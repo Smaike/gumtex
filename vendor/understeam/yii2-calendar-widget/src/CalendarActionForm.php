@@ -21,6 +21,8 @@ class CalendarActionForm extends Model
 
     public $date;
 
+    public $minute_period;
+
     /**
      * @var CalendarInterface
      */
@@ -44,6 +46,8 @@ class CalendarActionForm extends Model
             ['date', 'default', 'value' => date('Y-m-d')],
             ['viewMode', 'in', 'range' => [CalendarInterface::VIEW_MODE_MONTH, CalendarInterface::VIEW_MODE_WEEK]],
             ['date', 'date', 'format' => 'php:Y-m-d'],
+            ['minute_period', 'default', 'value' => 60],
+            ['minute_period', 'in', 'range' => [30, 45, 60]],
         ];
     }
 
@@ -67,7 +71,7 @@ class CalendarActionForm extends Model
         if ($this->viewMode == CalendarInterface::VIEW_MODE_MONTH) {
             return CalendarHelper::getMonthDisplayPeriod($this->date);
         } else {
-            return CalendarHelper::getWeekDisplayPeriod($this->date);
+            return CalendarHelper::getWeekDisplayPeriod($this->date, $this->minute_period);
         }
     }
 

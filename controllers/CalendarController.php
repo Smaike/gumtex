@@ -3,11 +3,9 @@
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
+use understeam\calendar\CalendarActionForm;
+use yii\web\JsExpression;
 
 class CalendarController extends Controller
 {
@@ -19,6 +17,30 @@ class CalendarController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $calendar = Yii::$app->get('calendar');
+        $model = new CalendarActionForm($calendar);
+        $model->load(Yii::$app->request->getQueryParams());
+        if (!$model->validate()) {
+            // Reset form to default values
+            $model = new CalendarActionForm($calendar);
+            $model->validate();
+        }
+        $grid = $model->getGrid();
+        $viewFile = '@vendor/understeam/yii2-calendar-widget/src/views/calendar';
+
+        $options = [
+             'onClick' => new JsExpression("function(d,t){alert([d,t].join(' '))}"),
+        ];
+
+        return $this->render($viewFile, [
+            'usePjax' => true,
+            'widgetOptions' => [
+                'grid' => $model->getGrid(),
+                'viewMode' => $model->viewMode,
+                'period' => $model->getPeriod(),
+                'calendar' => $calendar,
+                'clientOptions' => $options,
+            ],
+        ]);
     }
 }
