@@ -44,7 +44,7 @@ class CalendarActionForm extends Model
         return [
             ['viewMode', 'default', 'value' => CalendarInterface::VIEW_MODE_MONTH],
             ['date', 'default', 'value' => date('Y-m-d')],
-            ['viewMode', 'in', 'range' => [CalendarInterface::VIEW_MODE_MONTH, CalendarInterface::VIEW_MODE_WEEK]],
+            ['viewMode', 'in', 'range' => [CalendarInterface::VIEW_MODE_MONTH, CalendarInterface::VIEW_MODE_WEEK,  CalendarInterface::VIEW_MODE_DAY]],
             ['date', 'date', 'format' => 'php:Y-m-d'],
             ['minute_period', 'default', 'value' => 60],
             ['minute_period', 'in', 'range' => [30, 45, 60]],
@@ -58,8 +58,10 @@ class CalendarActionForm extends Model
     {
         if ($this->viewMode == CalendarInterface::VIEW_MODE_MONTH) {
             return CalendarHelper::getMonthPeriod($this->date);
-        } else {
+        } elseif($this->viewMode == CalendarInterface::VIEW_MODE_WEEK) {
             return CalendarHelper::getWeekPeriod($this->date);
+        } else {
+            return CalendarHelper::getDayPeriod($this->date);
         }
     }
 
@@ -70,8 +72,10 @@ class CalendarActionForm extends Model
     {
         if ($this->viewMode == CalendarInterface::VIEW_MODE_MONTH) {
             return CalendarHelper::getMonthDisplayPeriod($this->date);
-        } else {
+        } elseif($this->viewMode == CalendarInterface::VIEW_MODE_WEEK) {
             return CalendarHelper::getWeekDisplayPeriod($this->date, $this->minute_period);
+        } else {
+            return CalendarHelper::getDayDisplayPeriod($this->date, $this->minute_period);
         }
     }
 
@@ -89,7 +93,7 @@ class CalendarActionForm extends Model
             $grid = CalendarHelper::composeMonthGrid($period, $models);
         } else {
             $grid = CalendarHelper::composeWeekGrid($period, $models);
-        }
+        } 
         return $grid;
     }
 

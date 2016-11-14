@@ -103,6 +103,18 @@ class CalendarHelper
         return new DatePeriod($startDate, new DateInterval('P1D'), $endDate);
     }
 
+    public static function getDayPeriod($dateString)
+    {
+        $date = new DateTime($dateString);
+        $startDate = clone $date;
+        $dayOfWeek = $startDate->format('N');
+
+        $endDate = clone $startDate;
+        $endDate->add(new DateInterval('P1D'));
+
+        return new DatePeriod($startDate, new DateInterval('P1D'), $endDate);
+    }
+
     /**
      * Метод возвращает временные границы отображаемого месяца календаря
      * для последующей отправки, например, в запрос БД
@@ -142,6 +154,13 @@ class CalendarHelper
     public static function getWeekDisplayPeriod($dateString, $precision = 60)
     {
         $period = self::getWeekPeriod($dateString);
+
+        return new DatePeriod($period->getStartDate(), new DateInterval('PT' . $precision . 'M'), $period->getEndDate());
+    }
+
+    public static function getDayDisplayPeriod($dateString, $precision = 60)
+    {
+        $period = self::getDayPeriod($dateString);
 
         return new DatePeriod($period->getStartDate(), new DateInterval('PT' . $precision . 'M'), $period->getEndDate());
     }

@@ -55,6 +55,11 @@ class CalendarWidget extends Widget
     public $monthCellView = '@vendor/understeam/yii2-calendar-widget/src/views/month_cell';
 
     /**
+     * @var string View файл для режима "неделя"
+     */
+    public $dayView = '@vendor/understeam/yii2-calendar-widget/src/views/day';
+
+    /**
      * @var string устанавливает режим просмотра
      */
     public $viewMode;
@@ -84,8 +89,10 @@ class CalendarWidget extends Widget
         ]);
         if ($this->viewMode == CalendarInterface::VIEW_MODE_WEEK) {
             $result .= $this->renderWeek();
-        } else {
+        } elseif( $this->viewMode == CalendarInterface::VIEW_MODE_MONTH ) {
             $result .= $this->renderMonth();
+        } else {
+            $result .= $this->renderDay();
         }
         $result .= Html::endTag('div');
         return $result;
@@ -101,6 +108,13 @@ class CalendarWidget extends Widget
     public function renderMonth()
     {
         return $this->render($this->monthView, [
+            'grid' => $this->grid,
+        ]);
+    }
+
+    public function renderDay()
+    {
+        return $this->render($this->dayView, [
             'grid' => $this->grid,
         ]);
     }
@@ -161,7 +175,7 @@ class CalendarWidget extends Widget
     {
         /** @var \DateTime $date */
         $date = $this->period->getStartDate();
-        $date->sub(new \DateInterval($this->viewMode == CalendarInterface::VIEW_MODE_WEEK ? 'P7D' : 'P1M'));
+        $date->sub(new \DateInterval($this->viewMode == CalendarInterface::VIEW_MODE_DAY ? 'P1D' : 'P1M')); //менял с VIEW_MODE_WEEK
         return $date;
     }
 

@@ -21,7 +21,10 @@ interface CalendarInterface
     /**
      * Режим просмотра - "месяц"
      */
-    const VIEW_MODE_MONTH = 'month';
+    const VIEW_MODE_MONTH = 'month';/**
+     * Режим просмотра - "день"
+     */
+    const VIEW_MODE_DAY = 'day';
 
     /**
      * Возвращает найденные модели в запрашиваемом промежутке времени
