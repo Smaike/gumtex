@@ -113,3 +113,25 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+/* календарь */
+.calendar-week-cell{
+    display: inline-block;
+    width: auto;
+    margin-left: 30px;
+    padding: 10px;
+}
+.calendar-week-column{
+    width: auto;
+}
+.calendar-week-column .panel-body{
+    height: auto;
+    line-height: auto;
+    background-color: inherit;
+}
+.calendar-week-column .calendar-week-cell .panel-body.active:hover::after{
+    /* height: 30px;*/
+}
+.active_row{
+    background-color: #FF7A73;
+}

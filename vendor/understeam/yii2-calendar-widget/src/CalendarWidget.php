@@ -55,6 +55,11 @@ class CalendarWidget extends Widget
     public $monthCellView = '@vendor/understeam/yii2-calendar-widget/src/views/month_cell';
 
     /**
+     * @var string View файл для ячейки режима "день"
+     */
+    public $dayCellView = '@vendor/understeam/yii2-calendar-widget/src/views/day_cell';
+
+    /**
      * @var string View файл для режима "неделя"
      */
     public $dayView = '@vendor/understeam/yii2-calendar-widget/src/views/day';

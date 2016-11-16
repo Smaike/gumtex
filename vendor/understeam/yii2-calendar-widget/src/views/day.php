@@ -10,24 +10,16 @@ echo $this->render('header');
 $context = $this->context;
 ?>
 <div class="row">
-    <div class="calendar-week-column">
+    <div class="calendar-week-column" style="border-bottom: 1px solid black;">
         <?php
         $day = reset($grid);
         ?>
         <?php foreach ($day as $cell): ?>
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <?= $cell->date->format('H:i') ?>
-                </div>
+            <?php $isActive = $context->isActive($cell->date);?>
+            <div class="row <?=$isActive ? '' : ' active_row' ?>" style="border: 1px solid black; border-bottom:none;">
+                    <?= $this->render($context->dayCellView, ['cell' => $cell]) ?>
             </div>
         <?php endforeach; ?>
     </div>
-    <?php foreach ($grid as $day): ?>
-        <div class="calendar-week-column">
-            <?php foreach ($day as $cell): ?>
-                <?= $this->render($context->weekCellView, ['cell' => $cell]) ?>
-            <?php endforeach; ?>
-        </div>
-    <?php endforeach; ?>
 </div>
 
