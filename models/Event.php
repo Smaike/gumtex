@@ -46,4 +46,12 @@ class Event extends \yii\db\ActiveRecord implements ItemInterface
             'name' => 'Name',
         ];
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getClient()
+    {
+        return $this->hasOne(Client::className(), ['id' => 'id_client']);
+    }
 }

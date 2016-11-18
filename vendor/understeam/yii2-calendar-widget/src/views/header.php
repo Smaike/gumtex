@@ -18,7 +18,7 @@ $context = $this->context;
             <?= $context->getPeriodString() ?>
             <?= Html::a('<i class="glyphicon glyphicon-chevron-right"></i>', $context->getNextUrl()) ?>
         </div>
-        <?php if ($context->viewMode == CalendarInterface::VIEW_MODE_WEEK): ?>
+        <?php if ($context->viewMode == CalendarInterface::VIEW_MODE_DAY): ?>
             <div class="col-sm-4" style="text-align: center;">
                 <?= Html::a('30', Url::current(['minute_period' => 30])) ?>
                 <?= Html::a('45', Url::current(['minute_period' => 45])) ?>

@@ -29,7 +29,7 @@ class CalendarController extends Controller
         $viewFile = '@vendor/understeam/yii2-calendar-widget/src/views/calendar';
 
         $options = [
-             'onClick' => new JsExpression("function(d,t){alert([d,t].join(' '))}"),
+            'onClick' => new JsExpression("function(d,t){alert([d,t].join(' '))}"),
         ];
 
         return $this->render($viewFile, [
