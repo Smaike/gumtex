@@ -51,21 +51,6 @@ class SiteController extends Controller
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
-            'calendar' => [
-                'class' => 'understeam\calendar\CalendarAction',
-                'calendar' => 'calendar',           // ID компонента календаря (да, можно подключать несколько)
-                'usePjax' => true,                  // Использовать ли pjax для ajax загрузки страниц
-                'widgetOptions' => [                // Опции виджета (см. CalendarWidget)
-                    'clientOptions' => [            // Опции JS плагина виджета
-                        'onClick' => new JsExpression('showPopup'),   // JS функция, которая будет выполнена при клике на доступное время
-                        'onFutureClick' => new JsExpression('buyPlan'),
-                        'onPastClick' => new JsExpression('showError'),
-                        // Все эти функции принимают 2 параметра: date и time
-                        // Для тестирования можно использовать следующий код:
-                        // 'onClick' => new JsExpression("function(d,t){alert([d,t].join(' '))}")
-                    ],
-                ],
-            ],
         ];
     }
 
@@ -109,33 +94,5 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
-    }
-
-    /**
-     * Displays contact page.
-     *
-     * @return string
-     */
-    public function actionContact()
-    {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Displays about page.
-     *
-     * @return string
-     */
-    public function actionAbout()
-    {
-        return $this->render('about');
     }
 }

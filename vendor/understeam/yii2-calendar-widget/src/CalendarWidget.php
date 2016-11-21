@@ -236,7 +236,7 @@ class CalendarWidget extends Widget
         $endTs = isset($bounds[1]) ? $bounds[1] : null;
         $condition = true;
         if ($startTs !== null) {
-            $condition = $condition && $date->getTimestamp() >= $startTs;
+            $condition = $condition && ($date->getTimestamp() >= $startTs || ($this->viewMode == CalendarInterface::VIEW_MODE_MONTH && $date->format('Y-m-d') == date('Y-m-d')));
         }
         if ($endTs !== null) {
             $condition = $condition && $date->getTimestamp() < $endTs;

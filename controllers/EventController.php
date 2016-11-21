@@ -67,9 +67,8 @@ class EventController extends Controller
         $model = new EventCreateForm();
         $model->date = Yii::$app->request->get('date');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['calendar/index', 'date' => $model->date, 'viewMode' => 'day']);
+            return $this->redirect(['calendar/index', 'date' => date("Y-m-d",strtotime($model->date)), 'viewMode' => 'day']);
         } else {
-            var_dump($model->getErrors());
             return $this->render('create', [
                 'model' => $model,
             ]);

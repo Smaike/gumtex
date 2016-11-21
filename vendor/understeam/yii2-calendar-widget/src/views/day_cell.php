@@ -33,7 +33,7 @@ $time = $cell->date->format('Y-m-d H:i');
             <?php if(count(($cell->items < 6))&&($isActive)){?> 
             <div class="row">
                 <div class="panel-body<?=$isActive ? ' active' : '' ?>" style="width: 150px; cursor:pointer" >
-                    <a href = "<?=Url::to(['event/create', 'date' => $time])?>" style="text-decoration: none; color: inherit;">Добавить</a>
+                    <a href = "<?=Url::to(['event/create', 'date' => $time])?>" style="text-decoration: none; color: inherit; font-size: 18px;">+</a>
                     
                 </div>
             </div>

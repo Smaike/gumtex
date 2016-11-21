@@ -138,4 +138,5 @@ a.desc:after {
     background-color: #FF7A73;
 }
 .panel-body > .row > div{
+    padding: 5px;
 }
