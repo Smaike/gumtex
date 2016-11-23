@@ -2,103 +2,143 @@
 
 namespace app\models;
 
-class User extends \yii\base\Object implements \yii\web\IdentityInterface
+use Yii;
+
+/**
+ * This is the model class for table "users".
+ *
+ * @property integer $id
+ * @property string $first_name
+ * @property string $last_name
+ * @property string $middle_name
+ * @property string $email
+ * @property string $login
+ * @property string $password
+ * @property integer $type
+ * @property integer $is_active
+ * @property integer $is_notice
+ * @property string $authkey
+ * @property string $sessionkey
+ * @property string $created_at
+ * @property string $updated_at
+ *
+ * @property UserTypes $type0
+ */
+class User extends \yii\db\ActiveRecord
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
-
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
-
+    protected $__salt = '7z0ZzugKmnQW';
 
     /**
      * @inheritdoc
      */
+    public static function tableName()
+    {
+        return 'users';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['type', 'is_active', 'is_notice'], 'integer'],
+            [['created_at', 'updated_at'], 'safe'],
+            [['first_name', 'last_name', 'middle_name', 'email', 'login', 'authkey', 'sessionkey'], 'string', 'max' => 60],
+            [['password'], 'string', 'max' => 20],
+            [['type'], 'exist', 'skipOnError' => true, 'targetClass' => UserTypes::className(), 'targetAttribute' => ['type' => 'id']],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'first_name' => 'First Name',
+            'last_name' => 'Last Name',
+            'middle_name' => 'Middle Name',
+            'email' => 'Email',
+            'login' => 'Login',
+            'password' => 'Password',
+            'type' => 'Type',
+            'is_active' => 'Is Active',
+            'is_notice' => 'Is Notice',
+            'authkey' => 'Authkey',
+            'sessionkey' => 'Sessionkey',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getType()
+    {
+        return $this->hasOne(UserType::className(), ['id' => 'type']);
+    }
+
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return self::findOne($id);
     }
 
-    /**
-     * @inheritdoc
-     */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-
         return null;
     }
 
-    /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
     public static function findByUsername($username)
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
+        if($user = self::findOne(['login' => $username]))
+            return $user;
 
         return null;
     }
 
-    /**
-     * @inheritdoc
-     */
+    public function getAuthKey()
+    {
+        return $this->authkey;
+    }
+
     public function getId()
     {
         return $this->id;
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getAuthKey()
-    {
-        return $this->authKey;
-    }
-
-    /**
-     * @inheritdoc
+     * @param string $authKey
+     * @return boolean if auth key is valid for current user
      */
     public function validateAuthKey($authKey)
     {
-        return $this->authKey === $authKey;
+        return $this->getAuthKey() === $authKey;
     }
 
-    /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
-     */
     public function validatePassword($password)
     {
-        return $this->password === $password;
+        return $this->hashPassword($password) === $this->password;
+    }
+
+    public function hashPassword($password)
+    {
+        return md5($password . $this->__salt);
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if ($this->isNewRecord) {
+                $this->authkey = \Yii::$app->security->generateRandomString();
+                $this->sessionkey = \Yii::$app->security->generateRandomString();
+                $this->created_at = date("Y-m-d H:i:s");
+            }
+            $this->updated_at = date("Y-m-d H:i:s");
+            return true;
+        }
+        return false;
     }
 }
