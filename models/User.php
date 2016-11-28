@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models;
+use yii\web\IdentityInterface;
 
 use Yii;
 
@@ -24,7 +25,7 @@ use Yii;
  *
  * @property UserTypes $type0
  */
-class User extends \yii\db\ActiveRecord
+class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     protected $__salt = '7z0ZzugKmnQW';
 
@@ -46,7 +47,7 @@ class User extends \yii\db\ActiveRecord
             [['created_at', 'updated_at'], 'safe'],
             [['first_name', 'last_name', 'middle_name', 'email', 'login', 'authkey', 'sessionkey'], 'string', 'max' => 60],
             [['password'], 'string', 'max' => 20],
-            [['type'], 'exist', 'skipOnError' => true, 'targetClass' => UserTypes::className(), 'targetAttribute' => ['type' => 'id']],
+            [['type'], 'exist', 'skipOnEmpty' => false, 'targetClass' => UserType::className(), 'targetAttribute' => ['type' => 'id']],
         ];
     }
 
@@ -132,6 +133,7 @@ class User extends \yii\db\ActiveRecord
     {
         if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {
+                $this->password = $this->hashPassword($this->password);
                 $this->authkey = \Yii::$app->security->generateRandomString();
                 $this->sessionkey = \Yii::$app->security->generateRandomString();
                 $this->created_at = date("Y-m-d H:i:s");

@@ -6,6 +6,8 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'sourceLanguage' => 'ru',
+    'language' => 'ru',
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -53,6 +55,12 @@ $config = [
             // Так же в dateRange можно передать функцию, которая должна вернуть нужный массив в случае если нужны динамические вычисления
         ],
         
+        
+    ],
+    'modules' => [
+        'directory' => [
+            'class' => 'app\modules\directories\Module',
+        ],
     ],
     'params' => $params,
 ];

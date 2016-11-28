@@ -37,6 +37,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Начало', 'url' => ['/site/index']],
+            ['label' => 'Справочники', 'url' => ['/directory/default/index']],
             ['label' => 'Календарь', 'url' => ['/calendar/index']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Вход', 'url' => ['/site/login']]
@@ -44,7 +45,7 @@ AppAsset::register($this);
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
-                    'Выход (' . Yii::$app->user->identity->username . ')',
+                    'Выход (' . Yii::$app->user->identity->login . ')',
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()
@@ -58,6 +59,10 @@ AppAsset::register($this);
     <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            'homeLink' => [
+                'label' => 'Начало',
+                'url' => Yii::$app->homeUrl,
+            ],
         ]) ?>
         <?= $content ?>
     </div>
