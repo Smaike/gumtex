@@ -5,10 +5,13 @@ namespace app\controllers;
 use Yii;
 use app\models\Event;
 use app\models\search\EventSearch;
+use app\models\Service;
+use app\forms\EventCreateForm;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\forms\EventCreateForm;
+use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 
 /**
  * EventController implements the CRUD actions for Event model.
@@ -65,12 +68,15 @@ class EventController extends Controller
     public function actionCreate()
     {
         $model = new EventCreateForm();
+        $services = Service::find()->all();
+        $aServices = ArrayHelper::map($services, 'id', 'name');
         $model->date = Yii::$app->request->get('date');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['calendar/index', 'date' => date("Y-m-d",strtotime($model->date)), 'viewMode' => 'day']);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'aServices' => $aServices,
             ]);
         }
     }
@@ -105,6 +111,20 @@ class EventController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionCost()
+    {
+        if(!Yii::$app->request->isAjax){
+            return "Oh, go away";
+        }
+        $post = Yii::$app->request->post('services');
+        $services = Service::findAll(['id' => $post]);
+        $cost=0;
+        foreach ($services as $service) {
+            $cost+= $service->cost;
+        }
+        return $cost;
     }
 
     /**

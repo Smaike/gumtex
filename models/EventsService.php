@@ -31,8 +31,8 @@ class EventsService extends \yii\db\ActiveRecord
     {
         return [
             [['id_event', 'id_service'], 'integer'],
-            [['id_event'], 'exist', 'skipOnError' => true, 'targetClass' => Events::className(), 'targetAttribute' => ['id_event' => 'id']],
-            [['id_service'], 'exist', 'skipOnError' => true, 'targetClass' => Services::className(), 'targetAttribute' => ['id_service' => 'id']],
+            [['id_event'], 'exist', 'skipOnError' => true, 'targetClass' => Event::className(), 'targetAttribute' => ['id_event' => 'id']],
+            [['id_service'], 'exist', 'skipOnError' => true, 'targetClass' => Service::className(), 'targetAttribute' => ['id_service' => 'id']],
         ];
     }
 
@@ -53,7 +53,7 @@ class EventsService extends \yii\db\ActiveRecord
      */
     public function getIdEvent()
     {
-        return $this->hasOne(Events::className(), ['id' => 'id_event']);
+        return $this->hasOne(Event::className(), ['id' => 'id_event']);
     }
 
     /**
@@ -61,6 +61,6 @@ class EventsService extends \yii\db\ActiveRecord
      */
     public function getIdService()
     {
-        return $this->hasOne(Services::className(), ['id' => 'id_service']);
+        return $this->hasOne(Service::className(), ['id' => 'id_service']);
     }
 }

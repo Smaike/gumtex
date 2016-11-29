@@ -6,6 +6,7 @@ use Yii;
 use yii\base\Model;
 use app\models\Event;
 use app\models\Client;
+use app\models\EventsService;
 
 /**
  * ContactForm is the model behind the contact form.
@@ -28,6 +29,7 @@ class EventCreateForm extends Model
     public $where_know;
     public $date;
     public $name;
+    public $services;
 
     /**
      * @return array the validation rules.
@@ -42,7 +44,8 @@ class EventCreateForm extends Model
             [['first_name', 'last_name', 'middle_name', 'p_first_name', 'p_last_name', 'p_middle_name'], 'string', 'max' => 60],
             [['mobile', 'p_mobile'], 'string', 'max' => 20],
             [['name'], 'string', 'max' => 255],
-            ['date', 'date', 'format' => 'yyyy-mm-dd H:i']
+            ['date', 'date', 'format' => 'yyyy-mm-dd H:i'],
+            ['services', 'each', 'rule' => 'integer'],
         ];
     }
 
@@ -66,7 +69,8 @@ class EventCreateForm extends Model
             'id_consultant' => 'Консультант',
             'comment' => 'Комментарии',
             'where_know' => 'Откуда узнал',
-            'name' => "Название события"
+            'name' => "Название события",
+            'services' => "Услуги",
         ];
     }
 
@@ -78,7 +82,14 @@ class EventCreateForm extends Model
         $event->attributes = $this->attributes;
         if($client->save()){
             $event->id_client = $client->id;
-            $event->save();
+            if($event->save() && !empty($this->services)){
+                foreach ($this->services as $service) {
+                    $eventService = new EventsService();
+                    $eventService->id_event = $event->id;
+                    $eventService->id_service = $service;
+                    $eventService->save();
+                }
+            }
             return true;
         }
         return false;
