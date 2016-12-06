@@ -31,6 +31,12 @@ class ComposerStaticInit12d30b8fa1152da55d3304ad27e06e5e
             'understeam\\unit\\calendar\\' => 25,
             'understeam\\calendar\\' => 20,
         ),
+        'k' => 
+        array (
+            'kartik\\plugins\\fileinput\\' => 25,
+            'kartik\\file\\' => 12,
+            'kartik\\base\\' => 12,
+        ),
         'c' => 
         array (
             'cebe\\markdown\\' => 14,
@@ -112,6 +118,18 @@ class ComposerStaticInit12d30b8fa1152da55d3304ad27e06e5e
         'understeam\\calendar\\' => 
         array (
             0 => __DIR__ . '/..' . '/understeam/yii2-calendar-widget/src',
+        ),
+        'kartik\\plugins\\fileinput\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/bootstrap-fileinput',
+        ),
+        'kartik\\file\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-fileinput',
+        ),
+        'kartik\\base\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-krajee-base',
         ),
         'cebe\\markdown\\' => 
         array (

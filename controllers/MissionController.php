@@ -4,10 +4,12 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Mission;
+use app\forms\MissionCreateForm;
 use app\models\search\MissionSearch;
-use app\modules\directories\components\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\UploadedFile;   
 
 /**
  * MissionController implements the CRUD actions for Mission model.
@@ -63,10 +65,16 @@ class MissionController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Mission();
+        $model = new MissionCreateForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->files = UploadedFile::getInstances($model, 'files');
+            var_dump($model->files);
+            die;
+            if($model->validate()){
+                $model->save();
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         } else {
             return $this->render('create', [
                 'model' => $model,

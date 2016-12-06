@@ -11,7 +11,7 @@ use app\models\EventsService;
 /**
  * ContactForm is the model behind the contact form.
  */
-class EventCreateForm extends Model
+class MissionCreateForm extends Model
 {
     public $theme;
     public $description;
@@ -34,6 +34,7 @@ class EventCreateForm extends Model
             [['status', 'id_created', 'is_report', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['theme'], 'string', 'max' => 255],
+            [['files'], 'file', 'maxFiles' => 5],
         ];
     }
 
@@ -51,28 +52,13 @@ class EventCreateForm extends Model
             'created_at' => 'Дата создания',
             'updated_at' => 'Дата изменения',
             'updated_by' => 'Кем изменен',
+            'files' => 'Файлы',
         ];
     }
 
     public function save()
     {
-        $client = new Client();
-        $event = new Event();
-        $client->attributes = $this->attributes;
-        $event->attributes = $this->attributes;
-        if($client->save()){
-            $event->id_client = $client->id;
-            if($event->save() && !empty($this->services)){
-                foreach ($this->services as $service) {
-                    $eventService = new EventsService();
-                    $eventService->id_event = $event->id;
-                    $eventService->id_service = $service;
-                    $eventService->save();
-                }
-            }
-            return true;
-        }
-        return false;
+        
     }
 
 }
