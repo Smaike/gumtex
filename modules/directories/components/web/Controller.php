@@ -63,6 +63,11 @@ class Controller extends \yii\web\Controller {
 					['label' => 'Пользователи', 'url' => ['/directory/user'], 'active' => $this->id == 'user'],
 					['label' => 'Типы пользователей', 'url' => ['/directory/user-type'], 'active' => $this->id == 'user-type'],
 					['label' => 'Услуги', 'url' => ['/directory/service'], 'active' => $this->id == 'service'],
+					['label' => 'Типы сотрудников', 'url' => ['/directory/client-type'], 'active' => $this->id == 'client-type'],
+					['label' => 'Категории клиентов', 'url' => ['/directory/client-category'], 'active' => $this->id == 'client-category'],
+					['label' => 'IP компьютеров', 'url' => ['/directory/computer'], 'active' => $this->id == 'computer'],
+					['label' => 'Активные дни и интервалы', 'url' => ['/directory/active-day'], 'active' => $this->id == 'active-day'],
+					['label' => 'Учебные заведения', 'url' => ['/directory/lib-school'], 'active' => $this->id == 'lib-school'],
 				]
 			]
 

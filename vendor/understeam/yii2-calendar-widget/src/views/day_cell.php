@@ -25,7 +25,9 @@ $time = $cell->date->format('Y-m-d H:i');
                 <div class="row" style="width:100%; border-bottom: 1px dotted black">
                     <div class="col-sm-4"><?=$item->client->last_name?> <?=$item->client->first_name?> <?=$item->client->middle_name?></div>
                     <div class="col-sm-1"><?=$item->client->age?></div>
-                    <div class="col-sm-2"><?=$item->name?></div>
+                    <div class="col-sm-2"><?php foreach ($item->services as $service) {?>
+                        <?= $service->name?><br>
+                    <?php }?></div>
                     <div class="col-sm-2"><?=$item->client->id_consultant?></div>
                     <div class="col-sm-3"><?=$item->client->comment?></div>
                 </div>

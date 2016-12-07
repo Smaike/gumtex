@@ -44,8 +44,8 @@ class Service extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'cost' => 'Cost',
+            'name' => 'Наименование',
+            'cost' => 'Стоимость',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -57,5 +57,17 @@ class Service extends \yii\db\ActiveRecord
     public function getEventsServices()
     {
         return $this->hasMany(EventsServices::className(), ['id_service' => 'id']);
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            if ($this->isNewRecord) {
+                $this->created_at = date("Y-m-d H:i:s");
+            }
+            $this->updated_at = date("Y-m-d H:i:s");
+            return true;
+        }
+        return false;
     }
 }

@@ -27,20 +27,18 @@ $aUserTypes = ArrayHelper::map($userTypes, 'id', 'name');
 
     <?= $form->field($model, 'type')->dropDownList($aUserTypes,['prompt' => 'Выберите тип']) ?>
 
-    <?= $form->field($model, 'is_active')->textInput() ?>
+    <?= $form->field($model, 'is_active')->radioList([
+                        1 => 'Да',
+                        0 => 'Нет',
+                    ]) ?>
 
-    <?= $form->field($model, 'is_notice')->textInput() ?>
-
-    <?= $form->field($model, 'authkey')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'sessionkey')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'created_at')->textInput() ?>
-
-    <?= $form->field($model, 'updated_at')->textInput() ?>
+    <?= $form->field($model, 'is_notice')->radioList([
+                        0 => 'Нет',
+                        1 => 'Да',
+                    ]) ?>
 
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Изменить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

@@ -58,19 +58,19 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'first_name' => 'First Name',
-            'last_name' => 'Last Name',
-            'middle_name' => 'Middle Name',
+            'first_name' => 'Имя',
+            'last_name' => 'Фамилия',
+            'middle_name' => 'отчество',
             'email' => 'Email',
-            'login' => 'Login',
-            'password' => 'Password',
-            'type' => 'Type',
-            'is_active' => 'Is Active',
-            'is_notice' => 'Is Notice',
+            'login' => 'Логин',
+            'password' => 'Пароль',
+            'type' => 'Тип',
+            'is_active' => 'Активен?',
+            'is_notice' => 'Включить оповещения?',
             'authkey' => 'Authkey',
             'sessionkey' => 'Sessionkey',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'created_at' => 'Дата создания',
+            'updated_at' => 'Дата изменения',
         ];
     }
 
@@ -142,5 +142,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             return true;
         }
         return false;
+    }
+
+    public function getFullName()
+    {
+        return $this->last_name . " " . $this->first_name;
     }
 }

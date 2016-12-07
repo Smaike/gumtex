@@ -54,4 +54,9 @@ class Event extends \yii\db\ActiveRecord implements ItemInterface
     {
         return $this->hasOne(Client::className(), ['id' => 'id_client']);
     }
+
+    public function getServices()
+    {
+        return $this->hasMany(Service::className(), ['id' => 'id_service'])->viaTable('events_services', ['id_event' => 'id']);
+    }
 }

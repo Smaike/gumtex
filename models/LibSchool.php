@@ -5,21 +5,19 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "user_types".
+ * This is the model class for table "lib_schools".
  *
  * @property integer $id
  * @property string $name
- *
- * @property Users[] $users
  */
-class UserType extends \yii\db\ActiveRecord
+class LibSchool extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'user_types';
+        return 'lib_schools';
     }
 
     /**
@@ -28,7 +26,7 @@ class UserType extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'string', 'max' => 60],
+            [['name'], 'string', 'max' => 255],
         ];
     }
 
@@ -39,15 +37,7 @@ class UserType extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Название',
+            'name' => 'Name',
         ];
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUsers()
-    {
-        return $this->hasMany(Users::className(), ['type' => 'id']);
     }
 }

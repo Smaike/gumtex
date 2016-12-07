@@ -1,13 +1,17 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
+
 use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
-use yii\helpers\Url;
 use yii\web\View;
-/* @var $this yii\web\View */
-/* @var $model app\forms\EventCreateForm */
-/* @var $form ActiveForm */
+
+use app\models\User;
+
+$models = User::find()->where(['type' => 1])->select(['id', 'first_name', 'last_name'])->all();
+$consultants = ArrayHelper::map($models, 'id', 'fullName');
 ?>
 <div class="event-create row">
     <h2>Вы заполняете событие на <?=$model->date?></h2>
@@ -20,7 +24,7 @@ use yii\web\View;
             <?= $form->field($model, 'last_name') ?>
             <?= $form->field($model, 'middle_name') ?>
             <?= $form->field($model, 'birthday', ['template' => "{label}<br />{input}\n{hint}\n{error}"])->widget(DatePicker::className(),[
-                'dateFormat' => 'yyyy-MM-dd',
+                'dateFormat' => 'dd-MM-yyyy',
                 'clientOptions' => [
                     'changeMonth' => true,
                     'yearRange' => '1907:2016',
@@ -29,16 +33,16 @@ use yii\web\View;
                     'buttonImage' => Url::base().'/images/calendar.png',
                     'buttonImageOnly' => true,
                 ]])->widget(\yii\widgets\MaskedInput::className(), [
-                        'mask' => '9999-99-99',
+                        'mask' => '99-99-9999',
                         'options'=>[
                             'class' => 'form-control form_contact',
                             'style' => "width:80%; display:inline-block; margin-right:10px;",
-                            'placeholder' => '1999-12-31'
+                            'placeholder' => '31-12-1999'
             ]]) ?>
             <?= $form->field($model, 'mobile') ?>
             <?= $form->field($model, 'type') ?>
             <?= $form->field($model, 'category') ?>
-            <?= $form->field($model, 'id_consultant') ?>
+            <?= $form->field($model, 'id_consultant')->dropDownList($consultants, ['prompt' => '']) ?>
             <?= $form->field($model, 'comment') ?>
             <?= $form->field($model, 'where_know') ?>
             <?= $form->field($model, 'p_first_name') ?>
