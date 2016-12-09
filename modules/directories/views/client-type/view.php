@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\ClientType */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Client Types', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Типы клиентов', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="client-type-view">

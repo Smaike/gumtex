@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\ClientCategory */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Client Categories', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Категории клиентов', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="client-category-view">

@@ -28,7 +28,9 @@ class ActiveDay extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['date'], 'safe'],
+            [['date'], 'required'],
+            ['date', 'date', 'format' => 'yyyy-mm-dd'],
+
             [['is_active'], 'integer'],
             [['split'], 'string', 'max' => 2],
         ];
@@ -41,9 +43,17 @@ class ActiveDay extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'date' => 'Date',
-            'split' => 'Split',
-            'is_active' => 'Is Active',
+            'date' => 'Дата',
+            'split' => 'Разбитие',
+            'is_active' => 'Активен?',
         ];
+    }
+
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            // var_dump($this->attributes);
+            return true;
+        }
     }
 }

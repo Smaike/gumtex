@@ -37,7 +37,7 @@ class ClientCategory extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'Название категории',
         ];
     }
 }

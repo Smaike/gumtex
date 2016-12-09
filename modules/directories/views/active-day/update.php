@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\ActiveDay */
 
-$this->title = 'Update Active Day: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Active Days', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Изменить день: ' . $model->date;
+$this->params['breadcrumbs'][] = ['label' => 'Активный день', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->date, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = 'Изменить';
 ?>
 <div class="active-day-update">
 

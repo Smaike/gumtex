@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\LibSchool */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Lib Schools', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Учебные заведения', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="lib-school-view">

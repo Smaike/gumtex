@@ -45,10 +45,10 @@ class Computer extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'Наименование',
             'ip' => 'Ip',
-            'is_processed' => 'Is Processed',
-            'is_processed_by' => 'Is Processed By',
+            'is_processed' => 'Занят?',
+            'is_processed_by' => 'Кем занят',
         ];
     }
 

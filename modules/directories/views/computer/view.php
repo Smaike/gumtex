@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Computer */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Computers', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Компьютеры', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="computer-view">

@@ -6,6 +6,7 @@ use Yii;
 use yii\web\Controller;
 use understeam\calendar\CalendarActionForm;
 use yii\web\JsExpression;
+use app\models\ActiveDay;
 
 class CalendarController extends Controller
 {
@@ -20,6 +21,10 @@ class CalendarController extends Controller
         $calendar = Yii::$app->get('calendar');
         $model = new CalendarActionForm($calendar);
         $model->load(Yii::$app->request->getQueryParams());
+        if(($db_model = ActiveDay::findOne(['date' => Yii::$app->request->get('date')])) && !empty($db_model->date)){
+            $model->minute_period = $db_model->split;
+        }
+        $db_model = ActiveDay::findOne(['date' => Yii::$app->request->get('date')]);
         if (!$model->validate()) {
             // Reset form to default values
             $model = new CalendarActionForm($calendar);

@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\ActiveDay */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Active Days', 'url' => ['index']];
+$this->title = $model->date;
+$this->params['breadcrumbs'][] = ['label' => 'Активный день', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="active-day-view">

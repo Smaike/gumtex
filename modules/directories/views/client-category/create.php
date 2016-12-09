@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\ClientCategory */
 
-$this->title = 'Create Client Category';
-$this->params['breadcrumbs'][] = ['label' => 'Client Categories', 'url' => ['index']];
+$this->title = 'Создать категорию клиентов';
+$this->params['breadcrumbs'][] = ['label' => 'Категории клиентов', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="client-category-create">

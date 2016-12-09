@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\ClientType */
 
-$this->title = 'Update Client Type: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Client Types', 'url' => ['index']];
+$this->title = 'Изменить тип клиентов: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Типы клиентов', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Изменить';
 ?>
 <div class="client-type-update">
 

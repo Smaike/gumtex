@@ -5,10 +5,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\ClientCategory */
 
-$this->title = 'Update Client Category: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Client Categories', 'url' => ['index']];
+$this->title = 'Изменить категорию клиентов: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Категории клиентов', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Изменить';
 ?>
 <div class="client-category-update">
 
