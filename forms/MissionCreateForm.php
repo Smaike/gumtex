@@ -4,9 +4,14 @@ namespace app\forms;
 
 use Yii;
 use yii\base\Model;
-use app\models\Event;
+
 use app\models\Client;
+use app\models\Event;
 use app\models\EventsService;
+use app\models\File;
+use app\models\Mission;
+use app\models\MissionFile;
+use app\models\MissionUser;
 
 /**
  * ContactForm is the model behind the contact form.
@@ -31,7 +36,7 @@ class MissionCreateForm extends Model
     {
         return [
             [['description'], 'string'],
-            [['status', 'id_created', 'is_report', 'updated_by'], 'integer'],
+            [['status', 'is_report', 'updated_by'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['theme'], 'string', 'max' => 255],
             [['files'], 'file', 'maxFiles' => 5],
@@ -58,7 +63,28 @@ class MissionCreateForm extends Model
 
     public function save()
     {
-        
+        $mission = new Mission();
+        $mission->attributes = $this->attributes;
+        if(!$mission->save()){
+            return false;
+        }
+        foreach ($this->files as $file) {
+            $mFile = new File();
+            $mFile->title = $file->name;
+            $mFile->ext = $file->extension;
+            $mFile->filename = \Yii::$app->security->generateRandomString();
+            $mFile->created_at = date("Y-m-d H:i:s");
+            if($mFile->save()){
+                $file->saveAs("uploads/" . $mFile->filename . "." . $mFile->ext);
+                $mission_file = new MissionFile();
+                $mission_file->id_mission = $mission->id;
+                $mission_file->id_file = $mFile->id;
+                if($mission->save()){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

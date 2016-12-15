@@ -37,4 +37,13 @@ class GridCell extends Object
         $ts = $this->date->getTimestamp();
         return $ts >= $startDate && $ts < $endDate;
     }
+
+    public function countServices()
+    {
+        $count = 0;
+        foreach ($this->items as $item) {
+            $count += count($item->services);
+        }
+        return $count;
+    }
 }

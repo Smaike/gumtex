@@ -51,7 +51,7 @@ $config = [
             'class' => 'understeam\calendar\ActiveRecordCalendar',  // Имя класса календаря
             'modelClass' => 'app\models\Event',                     // Имя класса модели
             'dateAttribute' => 'date',                              // Атрибут модели, в котором хранится дата (тип в БД timestamp или datetime)
-            'dateRange' => [time(), time() + 2592000],       // период, в который будет доступно событие onClick
+            'dateRange' => [time(), time() + 2592000*12],       // период, в который будет доступно событие onClick
             // Так же в dateRange можно передать функцию, которая должна вернуть нужный массив в случае если нужны динамические вычисления
         ],
         

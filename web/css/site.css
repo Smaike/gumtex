@@ -140,3 +140,21 @@ a.desc:after {
 .panel-body > .row > div{
     padding: 5px;
 }
+
+.calendar-month-cell .panel-body.active{
+    background-color: #cfc;
+    color:#060;
+}
+.calendar-month-cell .panel-body {
+    background-color: #ccc;
+    color:#000;
+    line-height:normal;
+}
+.calendar-month-cell .panel-body.out {
+    background-color: #aaa;
+    color:#000;
+}
+.calendar-month-cell .panel-body.closed,  .calendar-month-cell .panel-body.out.closed{
+    background-color: #fcc;
+    color:#600;
+}

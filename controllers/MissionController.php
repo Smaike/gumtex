@@ -69,8 +69,6 @@ class MissionController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->files = UploadedFile::getInstances($model, 'files');
-            var_dump($model->files);
-            die;
             if($model->validate()){
                 $model->save();
                 return $this->redirect(['view', 'id' => $model->id]);
