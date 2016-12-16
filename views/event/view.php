@@ -2,12 +2,16 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\widgets\ListView;
+use yii\data\ActiveDataProvider;
+use app\models\Service;
+use yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Event */
 
-$this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Events', 'url' => ['index']];
+$this->title = $model->client->first_name . " " . $model->client->last_name;
+$this->params['breadcrumbs'][] = ['label' => 'События', 'url' => ['calendar/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="event-view">
@@ -15,25 +19,65 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?php /* Html::a('Изменить', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => 'Вы уверены, что хотите его удалить?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ]) */?>
     </p>
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'date',
-            'name',
-            'status',
-            'id_client',
+            'client.first_name',
+            'client.last_name',
+            'client.middle_name',
+            'client.birthday',
+            'client.mobile',
+            [
+                'attribute' => "client.p_first_name",
+                'visible' => $model->client->getAge()<18,
+            ],
+            [
+                'attribute' => "client.p_last_name",
+                'visible' => $model->client->getAge()<18,
+            ],
+            [
+                'attribute' => "client.p_middle_name",
+                'visible' => $model->client->getAge()<18,
+            ],[
+                'attribute' => "client.p_mobile",
+                'visible' => $model->client->getAge()<18,
+            ],
+            'client.clientType.name',
+            'client.clientCategory.name',
         ],
     ]) ?>
+    <div class="col-sm-6">
+        <h2>Услуги</h2>
+        <table class="table table-bordered table-striped">
+        <?php foreach($model->services as $service){?>
+            <tr>
+                <td><?=$service->name?></td>
+                <td><?php Modal::begin([
+                    'header' => '<h2>Выберите аудиторию</h2>',
+                    'toggleButton' => [
+                        'label' => 'Начать',
+                        'class' => "btn btn-success",
+                    ],
+                ]);?>
+                Здесь будет схема аудитории
+                <?php Modal::end();?>
+                    
+                </td>
+            </tr>
+        <?php }?>
+        </table>
+    </div>
+    
 
 </div>

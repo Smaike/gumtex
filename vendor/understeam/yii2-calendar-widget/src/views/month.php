@@ -30,3 +30,4 @@ $firstWeek = reset($grid);
         <?php endforeach; ?>
     </div>
 <?php endforeach; ?>
+<p class="help-block">*К|У - Количество клиентов | Количество услуг</p>

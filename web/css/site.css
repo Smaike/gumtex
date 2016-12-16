@@ -2,6 +2,9 @@ html,
 body {
     height: 100%;
 }
+html{
+    overflow-y: scroll;
+}
 
 .wrap {
     min-height: 100%;
@@ -125,7 +128,6 @@ a.desc:after {
     width: auto;
 }
 .calendar-week-column .panel-body{
-    height: auto;
     line-height: normal;
     font-size: 18px;
     background-color: inherit;
@@ -157,4 +159,10 @@ a.desc:after {
 .calendar-month-cell .panel-body.closed,  .calendar-month-cell .panel-body.out.closed{
     background-color: #fcc;
     color:#600;
+}
+.day_cell.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n) > th {
+   background-color: #fff;
+}
+.day_cell.table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+   background-color: #f9f9f9;
 }

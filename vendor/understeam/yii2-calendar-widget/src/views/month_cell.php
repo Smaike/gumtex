@@ -20,7 +20,7 @@ $link = ($isActive)? Url::to(['calendar/index', 'date' => $time, 'viewMode' => '
         </div>
         <a href = "<?=$link?>" style="text-decoration: none; color: inherit;">
         <div class="panel-body<?=$isActive ? ' active' : '' ?> <?=(in_array($cell->date->format('N'), [6,7])) ? 'closed' : ''?>">
-            <span style="font-size: 12px;">Л|У</span><br>
+            <span style="font-size: 12px;">К|У</span><br>
             <?= count($cell->items) ?>|<?= $cell->countServices() ?>
         </div>
         </a>

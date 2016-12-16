@@ -55,21 +55,30 @@ class Client extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'first_name' => 'First Name',
-            'last_name' => 'Last Name',
-            'middle_name' => 'Middle Name',
-            'birthday' => 'Birthday',
-            'p_first_name' => 'P First Name',
-            'p_last_name' => 'P Last Name',
-            'p_middle_name' => 'P Middle Name',
-            'mobile' => 'Mobile',
-            'p_mobile' => 'P Mobile',
-            'type' => 'Type',
-            'category' => 'Category',
-            'id_consultant' => 'Id Consultant',
-            'comment' => 'Comment',
-            'where_know' => 'Where Know',
+            'first_name' => 'Имя',
+            'last_name' => 'Фамилия',
+            'middle_name' => 'Отчество',
+            'birthday' => 'День рождения',
+            'p_first_name' => 'Имя родителя',
+            'p_last_name' => 'Фамилия родителя',
+            'p_middle_name' => 'Отчество родителя',
+            'mobile' => 'Телефон',
+            'p_mobile' => 'Телефон родителя',
+            'type' => 'Тип',
+            'category' => 'Категория',
+            'id_consultant' => 'Консультант',
+            'comment' => 'Комментарии',
+            'where_know' => 'Откуда узнал',
         ];
+    }
+
+    public function getClientType()
+    {
+        return $this->hasOne(ClientType::className(), ['id' => 'type']);
+    }
+    public function getClientCategory()
+    {
+        return $this->hasOne(ClientCategory::className(), ['id' => 'category']);
     }
 
     public function getAge()
