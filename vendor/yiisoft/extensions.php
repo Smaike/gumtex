@@ -75,4 +75,13 @@ return array (
       '@kartik/file' => $vendorDir . '/kartik-v/yii2-widget-fileinput',
     ),
   ),
+  'skeeks/yii2-ckeditor' => 
+  array (
+    'name' => 'skeeks/yii2-ckeditor',
+    'version' => '1.1.0.0',
+    'alias' => 
+    array (
+      '@skeeks/yii2/ckeditor' => $vendorDir . '/skeeks/yii2-ckeditor',
+    ),
+  ),
 );
