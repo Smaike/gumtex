@@ -106,6 +106,14 @@ class ComputerController extends Controller
         return $this->redirect(['index']);
     }
 
+    public function actionListActivity()
+    {
+        $computers = Computer::find()->all();
+        return $this->renderAjax('list-activity', [
+            'computers' => $computers,
+        ]);
+    }
+
     /**
      * Finds the Computer model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

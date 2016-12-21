@@ -46,7 +46,7 @@ $linkProfile = Url::to();
             <?php }?>
         </div>
         */?>
-        <table class=" day_cell table panel-body table-bordered table-striped" data-cal-date="<?=$time?>" style = "margin-bottom: 0px; border:none">
+        <table class=" day_cell table panel-body table-bordered" data-cal-date="<?=$time?>" style = "margin-bottom: 0px; border:none">
             <tr>
                 <th style="width:10%">Время</th>
                 <th style="width:25%">ФИО клиента</th>

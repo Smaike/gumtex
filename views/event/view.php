@@ -1,11 +1,14 @@
 <?php
 
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 use yii\widgets\ListView;
+use yii\web\View;
 use yii\data\ActiveDataProvider;
+
 use app\models\Service;
-use yii\bootstrap\Modal;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Event */
@@ -67,10 +70,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     'header' => '<h2>Выберите аудиторию</h2>',
                     'toggleButton' => [
                         'label' => 'Начать',
-                        'class' => "btn btn-success",
+                        'class' => "btn btn-success start-serv",
+                        'data-service' => $service->id,
+                        'data-client' =>$client->id,
                     ],
                 ]);?>
-                Здесь будет схема аудитории
                 <?php Modal::end();?>
                     
                 </td>
@@ -81,3 +85,19 @@ $this->params['breadcrumbs'][] = $this->title;
     
 
 </div>
+<?php $this->registerJs("
+    $(document).on('click', '.start-serv', function(){
+        var div = $(this);
+        console.log(div);
+        $.ajax({
+          url: '" . Url::to('directory/computer/list-activity', true) . "',
+          type: 'POST',   
+          data: {'service':div.data['service'], 'client':div.data['service']}, 
+          success: function(response){
+            $('.modal-body').html(response);
+          }
+        });
+    });",
+    View::POS_END,
+     'my-options');
+?>

@@ -17,7 +17,7 @@ $count = 0;
             <?php $count++;?>
             <?php if($cell->date->format('H') >= 10 and $cell->date->format('H') <= 19){?>
             <?php $isActive = $context->isActive($cell->date);?>
-            <div class="row <?=$isActive ? '' : ' active_row' ?>" style="border: 2px solid black; border-bottom:none;">
+            <div class="row <?=$isActive ? '' : 'active_row' ?>" style="border: 2px solid black; border-bottom:none;">
                     <?= $this->render($context->dayCellView, ['cell' => $cell, 'count' => $count]) ?>
             </div>
             <?php }?>

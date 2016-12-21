@@ -166,3 +166,14 @@ a.desc:after {
 .day_cell.table-striped > tbody > tr:nth-child(2n) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
    background-color: #f9f9f9;
 }
+
+.pc {
+    background: url('../images/pc.png') no-repeat;
+    background-size: 100px 100px;
+    width: 100px;
+    height: 100px; 
+}
+.pc.active{
+    background: url('../images/pc-processed.png') no-repeat;
+    background-size: 100px 100px;
+}
