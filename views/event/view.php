@@ -7,6 +7,7 @@ use yii\widgets\DetailView;
 use yii\widgets\ListView;
 use yii\web\View;
 use yii\data\ActiveDataProvider;
+use app\models\EventsService;
 
 use app\models\Service;
 
@@ -63,23 +64,29 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-6">
         <h2>Услуги</h2>
         <table class="table table-bordered table-striped">
-        <?php foreach($model->services as $service){?>
-            <tr>
-                <td><?=$service->name?></td>
-                <td><?php Modal::begin([
-                    'header' => '<h2>Выберите аудиторию</h2>',
-                    'toggleButton' => [
-                        'label' => 'Начать',
-                        'class' => "btn btn-success start-serv",
-                        'data-service' => $service->id,
-                        'data-client' =>$client->id,
-                    ],
-                ]);?>
-                <?php Modal::end();?>
-                    
-                </td>
-            </tr>
-        <?php }?>
+        <?php foreach($model->services as $service){
+            if($es = EventsService::find()->where([
+                'id_service' => $service->id,
+                'id_event' => $model->id,
+                'status' => 'new',
+            ])->one()){?>
+                <tr>
+                    <td><?=$service->name?></td>
+                    <td><?php Modal::begin([
+                        'header' => '<h2>Выберите аудиторию</h2>',
+                        'toggleButton' => [
+                            'label' => 'Начать',
+                            'class' => "btn btn-success start-serv",
+                            'data-service' => $service->id,
+                            'data-event' => $model->id,
+                        ],
+                    ]);?>
+                    <?php Modal::end();?>
+                        
+                    </td>
+                </tr>
+            <?php }
+        }?>
         </table>
     </div>
     
@@ -92,7 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
         $.ajax({
           url: '" . Url::to('directory/computer/list-activity', true) . "',
           type: 'POST',   
-          data: {'service':div.data['service'], 'client':div.data['service']}, 
+          data: {'service':div.data('service'), 'event':div.data('event')}, 
           success: function(response){
             $('.modal-body').html(response);
           }

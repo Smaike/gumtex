@@ -3,11 +3,13 @@
 namespace app\modules\directories\controllers;
 
 use Yii;
-use app\models\Computer;
 use yii\data\ActiveDataProvider;
-use app\modules\directories\components\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
+use app\modules\directories\components\web\Controller;
+use app\models\Computer;
+use app\models\EventsService;
 
 /**
  * ComputerController implements the CRUD actions for Computer model.
@@ -109,8 +111,13 @@ class ComputerController extends Controller
     public function actionListActivity()
     {
         $computers = Computer::find()->all();
+        $eventService = EventsService::find()->where([
+            'id_event' => Yii::$app->request->post('event'),
+            'id_service' => Yii::$app->request->post('service'),
+        ])->one();
         return $this->renderAjax('list-activity', [
             'computers' => $computers,
+            'eventService' => $eventService,
         ]);
     }
 
