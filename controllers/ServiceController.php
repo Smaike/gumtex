@@ -6,6 +6,7 @@ use Yii;
 use app\models\Event;
 use app\models\search\EventSearch;
 use app\models\Service;
+use app\models\EventsService;
 use app\models\Computer;
 use app\forms\EventCreateForm;
 use yii\web\Controller;
@@ -40,10 +41,13 @@ class ServiceController extends Controller
      */
     public function actionStart()
     {
-        $computer = Computer::find(Yii::$app->request->post('computer'))->one();
-        $computer->is_processed_by = Yii::$app->request->post('id');
+        $computer = Computer::find(Yii::$app->request->get('computer'))->one();
+        $computer->is_processed_by = Yii::$app->request->get('id');
         $computer->is_processed = 1;
         $computer->save();
+        $eventsService = EventsService::find($computer->is_processed_by)->one();
+        $eventsService->status = "processed";
+        $eventsService->save();
         return $this->render('start');
     }
 
