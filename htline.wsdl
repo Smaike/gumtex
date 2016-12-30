@@ -1,0 +1,1107 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+
+
+<wsdl:definitions 
+	name="MtestsServer" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+	xmlns:tns="https://ctr.ht-line.ru/maintest-5i/api/1.6/" 
+	targetNamespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/">
+
+
+<!--
+  API Data Types 
+-->
+
+
+	<wsdl:types>
+
+    
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/">
+                
+                
+			<xsd:complexType name="TypeOperationStatus">
+				<xsd:sequence>
+					<xsd:element minOccurs="1" maxOccurs="1" name="ErrorNumber" type="xsd:int"/>
+					<xsd:element minOccurs="1" maxOccurs="1" name="ErrorCode" type="xsd:string"/>
+					<xsd:element minOccurs="1" maxOccurs="1" name="ErrorMessage" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+	        
+	        
+			<xsd:complexType name="TypeTestAttribs">
+				<xsd:sequence>
+					<xsd:element name="TestId" type="xsd:int"/>
+					<xsd:element name="TestUid" type="xsd:string"/>
+					<xsd:element name="TestName" type="xsd:string"/>
+					<xsd:element name="MaintestName" type="xsd:string"/>
+					<xsd:element name="TestTitle" type="xsd:string"/>
+					<xsd:element name="TestEnabled" type="xsd:boolean"/>
+					<xsd:element name="IsLibraryTest" type="xsd:boolean"/>
+					<xsd:element name="QuestionsCount" type="xsd:int"/>
+					<xsd:element name="LicensesCount" type="xsd:int"/>
+					<xsd:element name="ProtocolsCount" type="xsd:int"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			
+			
+			<xsd:complexType name="TypeTestsAttribsList">
+				<xsd:sequence>
+					<xsd:element name="TestAttribs" type="tns:TypeTestAttribs" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:complexType>
+                  
+                
+			<xsd:complexType name="TypeTestScale">
+				<xsd:sequence>
+					<xsd:element name="ScaleNumber" type="xsd:int"/>
+					<xsd:element name="ScaleTitle" type="xsd:string"/>
+					<xsd:element name="ScaleType" type="xsd:string"/>
+					<xsd:element name="ScalePoles" type="xsd:int"/>
+				</xsd:sequence>
+			</xsd:complexType>
+	        
+			
+			<xsd:complexType name="TypeTestsScalesList">
+				<xsd:sequence>
+					<xsd:element name="TestScale" type="tns:TypeTestScale" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:complexType>
+	        
+		  
+			<xsd:complexType name="TypeProtocolData">
+				<xsd:sequence>
+					<xsd:element minOccurs="1" maxOccurs="1" name="QuestionsAnswers" type="xsd:string"/>
+					<xsd:element minOccurs="1" maxOccurs="1" name="QuestionsViews" type="xsd:string"/>
+					<xsd:element minOccurs="1" maxOccurs="1" name="QuestionsTimes" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+	        
+	        
+<xsd:complexType name="TypeResultsScaleValues">
+	<xsd:sequence>
+		<xsd:element name="ScaleNumber" type="xsd:int"/>
+		<xsd:element name="ScaleTitle" type="xsd:string"/>
+		<xsd:element name="ScaleValue" type="xsd:double"/>
+		<xsd:element name="StenValue" type="xsd:double"/>
+		<xsd:element name="SourceValue" type="xsd:int"/>
+		<xsd:element name="PercentValue" type="xsd:int"/>
+		<xsd:element name="HitValue" type="xsd:int"/>
+		<xsd:element name="IqValue" type="xsd:int"/>
+		<xsd:element name="CustomValue" type="xsd:double"/>
+	</xsd:sequence>
+</xsd:complexType>
+
+
+<xsd:complexType name="TypeResultsValuesList">
+	<xsd:sequence>
+		<xsd:element name="ScaleValues" type="tns:TypeResultsScaleValues" minOccurs="0" maxOccurs="unbounded"/>
+	</xsd:sequence>
+</xsd:complexType>
+	        
+		  
+			<xsd:complexType name="TypeReportVariant">
+				<xsd:sequence>
+					<xsd:element name="VariantId" type="xsd:int"/>
+					<xsd:element name="VariantName" type="xsd:string"/>
+					<xsd:element name="VariantTitle" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+			
+		
+			<xsd:complexType name="TypeReportVariantsList">
+				<xsd:sequence>
+					<xsd:element name="ReportVariant" type="tns:TypeReportVariant" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:complexType>
+
+
+			<xsd:complexType name="TypeLMSRespondentCard">
+				<xsd:sequence>
+					<xsd:element name="RsdoId" type="xsd:int"/>
+					<xsd:element name="RsdoSid" type="xsd:int"/>
+					<xsd:element name="RespId" type="xsd:int"/>
+					<xsd:element name="RespRuid" type="xsd:int"/>
+					<xsd:element name="RespLogin" type="xsd:string"/>
+					<xsd:element name="RespLname" type="xsd:string"/>
+					<xsd:element name="RespFname" type="xsd:string"/>
+					<xsd:element name="RespMname" type="xsd:string"/>
+					<xsd:element name="RespSurname" type="xsd:string"/>
+					<xsd:element name="RespSex" type="xsd:int"/>
+					<xsd:element name="RespBorn" type="xsd:string"/>
+					<xsd:element name="RespEmail" type="xsd:string"/>
+					<xsd:element name="RespPhone" type="xsd:string"/>
+					<xsd:element name="RespCreated" type="xsd:string"/>
+					<xsd:element name="RespEdited" type="xsd:string"/>
+				</xsd:sequence>
+			</xsd:complexType>
+                
+                
+			<xsd:complexType name="TypeLMSRespondentsList">
+				<xsd:sequence>
+					<xsd:element name="LMSRespondentCard" type="tns:TypeLMSRespondentCard" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:complexType>
+	                  
+			
+		</xsd:schema>
+
+	</wsdl:types>
+	
+	
+	
+<!--
+  API Message Definitions
+-->
+
+
+	<wsdl:message name="getApiVersionNumberRequest">
+	</wsdl:message>
+
+	<wsdl:message name="getApiVersionNumberResponse">
+		<wsdl:part name="VersionNumber" type="xsd:string"/>
+    	<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+
+
+
+	<wsdl:message name="getTestsCountRequest">
+	</wsdl:message>
+
+	<wsdl:message name="getTestsCountResponse">
+		<wsdl:part name="TestsCount" type="xsd:int"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+
+
+
+	<wsdl:message name="getTestNameRequest">
+		<wsdl:part name="TestIndex" type="xsd:int"/>
+	</wsdl:message>
+  
+	<wsdl:message name="getTestNameResponse">
+		<wsdl:part name="TestName" type="xsd:string"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+
+
+  
+	<wsdl:message name="getTestAttribsRequest">
+		<wsdl:part name="TestIndex" type="xsd:int"/>
+	</wsdl:message>
+  
+	<wsdl:message name="getTestAttribsResponse">
+		<wsdl:part name="TestAttribs" type="tns:TypeTestAttribs"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+
+  
+
+	<wsdl:message name="getTestScalesListRequest">
+		<wsdl:part name="TestName" type="xsd:string"/>
+		<wsdl:part name="ReportVariantId" type="xsd:int"/>
+	</wsdl:message>
+  
+	<wsdl:message name="getTestScalesListResponse">
+		<wsdl:part name="TestScalesList" type="tns:TypeTestsScalesList"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+
+
+  
+	<wsdl:message name="getTestsAttribsListRequest">
+	</wsdl:message>
+
+	<wsdl:message name="getTestsAttribsListResponse">
+		<wsdl:part name="TestsAttribsList" type="tns:TypeTestsAttribsList"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+
+  
+
+	<wsdl:message name="createTestingSessionRequest">
+		<wsdl:part name="TestName" type="xsd:string"/>
+		<wsdl:part name="ExternalSessionGuid" type="xsd:string"/>
+		<wsdl:part name="IsAnonymousSession" type="xsd:boolean"/>
+	</wsdl:message>
+
+	<wsdl:message name="createTestingSessionResponse">
+		<wsdl:part name="ExternalSessionGuid" type="xsd:string"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+
+
+
+	<wsdl:message name="getTestSettingsInterruptsRequest">
+		<wsdl:part name="TestName" type="xsd:string"/>
+	</wsdl:message>
+
+	<wsdl:message name="getTestSettingsInterruptsResponse">
+		<wsdl:part name="IsInterruptEnabled" type="xsd:boolean"/>
+                <wsdl:part name="InterruptString" type="xsd:string"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+
+
+
+	<wsdl:message name="setSessionRespondentRequest">
+		<wsdl:part name="ExternalSessionGuid" type="xsd:string"/>
+		<wsdl:part name="RespondentLastName" type="xsd:string"/>
+		<wsdl:part name="RespondentFirstName" type="xsd:string"/>
+		<wsdl:part name="RespondentMiddleName" type="xsd:string"/>
+		<wsdl:part name="RespondentShortName" type="xsd:string"/>
+		<wsdl:part name="RespondentBirthDate" type="xsd:string"/>
+		<wsdl:part name="RespondentAge" type="xsd:integer"/>
+		<wsdl:part name="RespondentGender" type="xsd:string"/>
+		<wsdl:part name="RespondentEmail" type="xsd:string"/>
+		<wsdl:part name="RespondentPhone" type="xsd:string"/>
+		<wsdl:part name="RespondentField1" type="xsd:string"/>
+		<wsdl:part name="RespondentField2" type="xsd:string"/>
+		<wsdl:part name="RespondentField3" type="xsd:string"/>
+		<wsdl:part name="RespondentField4" type="xsd:string"/>
+		<wsdl:part name="RespondentField5" type="xsd:string"/>
+	</wsdl:message>
+
+	<wsdl:message name="setSessionRespondentResponse">
+		<wsdl:part name="ExternalSessionGuid" type="xsd:string"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+
+
+  
+	<wsdl:message name="getTestingSessionUrlRequest">
+		<wsdl:part name="ExternalSessionGuid" type="xsd:string"/>
+	</wsdl:message>
+  
+	<wsdl:message name="getTestingSessionUrlResponse">
+		<wsdl:part name="TestingSessionUrl" type="xsd:string"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+
+
+
+	<wsdl:message name="getTestingSessionUrlExRequest">
+		<wsdl:part name="ExternalSessionGuid" type="xsd:string"/>
+		<wsdl:part name="IsCompactMode" type="xsd:boolean"></wsdl:part>
+		<wsdl:part name="FrameWidth" type="xsd:int"></wsdl:part>
+		<wsdl:part name="FrameHeight" type="xsd:int"></wsdl:part>
+
+	</wsdl:message>
+	<wsdl:message name="getTestingSessionUrlExResponse">
+		<wsdl:part name="TestingSessionUrl" type="xsd:string"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+
+
+
+	<wsdl:message name="isTestingSessionCompleteRequest">
+		<wsdl:part name="ExternalSessionGuid" type="xsd:string"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="isTestingSessionCompleteResponse">
+		<wsdl:part name="IsSessionComplete" type="xsd:boolean"></wsdl:part>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"></wsdl:part>
+	</wsdl:message>
+        
+        
+        <wsdl:message name="isTestingSessionInterruptedRequest">
+		<wsdl:part name="ExternalSessionGuid" type="xsd:string"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="isTestingSessionInterruptedResponse">
+		<wsdl:part name="isSessionInterrupted" type="xsd:boolean"></wsdl:part>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"></wsdl:part>
+	</wsdl:message>
+
+
+
+	<wsdl:message name="processTestingProtocolRequest">
+		<wsdl:part name="ExternalSessionGuid" type="xsd:string"/>
+		<wsdl:part name="ProtocolData" type="tns:TypeProtocolData"/>
+	</wsdl:message>
+  
+	<wsdl:message name="processTestingProtocolResponse">
+		<wsdl:part name="ProtocolId" type="xsd:int"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+
+
+  
+	<wsdl:message name="getResultsReportXmlRequest">
+		<wsdl:part name="ExternalSessionGuid" type="xsd:string"/>
+		<wsdl:part name="ReportVariantId" type="xsd:int"/>
+		<wsdl:part name="HtmlProcessMode" type="xsd:int"/>
+		<wsdl:part name="Base64Encoded" type="xsd:boolean"/>
+	</wsdl:message>
+  
+	<wsdl:message name="getResultsReportXmlResponse">
+		<wsdl:part name="ReportContentXml" type="xsd:string"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+
+
+
+	<wsdl:message name="getResultsReportHtmlRequest">
+		<wsdl:part name="ExternalSessionGuid" type="xsd:string"/>
+		<wsdl:part name="ReportVariantId" type="xsd:int"/>
+		<wsdl:part name="Base64Encoded" type="xsd:boolean"/>
+	</wsdl:message>
+  
+	<wsdl:message name="getResultsReportHtmlResponse">
+		<wsdl:part name="ReportContentHtml" type="xsd:string"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+
+
+
+	<wsdl:message name="getResultsReportHtmlExRequest">
+		<wsdl:part name="ExternalSessionGuid" type="xsd:string"/>
+		<wsdl:part name="ReportVariantId" type="xsd:int"/>
+		<wsdl:part name="ResponderFullName" type="xsd:string"/>
+		<wsdl:part name="ResponderGender" type="xsd:string"/>
+		<wsdl:part name="ResponderBirthDate" type="xsd:string"/>
+		<wsdl:part name="ResponderAge" type="xsd:string"/>
+		<wsdl:part name="ResponderField1" type="xsd:string"/>
+		<wsdl:part name="ResponderField2" type="xsd:string"/>
+		<wsdl:part name="ResponderField3" type="xsd:string"/>
+		<wsdl:part name="ResponderField4" type="xsd:string"/>
+		<wsdl:part name="ResponderField5" type="xsd:string"/>
+		<wsdl:part name="Base64Encoded" type="xsd:boolean"/>
+	</wsdl:message>
+  
+	<wsdl:message name="getResultsReportHtmlExResponse">
+		<wsdl:part name="ReportContentHtml" type="xsd:string"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+
+
+
+	<wsdl:message name="getResultsReportPdfRequest">
+		<wsdl:part name="ExternalSessionGuid" type="xsd:string"/>
+		<wsdl:part name="ReportVariantId" type="xsd:int"/>
+		<wsdl:part name="Base64Encoded" type="xsd:boolean"/>
+	</wsdl:message>
+  
+	<wsdl:message name="getResultsReportPdfResponse">
+		<wsdl:part name="ReportContentPdf" type="xsd:string"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+
+
+
+	<wsdl:message name="getResultsReportPdfExRequest">
+		<wsdl:part name="ExternalSessionGuid" type="xsd:string"/>
+		<wsdl:part name="ReportVariantId" type="xsd:int"/>
+		<wsdl:part name="ResponderFullName" type="xsd:string"/>
+		<wsdl:part name="ResponderGender" type="xsd:string"/>
+		<wsdl:part name="ResponderBirthDate" type="xsd:string"/>
+		<wsdl:part name="ResponderAge" type="xsd:string"/>
+		<wsdl:part name="ResponderField1" type="xsd:string"/>
+		<wsdl:part name="ResponderField2" type="xsd:string"/>
+		<wsdl:part name="ResponderField3" type="xsd:string"/>
+		<wsdl:part name="ResponderField4" type="xsd:string"/>
+		<wsdl:part name="ResponderField5" type="xsd:string"/>
+		<wsdl:part name="Base64Encoded" type="xsd:boolean"/>
+	</wsdl:message>
+  
+	<wsdl:message name="getResultsReportPdfExResponse">
+		<wsdl:part name="ReportContentPdf" type="xsd:string"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+
+
+
+	<wsdl:message name="getResultsReportUrlRequest">
+		<wsdl:part name="ExternalSessionGuid" type="xsd:string"/>
+	</wsdl:message>
+
+	<wsdl:message name="getResultsReportUrlResponse">
+		<wsdl:part name="ResultsReportUrl" type="xsd:string"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+
+
+
+<wsdl:message name="getResultsValuesListRequest">
+	<wsdl:part name="ExternalSessionGuid" type="xsd:string"/>
+	<wsdl:part name="ReportVariantId" type="xsd:int"/>
+	<wsdl:part name="ValuesMetrics" type="xsd:string"/>
+</wsdl:message>
+
+<wsdl:message name="getResultsValuesListResponse">
+	<wsdl:part name="ResultsValuesList" type="tns:TypeResultsValuesList"/>
+	<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+</wsdl:message>
+
+
+
+<wsdl:message name="getResultsValuesStringRequest">
+	<wsdl:part name="ExternalSessionGuid" type="xsd:string"/>
+	<wsdl:part name="ReportVariantId" type="xsd:int"/>
+	<wsdl:part name="ValuesMetrics" type="xsd:string"/>
+</wsdl:message>
+
+<wsdl:message name="getResultsValuesStringResponse">
+	<wsdl:part name="ResultsValuesString" type="xsd:string"/>
+	<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+</wsdl:message>
+
+
+
+	<wsdl:message name="getReportVariantsListRequest">
+		<wsdl:part name="TestName" type="xsd:string"></wsdl:part>
+	</wsdl:message>
+
+	<wsdl:message name="getReportVariantsListResponse">
+		<wsdl:part name="ReportVariantsList" type="tns:TypeReportVariantsList"></wsdl:part>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"></wsdl:part>
+	</wsdl:message>
+
+
+
+	<wsdl:message name="getTestLicensesCountRequest">
+		<wsdl:part name="TestName" type="xsd:string"></wsdl:part>
+	</wsdl:message>
+	
+	<wsdl:message name="getTestLicensesCountResponse">
+		<wsdl:part name="LicensesCount" type="xsd:int"></wsdl:part>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+
+
+
+	<wsdl:message name="getMT5TestContentRequest">
+		<wsdl:part name="TestName" type="xsd:string"/>
+		<wsdl:part name="Base64Encoded" type="xsd:boolean"/>
+	</wsdl:message>
+
+	<wsdl:message name="getMT5TestContentResponse">
+		<wsdl:part name="TestContentXml" type="xsd:string"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+	
+	
+	
+        <wsdl:message name="isLMSServicesAvailableRequest">
+	</wsdl:message>
+	
+	<wsdl:message name="isLMSServicesAvailableResponse">
+		<wsdl:part name="LMSServicesAvailable" type="xsd:boolean"/>
+    	<wsdl:part name="LMSServicesComment" type="xsd:string"/>
+    	<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+        </wsdl:message>
+	
+	
+	
+        <wsdl:message name="getLMSRespondentsCountRequest">
+	</wsdl:message>
+	
+	<wsdl:message name="getLMSRespondentsCountResponse">
+		<wsdl:part name="LMSRespondentsCount" type="xsd:int"/>
+    	<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+        </wsdl:message>
+        
+	
+	
+	<wsdl:message name="getLMSRespondentCardRequest">
+		<wsdl:part name="LMSRespondentIndex" type="xsd:int"/>
+	</wsdl:message>
+	
+	<wsdl:message name="getLMSRespondentCardResponse">
+		<wsdl:part name="LMSRespondentCard" type="tns:TypeLMSRespondentCard"/>
+	<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+        </wsdl:message>
+	
+	
+	
+	<wsdl:message name="getLMSRespondentsListRequest">
+        </wsdl:message>
+        
+        <wsdl:message name="getLMSRespondentsListResponse">
+		<wsdl:part name="LMSRespondentsList" type="tns:TypeLMSRespondentsList"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+        
+	
+	
+	<wsdl:message name="setLMSSessionRespondentRequest">
+		<wsdl:part name="ExternalSessionGuid" type="xsd:string"/>
+    	<wsdl:part name="RespRuid" type="xsd:string"/>
+        </wsdl:message>
+        
+	<wsdl:message name="setLMSSessionRespondentResponse">
+		<wsdl:part name="RespRuid" type="xsd:string"/>
+		<wsdl:part name="OperationStatus" type="tns:TypeOperationStatus"/>
+	</wsdl:message>
+	
+	<wsdl:portType name="APIPort">
+
+
+<!--
+  API Port Definitions
+-->
+  
+	<wsdl:operation name="getApiVersionNumber">
+		<wsdl:input message="tns:getApiVersionNumberRequest" name="getApiVersionInfoRequest"/>
+		<wsdl:output message="tns:getApiVersionNumberResponse" name="getApiVersionInfoResponse"/>
+	</wsdl:operation>
+
+	<wsdl:operation name="getTestsCount">
+		<wsdl:input message="tns:getTestsCountRequest" name="getTestsCountRequest"/>
+		<wsdl:output message="tns:getTestsCountResponse" name="getTestsCountResponse"/>
+	</wsdl:operation>
+    
+	<wsdl:operation name="getTestName">
+		<wsdl:input message="tns:getTestNameRequest" name="getTestNameRequest"/>
+		<wsdl:output message="tns:getTestNameResponse" name="getTestNameResponse"/>
+	</wsdl:operation>
+	
+	<wsdl:operation name="getTestAttribs">
+		<wsdl:input message="tns:getTestAttribsRequest" name="getTestAttribsRequest"/>
+		<wsdl:output message="tns:getTestAttribsResponse" name="getTestAttribsResponse"/>
+	</wsdl:operation>
+	
+	<wsdl:operation name="getTestScalesList">
+		<wsdl:input message="tns:getTestScalesListRequest" name="getTestScalesExRequest"/>
+		<wsdl:output message="tns:getTestScalesListResponse" name="getTestScalesExResponse"/>
+	</wsdl:operation>
+
+	<wsdl:operation name="getTestLicensesCount">
+		<wsdl:input message="tns:getTestLicensesCountRequest" name="getTestLicensesCountRequest"/>
+		<wsdl:output message="tns:getTestLicensesCountResponse" name="getTestLicensesCountResponse"/>
+	</wsdl:operation>
+
+	<wsdl:operation name="getTestsAttribsList">
+            <wsdl:input message="tns:getTestsAttribsListRequest" name="getTestsAttribsListRequest"/>
+            <wsdl:output message="tns:getTestsAttribsListResponse" name="getTestsAttribsListResponse"/>
+	</wsdl:operation>
+
+	<wsdl:operation name="createTestingSession">
+	<wsdl:input message="tns:createTestingSessionRequest" name="createTestingSessionRequest"/>
+		<wsdl:output message="tns:createTestingSessionResponse" name="createTestingSessionResponse"/>
+	</wsdl:operation>
+                
+        <wsdl:operation name="getTestSettingsInterrupts">
+	<wsdl:input message="tns:getTestSettingsInterruptsRequest" name="getTestSettingsInterruptsRequest"/>
+		<wsdl:output message="tns:getTestSettingsInterruptsResponse" name="getTestSettingsInterruptsResponse"/>
+	</wsdl:operation>
+
+	<wsdl:operation name="setSessionRespondent">
+	<wsdl:input message="tns:setSessionRespondentRequest" name="setSessionRespondentRequest"/>
+		<wsdl:output message="tns:setSessionRespondentResponse" name="setSessionRespondentResponse"/>
+	</wsdl:operation>
+
+	<wsdl:operation name="getTestingSessionUrl">
+		<wsdl:input message="tns:getTestingSessionUrlRequest" name="getTestingSessionUrlRequest"></wsdl:input>
+		<wsdl:output message="tns:getTestingSessionUrlResponse" name="getTestingSessionUrlResponse"></wsdl:output>
+	</wsdl:operation>
+
+	<wsdl:operation name="getTestingSessionUrlEx">
+		<wsdl:input message="tns:getTestingSessionUrlExRequest" name="getTestingSessionUrlExRequest"/>
+		<wsdl:output message="tns:getTestingSessionUrlExResponse" name="getTestingSessionUrlExResponse"/>
+	</wsdl:operation>
+
+	<wsdl:operation name="isTestingSessionComplete">
+		<wsdl:input message="tns:isTestingSessionCompleteRequest" name="isTestingSessionCompleteRequest"/>
+		<wsdl:output message="tns:isTestingSessionCompleteResponse" name="isTestingSessionCompleteResponse"/>
+	</wsdl:operation>
+
+	<wsdl:operation name="isTestingSessionInterrupted">
+		<wsdl:input message="tns:isTestingSessionInterruptedRequest" name="isTestingSessionInterruptedRequest"/>
+		<wsdl:output message="tns:isTestingSessionInterruptedResponse" name="isTestingSessionInterruptedResponse"/>
+	</wsdl:operation>
+
+        <wsdl:operation name="processTestingProtocol">
+		<wsdl:input message="tns:processTestingProtocolRequest" name="processTestingProtocolRequest"/>
+		<wsdl:output message="tns:processTestingProtocolResponse" name="processTestingProtocolResponse"/>
+	</wsdl:operation>
+
+	<wsdl:operation name="getResultsReportUrl">
+		<wsdl:input message="tns:getResultsReportUrlRequest" name="getResultsReportUrlRequest"/>
+		<wsdl:output message="tns:getResultsReportUrlResponse" name="getResultsReportUrlResponse"/>
+	</wsdl:operation>
+
+
+	
+	<wsdl:operation name="getResultsReportXml">
+		<wsdl:input message="tns:getResultsReportXmlRequest" name="getResultsReportXmlRequest"/>
+		<wsdl:output message="tns:getResultsReportXmlResponse" name="getResultsReportXmlResponse"/>
+	</wsdl:operation>
+
+
+	<wsdl:operation name="getResultsReportHtml">
+		<wsdl:input message="tns:getResultsReportHtmlRequest" name="getResultsReportHtmlRequest"/>
+		<wsdl:output message="tns:getResultsReportHtmlResponse" name="getResultsReportHtmlResponse"/>
+	</wsdl:operation>
+
+
+	<wsdl:operation name="getResultsReportHtmlEx">
+		<wsdl:input message="tns:getResultsReportHtmlExRequest" name="getResultsReportHtmlExRequest"/>
+		<wsdl:output message="tns:getResultsReportHtmlExResponse" name="getResultsReportHtmlExResponse"/>
+	</wsdl:operation>
+
+	<wsdl:operation name="getResultsReportPdf">
+		<wsdl:input message="tns:getResultsReportPdfRequest" name="getResultsReportPdfRequest"/>
+		<wsdl:output message="tns:getResultsReportPdfResponse" name="getResultsReportPdfResponse"/>
+	</wsdl:operation>
+
+
+	<wsdl:operation name="getResultsReportPdfEx">
+		<wsdl:input message="tns:getResultsReportPdfExRequest" name="getResultsReportPdfExRequest"/>
+		<wsdl:output message="tns:getResultsReportPdfExResponse" name="getResultsReportPdfExResponse"/>
+	</wsdl:operation>
+
+
+<wsdl:operation name="getResultsValuesList">
+	<wsdl:input message="tns:getResultsValuesListRequest" name="getResultsValuesListRequest"/>
+	<wsdl:output message="tns:getResultsValuesListResponse" name="getResultsValuesListResponse"/>
+</wsdl:operation>
+
+
+<wsdl:operation name="getResultsValuesString">
+	<wsdl:input message="tns:getResultsValuesStringRequest" name="getResultsValuesStringRequest"/>
+	<wsdl:output message="tns:getResultsValuesStringResponse" name="getResultsValuesStringResponse"/>
+</wsdl:operation>
+
+
+	<wsdl:operation name="getReportVariantsList">
+		<wsdl:input message="tns:getReportVariantsListRequest" name="getReportVariantsNamesRequest"/>
+		<wsdl:output message="tns:getReportVariantsListResponse" name="getReportVariantsNamesResponse"/>
+	</wsdl:operation>
+
+
+
+	<wsdl:operation name="getMT5TestContent">
+		<wsdl:input message="tns:getMT5TestContentRequest" name="getMT5TestContentRequest"/>
+		<wsdl:output message="tns:getMT5TestContentResponse" name="getMT5TestContentResponse"/>
+	</wsdl:operation>
+
+	
+	
+        <wsdl:operation name="isLMSServicesAvailable">
+    	<wsdl:input message="tns:isLMSServicesAvailableRequest" name="isLMSServicesAvailableRequest"/>
+		<wsdl:output message="tns:isLMSServicesAvailableResponse" name="isLMSServicesAvailableResponse"/>
+	</wsdl:operation>
+		
+	
+        <wsdl:operation name="getLMSRespondentsCount">
+    	<wsdl:input message="tns:getLMSRespondentsCountRequest" name="getLMSRespondentsCountRequest"/>
+    	<wsdl:output message="tns:getLMSRespondentsCountResponse" name="getLMSRespondentsCountResponse"/>
+	</wsdl:operation>
+		
+	
+	<wsdl:operation name="getLMSRespondentCard">
+    	<wsdl:input message="tns:getLMSRespondentCardRequest" name="getLMSRespondentCardRequest"/>
+		<wsdl:output message="tns:getLMSRespondentCardResponse" name="getLMSRespondentCardResponse"/>
+	</wsdl:operation>
+		
+	
+        <wsdl:operation name="getLMSRespondentsList">
+    	<wsdl:input message="tns:getLMSRespondentsListRequest" name="getLMSRespondentsListRequest"/>
+		<wsdl:output message="tns:getLMSRespondentsListResponse" name="getLMSRespondentsListResponse"/>
+	</wsdl:operation>
+		
+	
+        <wsdl:operation name="setLMSSessionRespondent">
+    	<wsdl:input message="tns:setLMSSessionRespondentRequest" name="setLMSSessionRespondentRequest"/>
+    	<wsdl:output message="tns:setLMSSessionRespondentResponse" name="setLMSSessionRespondentResponse"/>
+	</wsdl:operation>
+	
+        
+	</wsdl:portType>
+
+
+<!--
+  API Port Bindings
+-->
+
+
+	<wsdl:binding name="HtlineMtestsAPIService" type="tns:APIPort">
+
+            
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+        
+	<wsdl:operation name="getApiVersionNumber">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getApiVersionNumber"/>
+		<wsdl:input name="getApiVersionInfoRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="getApiVersionInfoResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+
+        <wsdl:operation name="getTestsCount">
+		<soap:operation soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getTestsCount"/>
+		<wsdl:input name="getTestsCountRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="getTestsCountResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+
+	<wsdl:operation name="getTestName">
+		<soap:operation soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getTestName"/>
+		<wsdl:input name="getTestNameRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="getTestNameResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+
+	<wsdl:operation name="getTestAttribs">
+		<soap:operation soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getTestAttribs"/>
+		<wsdl:input name="getTestAttribsRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="getTestAttribsResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+
+	<wsdl:operation name="getTestsAttribsList">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getTestsAttribsList"/>
+		<wsdl:input name="getTestsAttribsListRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="getTestsAttribsListResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+
+
+	<wsdl:operation name="createTestingSession">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/createTestingSession"/>
+		<wsdl:input name="createTestingSessionRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="createTestingSessionResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+
+	<wsdl:operation name="getTestSettingsInterrupts">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getTestSettingsInterrupts"/>
+		<wsdl:input name="getTestSettingsInterruptsRequest">
+			<soap:body use="literal" namespace="http://localhost"/>
+		</wsdl:input>
+		<wsdl:output name="getTestSettingsInterruptsResponse">
+			<soap:body use="literal" namespace="http://localhost"/>
+		</wsdl:output>
+	</wsdl:operation>
+        
+        
+	<wsdl:operation name="setSessionRespondent">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/setSessionRespondent"/>
+		<wsdl:input name="setSessionRespondentRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="setSessionRespondentResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+
+	<wsdl:operation name="getTestingSessionUrl">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getTestingSessionUrl"/>
+		<wsdl:input name="getTestingSessionUrlRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="getTestingSessionUrlResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+
+	<wsdl:operation name="isTestingSessionComplete">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/isTestingSessionComplete"/>
+		<wsdl:input name="isTestingSessionCompleteRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="isTestingSessionCompleteResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+        
+        
+	<wsdl:operation name="isTestingSessionInterrupted">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/isTestingSessionInterrupted"/>
+		<wsdl:input name="isTestingSessionInterruptedRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="isTestingSessionInterruptedResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+
+	<wsdl:operation name="processTestingProtocol">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/processTestingProtocol"/>
+		<wsdl:input name="processTestingProtocolRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="processTestingProtocolResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+
+	<wsdl:operation name="getResultsReportUrl">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getResultsReportUrl"/>
+		<wsdl:input name="getResultsReportUrlRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="getResultsReportUrlResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+
+	<wsdl:operation name="getResultsReportXml">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getResultsReportXml"/>
+		<wsdl:input name="getResultsReportXmlRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="getResultsReportXmlResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+
+	<wsdl:operation name="getResultsReportHtml">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getResultsReportHtml"/>
+		<wsdl:input name="getResultsReportHtmlRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="getResultsReportHtmlResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+
+	<wsdl:operation name="getResultsReportHtmlEx">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getResultsReportHtmlEx"/>
+		<wsdl:input name="getResultsReportHtmlExRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="getResultsReportHtmlExResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+
+	<wsdl:operation name="getResultsReportPdf">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getResultsReportPdf"/>
+		<wsdl:input name="getResultsReportPdfRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="getResultsReportPdfResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+
+	<wsdl:operation name="getResultsReportPdfEx">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getResultsReportPdfEx"/>
+		<wsdl:input name="getResultsReportPdfExRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="getResultsReportPdfExResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+
+<wsdl:operation name="getResultsValuesList">
+	<soap:operation
+		soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getResultsValuesList"/>
+	<wsdl:input name="getResultsValuesListRequest">
+		<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+	</wsdl:input>
+	<wsdl:output name="getResultsValuesListResponse">
+		<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+	</wsdl:output>
+</wsdl:operation>
+
+
+<wsdl:operation name="getResultsValuesString">
+	<soap:operation
+		soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getResultsValuesString"/>
+	<wsdl:input name="getResultsValuesStringRequest">
+		<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+	</wsdl:input>
+	<wsdl:output name="getResultsValuesStringResponse">
+		<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+	</wsdl:output>
+</wsdl:operation>
+
+
+	<wsdl:operation name="getReportVariantsList">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getReportVariantsList"/>
+		<wsdl:input name="getReportVariantsNamesRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="getReportVariantsNamesResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+
+
+	<wsdl:operation name="getTestScalesList">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getTestScalesList"/>
+		<wsdl:input name="getTestScalesExRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="getTestScalesExResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+	<wsdl:operation name="getTestingSessionUrlEx">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getTestingSessionUrlEx"/>
+		<wsdl:input name="getTestingSessionUrlExRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="getTestingSessionUrlExResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+	
+	<wsdl:operation name="getTestLicensesCount">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getTestLicensesCount"/>
+		<wsdl:input name="getTestLicensesCountRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="getTestLicensesCountResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+	</wsdl:operation>
+
+	
+	<wsdl:operation name="getMT5TestContent">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getMT5TestContent"/>
+		<wsdl:input name="getMT5TestContentRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="getMT5TestContentResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+		<documentation>получение контента теста для Maintest-5</documentation> 
+	</wsdl:operation>
+	
+		
+	<wsdl:operation name="isLMSServicesAvailable">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/isLMSServicesAvailable"/>
+		<wsdl:input name="isLMSServicesAvailableRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="isLMSServicesAvailableResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+		<documentation>проверка доступности сервиса и данных СДО</documentation> 
+        </wsdl:operation>
+	
+		
+	<wsdl:operation name="getLMSRespondentsCount">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getLMSRespondentsCount"/>
+		<wsdl:input name="getLMSRespondentsCountRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="getLMSRespondentsCountResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+        	</wsdl:output>
+		<documentation>запрос числа респондентов СДО в текущем личном кабинете</documentation> 
+	</wsdl:operation>
+	
+		
+	<wsdl:operation name="getLMSRespondentCard">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getLMSRespondentCard"/>
+		<wsdl:input name="getLMSRespondentCardRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="getLMSRespondentCardResponse">
+		<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+		<documentation>запрос карточки респондента СДО по индексу в массиве карточек</documentation> 
+	</wsdl:operation>
+	
+		
+	<wsdl:operation name="getLMSRespondentsList">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/getLMSRespondentsList"/>
+		<wsdl:input name="getLMSRespondentsListRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+        	</wsdl:input>
+		<wsdl:output name="getLMSRespondentsListResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+		<documentation>запрос массива респондентов СДО в текущем личном кабинете</documentation> 
+	</wsdl:operation>
+	
+		
+	<wsdl:operation name="setLMSSessionRespondent">
+		<soap:operation
+			soapAction="https://ctr.ht-line.ru/maintest-5i/api/1.6/setLMSSessionRespondent"/>
+        	<wsdl:input name="setLMSSessionRespondentRequest">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:input>
+		<wsdl:output name="setLMSSessionRespondentResponse">
+			<soap:body use="literal" namespace="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+		</wsdl:output>
+		<documentation>установка идентификатора респондента СДО для сеанса тестирования</documentation> 
+	</wsdl:operation>
+	
+		
+	
+	</wsdl:binding>
+
+
+<!--
+  API Service Definitions
+-->
+
+
+  <wsdl:service name="HtlineMtestsAPIService">
+    <wsdl:port binding="tns:HtlineMtestsAPIService" name="APIPort">
+      <soap:address location="https://ctr.ht-line.ru/maintest-5i/api/1.6/"/>
+    </wsdl:port>
+
+  </wsdl:service>
+  
+  
+</wsdl:definitions>
