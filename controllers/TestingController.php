@@ -17,7 +17,6 @@ use app\models\EventsService;
  */
 class TestingController extends Controller
 {
-    private $soapClient;
 
     /**
      * @inheritdoc
@@ -34,35 +33,46 @@ class TestingController extends Controller
         ];
     }
 
-    public function beforeAction($action)
-    {
-        if (!parent::beforeAction($action)) {
-            return false;
-        }
-        $options = [
-            "login" => "",
-            "password" => "",
-        ];
-        $wsdlpath = Yii::getAlias("@app")."/htline.wsdl"; 
-
-        $SoapClient = new \SoapClient($wsdlpath,$options);
-        $this->soapClient = $SoapClient;    
-        return true; // or false to not run the action
-    }
-
     /**
      * Lists all Event models.
      * @return mixed
      */
     public function actionIndex()
-    {
-        $soap = $this->soapClient;
-        var_dump($soap->getTestName(2)['TestName']);
-        die;
+    {   
+        $this->layout = 'testing';
         $computer = Computer::find(1)->one();
         $eventsService = EventsService::find($computer->is_processed_by)->one();
+        // $eventsService->session = \Yii::$app->security->generateRandomString();
+        // $eventsService->save();
+        Yii::$app->soap->sc->createTestingSession($eventsService->idService->ht_name, $eventsService->session);
+        $url = Yii::$app->soap->sc->getTestingSessionUrl($eventsService->session);
+        return $this->redirect($url['TestingSessionUrl']);
+        // var_dump($url);
+        // die;
         return $this->render('index', [
             'eventsService' => $eventsService,
+            'url' => $url['TestingSessionUrl']
         ]);
+    }
+
+    public function actionTestFinish()
+    {   
+        if($eventsService = EventsService::find()->where([
+            'session' => Yii::$app->request->get('ExternalSessionGuid')
+        ])->one()){
+            $eventsService->status = 'consultant';
+            $eventsService->save();
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function actionReport()
+    {
+        $computer = Computer::find(1)->one();
+        $eventsService = EventsService::find($computer->is_processed_by)->one();
+        // return Yii::$app->soap->sc->getResultsReportHtml($eventsService->session, 0, 0)['ReportContentHtml'];
+        return $this->redirect(Yii::$app->soap->sc->getResultsReportUrl($eventsService->session)['ResultsReportUrl']);
     }
 }

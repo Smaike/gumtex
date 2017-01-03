@@ -54,6 +54,12 @@ $config = [
             'dateRange' => [time(), time() + 2592000*12],       // период, в который будет доступно событие onClick
             // Так же в dateRange можно передать функцию, которая должна вернуть нужный массив в случае если нужны динамические вычисления
         ],
+        'soap' => [
+            'class' => 'app\components\Soap',
+            'login' => 'ctr_online',
+            'password' => 'bdk23rtk',
+            'wsdlpath' => __DIR__."/../htline.wsdl"
+        ]
         
         
     ],

@@ -51,12 +51,4 @@ class Computer extends \yii\db\ActiveRecord
             'is_processed_by' => 'Кем занят',
         ];
     }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIsProcessedBy()
-    {
-        return $this->hasOne(Client::className(), ['id' => 'is_processed_by']);
-    }
 }

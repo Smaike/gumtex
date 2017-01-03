@@ -6,7 +6,8 @@ class m161230_101436_add_columns_for_services extends Migration
 {
     public function up()
     {
-
+        $this->addColumn('events_services', 'session', $this->string(50));
+        $this->addColumn('services', 'ht_name', $this->string(50));
     }
 
     public function down()

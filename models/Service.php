@@ -34,6 +34,7 @@ class Service extends \yii\db\ActiveRecord
             [['cost'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['name'], 'string', 'max' => 60],
+            [['ht_name'], 'string', 'max' => 50],
         ];
     }
 
