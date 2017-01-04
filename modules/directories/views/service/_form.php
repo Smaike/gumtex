@@ -3,9 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-/* @var $this yii\web\View */
-/* @var $model app\models\Service */
-/* @var $form yii\widgets\ActiveForm */
+$ht_names = Yii::$app->soap->getHtNames();
 ?>
 
 <div class="service-form">
@@ -13,6 +11,8 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'ht_name')->dropDownList($ht_names, ['prompt' => 'Выберите название из системы HT']) ?>
 
     <?= $form->field($model, 'cost')->textInput() ?>
 

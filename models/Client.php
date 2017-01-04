@@ -80,6 +80,10 @@ class Client extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ClientCategory::className(), ['id' => 'category']);
     }
+    public function getConsultant()
+    {
+        return $this->hasOne(User::className(), ['id' => 'id_consultant']);
+    }
 
     public function getAge()
     {

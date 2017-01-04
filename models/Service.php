@@ -49,6 +49,7 @@ class Service extends \yii\db\ActiveRecord
             'cost' => 'Стоимость',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'ht_name' => 'Имя в системе HT'
         ];
     }
 
