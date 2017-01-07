@@ -47,8 +47,7 @@ class TestingController extends Controller
         Yii::$app->soap->sc->createTestingSession($eventsService->idService->ht_name, $eventsService->session);
         $url = Yii::$app->soap->sc->getTestingSessionUrl($eventsService->session);
         return $this->redirect($url['TestingSessionUrl']);
-        // var_dump($url);
-        // die;
+        //Вариант с фреймом
         return $this->render('index', [
             'eventsService' => $eventsService,
             'url' => $url['TestingSessionUrl']
@@ -61,6 +60,7 @@ class TestingController extends Controller
             'session' => Yii::$app->request->get('ExternalSessionGuid')
         ])->one()){
             $eventsService->status = 'consultant';
+            $eventsService->url_report = Yii::$app->soap->sc->getResultsReportUrl($eventsService->session)['ResultsReportUrl'];
             $eventsService->save();
             return true;
         }else{
@@ -68,11 +68,12 @@ class TestingController extends Controller
         }
     }
 
-    public function actionReport()
+    public function actionReport($id)
     {
-        $computer = Computer::find(1)->one();
-        $eventsService = EventsService::find($computer->is_processed_by)->one();
-        // return Yii::$app->soap->sc->getResultsReportHtml($eventsService->session, 0, 0)['ReportContentHtml'];
-        return $this->redirect(Yii::$app->soap->sc->getResultsReportUrl($eventsService->session)['ResultsReportUrl']);
+        $eventsService = EventsService::findOne($id);
+        var_dump(Yii::$app->soap->sc->getResultsReportHtml($eventsService->session, 0, 0));
+        die;
+        return Yii::$app->soap->sc->getResultsReportHtml($eventsService->session, 0, 0)['ReportContentHtml'];
+        // return $this->redirect(Yii::$app->soap->sc->getResultsReportUrl($eventsService->session)['ResultsReportUrl']);
     }
 }

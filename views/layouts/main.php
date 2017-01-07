@@ -38,7 +38,10 @@ AppAsset::register($this);
         'items' => [
             ['label' => 'Начало', 'url' => ['/site/index']],
             ['label' => 'Справочники', 'url' => ['/directory/default/index']],
-            ['label' => 'Календарь', 'url' => ['/calendar/index']],
+            ['label' => 'Отчеты', 'url' => ['/report/index']],
+            ['label' => 'Консультации', 'url' => ['/consultant/index']],
+            ['label' => 'Календарь услуг', 'url' => ['/calendar/index']],
+            ['label' => 'Бронирование', 'url' => ['/booking/list']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Вход', 'url' => ['/site/login']]
             ) : (

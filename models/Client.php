@@ -94,4 +94,9 @@ class Client extends \yii\db\ActiveRecord
         }
         return $age;
     }
+
+    public function getFullName()
+    {
+        return $this->last_name . " " . $this->first_name;
+    }
 }

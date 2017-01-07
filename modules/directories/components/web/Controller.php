@@ -68,6 +68,7 @@ class Controller extends \yii\web\Controller {
 					['label' => 'Услуги', 'url' => ['/directory/service'], 'active' => $this->id == 'service'],
 					['label' => 'Учебные заведения', 'url' => ['/directory/lib-school'], 'active' => $this->id == 'lib-school'],
 					['label' => 'IP компьютеров', 'url' => ['/directory/computer'], 'active' => $this->id == 'computer'],
+					['label' => 'Помещения для бронирования', 'url' => ['/directory/room'], 'active' => $this->id == 'room'],
 				]
 			]
 
