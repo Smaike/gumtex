@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "emails_history".
  *
  * @property integer $id
- * @property integer $emails_tpls_id
+ * @property integer emails_send_id
  * @property integer $recipient
  * @property string $date_send
  * @property integer $user_id
@@ -29,8 +29,8 @@ class EmailsHistory extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['emails_tpls_id', 'recipient', 'date_send', 'user_id'], 'required'],
-            [['emails_tpls_id', 'recipient', 'user_id'], 'integer'],
+            [['emails_send_id', 'recipient', 'date_send', 'user_id'], 'required'],
+            [['emails_send_id', 'recipient', 'user_id'], 'integer'],
             [['date_send'], 'safe'],
         ];
     }
@@ -42,7 +42,7 @@ class EmailsHistory extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'emails_tpls_id' => 'Шаблон',
+            'emails_send_id' => 'Шаблон',
             'recipient' => 'Получатель',
             'date_send' => 'Дата отправки',
             'user_id' => 'Отправитель',

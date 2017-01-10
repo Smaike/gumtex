@@ -19,7 +19,7 @@ class EmailsTplsSearch extends EmailsTpls
     {
         return [
             [['id', 'user_id'], 'integer'],
-            [['content', 'date_add', 'date_send', 'date_update'], 'safe'],
+            [['name','content', 'date_add', 'date_send', 'date_update'], 'safe'],
         ];
     }
 
@@ -67,6 +67,7 @@ class EmailsTplsSearch extends EmailsTpls
         ]);
 
         $query->andFilterWhere(['like', 'content', $this->content]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

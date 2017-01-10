@@ -26,7 +26,7 @@ Yii::$app->timeZone = 'UTC';// ???
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            'name',
             'content:raw',
             'date_add' =>
                 [

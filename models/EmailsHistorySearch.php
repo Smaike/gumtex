@@ -18,7 +18,7 @@ class EmailsHistorySearch extends EmailsHistory
     public function rules()
     {
         return [
-            [['id', 'emails_tpls_id', 'recipient', 'user_id'], 'integer'],
+            [['id', 'emails_send_id', 'recipient', 'user_id'], 'integer'],
             [['date_send'], 'safe'],
         ];
     }
@@ -60,7 +60,7 @@ class EmailsHistorySearch extends EmailsHistory
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'emails_tpls_id' => $this->emails_tpls_id,
+            'emails_send_id' => $this->emails_send_id,
             'recipient' => $this->recipient,
             'date_send' => $this->date_send,
             'user_id' => $this->user_id,

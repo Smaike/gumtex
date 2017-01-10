@@ -13,7 +13,7 @@ use skeeks\yii2\ckeditor\CKEditorPresets;
 <div class="emails-tpls-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
+    <?= $form->field($model, 'name')->textInput() ?>
     <?= $form->field($model, 'content')->widget(CKEditorWidget::className(), [
         'preset' => CKEditorPresets::BASIC
     ]) ?>

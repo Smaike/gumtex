@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'emails_tpls_id')->textInput() ?>
+    <?= $form->field($model, 'emails_send_id')->textInput() ?>
 
     <?= $form->field($model, 'recipient')->textInput() ?>
 

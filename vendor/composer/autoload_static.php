@@ -31,6 +31,10 @@ class ComposerStaticInit12d30b8fa1152da55d3304ad27e06e5e
             'understeam\\unit\\calendar\\' => 25,
             'understeam\\calendar\\' => 20,
         ),
+        's' => 
+        array (
+            'skeeks\\yii2\\ckeditor\\' => 21,
+        ),
         'k' => 
         array (
             'kartik\\plugins\\fileinput\\' => 25,
@@ -118,6 +122,10 @@ class ComposerStaticInit12d30b8fa1152da55d3304ad27e06e5e
         'understeam\\calendar\\' => 
         array (
             0 => __DIR__ . '/..' . '/understeam/yii2-calendar-widget/src',
+        ),
+        'skeeks\\yii2\\ckeditor\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/skeeks/yii2-ckeditor',
         ),
         'kartik\\plugins\\fileinput\\' => 
         array (

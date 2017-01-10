@@ -16,6 +16,7 @@ return array(
     'yii\\' => array($vendorDir . '/yiisoft/yii2'),
     'understeam\\unit\\calendar\\' => array($vendorDir . '/understeam/yii2-calendar-widget/tests/unit'),
     'understeam\\calendar\\' => array($vendorDir . '/understeam/yii2-calendar-widget/src'),
+    'skeeks\\yii2\\ckeditor\\' => array($vendorDir . '/skeeks/yii2-ckeditor'),
     'kartik\\plugins\\fileinput\\' => array($vendorDir . '/kartik-v/bootstrap-fileinput'),
     'kartik\\file\\' => array($vendorDir . '/kartik-v/yii2-widget-fileinput'),
     'kartik\\base\\' => array($vendorDir . '/kartik-v/yii2-krajee-base'),

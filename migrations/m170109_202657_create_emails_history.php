@@ -8,10 +8,10 @@ class m170109_202657_create_emails_history extends Migration
     {
         $this->createTable('emails_history', [
             'id' => $this->primaryKey(),
-            'emails_tpls_id' => $this->integer(11),
+            'emails_send_id' => $this->integer(11),
             'recipient' => $this->char(255),
             'date_send' => $this->dateTime(),
-            'user_id' => $this->integer(255),
+            'user_id' => $this->integer(11),
         ]);
     }
 

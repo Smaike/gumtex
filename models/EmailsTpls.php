@@ -30,10 +30,11 @@ class EmailsTpls extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['content'/*, 'date_add', 'date_send', 'date_update', 'user_id'*/], 'required'],
+            [['name','content'/*, 'date_add', 'date_send', 'date_update', 'user_id'*/], 'required'],
             [['content'], 'string'],
             [['date_add', 'date_send', 'date_update'], 'safe'],
             [['user_id'], 'integer'],
+            [['name'], 'string', 'max' => 255],
         ];
     }
 
@@ -44,6 +45,7 @@ class EmailsTpls extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'name' => 'Название',
             'content' => 'Текст письма',
             'date_add' => 'Дата создания',
             'date_send' => 'Дата последней отправки',

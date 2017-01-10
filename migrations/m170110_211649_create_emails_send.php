@@ -2,25 +2,22 @@
 
 use yii\db\Migration;
 
-class m170109_202709_create_emails_tpls extends Migration
+class m170110_211649_create_emails_send extends Migration
 {
     public function up()
     {
-        $this->createTable('emails_history', [
+        $this->createTable('emails_send', [
             'id' => $this->primaryKey(),
-            'name' => $this->char(255),
+            'parent_id' => $this->integer(11),
             'content' => $this->text(),
-            'date_add' => $this->dateTime(),
             'date_send' => $this->dateTime(),
-            'date_update' => $this->dateTime(),
             'user_id' => $this->integer(11),
-
         ]);
     }
 
     public function down()
     {
-        echo "m170109_202709_create_emails_tpls cannot be reverted.\n";
+        echo "m170110_211649_create_emails_send cannot be reverted.\n";
 
         return false;
     }
