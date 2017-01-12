@@ -27,6 +27,11 @@ use Yii;
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
+
+    const STATUS_DELETED = 0;
+    const STATUS_NOT_ACTIVE = 1;
+    const STATUS_ACTIVE = 10;
+
     protected $__salt = '7z0ZzugKmnQW';
 
     /**
@@ -68,6 +73,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'is_active' => 'Активен?',
             'is_notice' => 'Включить оповещения?',
             'authkey' => 'Authkey',
+            //'secretkey' => 'Secretkey',
             'sessionkey' => 'Sessionkey',
             'created_at' => 'Дата создания',
             'updated_at' => 'Дата изменения',
@@ -147,5 +153,20 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function getFullName()
     {
         return $this->last_name . " " . $this->first_name;
+    }
+
+    public function setPassword ($password)
+    {
+        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+    }
+
+    public function generateAuthKey()
+    {
+        $this->authkey = Yii::$app->security->generateRandomString();
+    }
+
+    public function generateSecretKey()
+    {
+        $this->secretkey = Yii::$app->security->generateRandomString().'_'.time();
     }
 }
