@@ -2,11 +2,14 @@
 
 namespace app\controllers;
 
+use app\models\RegForm;
+use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use app\forms\LoginForm;
+//use app\forms\LoginForm;
+use app\models\LoginForm;
 use app\models\ContactForm;
 use yii\web\JsExpression;
 
@@ -79,9 +82,43 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         }
-        return $this->render('login', [
+        return $this->render('login1', [
             'model' => $model,
         ]);
+    }
+
+    public function actionReg()
+    {
+        $model = new RegForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate())
+            if ($user = $model->reg()) {
+                if ($user->is_active === User::STATUS_ACTIVE)
+                    if (Yii::$app->getUser()->login($user))
+                        return $this->goHome();
+
+               /* if ($model->sendActivationEmail($user)) {
+                    Yii::$app->session->setFlash('success', 'Письмо с активацией отправлено на емайл <strong>' . Html::encode($user->email) . '</strong> (проверьте папку спам).');
+
+                } else {
+
+                    Yii::$app->session->setFlash('error', 'Ошибка. Письмо не отправлено.');
+                    Yii::error('Ошибка отправки письма.');
+                }*/
+                return $this->refresh();
+            } else {
+                die('owibka pri registracii');
+                /*Yii::$app->session->setFlash('error','Возникла проблема при регистрации');
+                        Yii::error('Ошибка при регистрации');
+                        return $this->refresh();*/
+            }
+
+        return $this->render(
+            'reg',
+            [
+                'model' => $model
+            ]
+        );
     }
 
     /**

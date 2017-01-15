@@ -52,7 +52,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             [['created_at', 'updated_at'], 'safe'],
             [['first_name', 'last_name', 'middle_name', 'email', 'login', 'authkey', 'sessionkey'], 'string', 'max' => 60],
             [['password'], 'string', 'max' => 20],
-            [['type'], 'exist', 'skipOnEmpty' => false, 'targetClass' => UserType::className(), 'targetAttribute' => ['type' => 'id']],
+            //[['type'], 'exist', 'skipOnEmpty' => false, 'targetClass' => UserType::className(), 'targetAttribute' => ['type' => 'id']],
         ];
     }
 
@@ -125,10 +125,15 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return $this->getAuthKey() === $authKey;
     }
 
-    public function validatePassword($password)
+   /* public function validatePassword($password)
     {
         return $this->hashPassword($password) === $this->password;
+    }*/
+
+    public function validatePassword($password) {
+        return Yii::$app->security->validatePassword($password,$this->password_hash);
     }
+
 
     public function hashPassword($password)
     {

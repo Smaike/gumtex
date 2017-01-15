@@ -12,7 +12,7 @@ class LoginForm extends Model
     public $password;
     public $email;
     public $rememberMe = true;
-    public $status;
+    public $is_active;
 
     private $_user = false;
 
@@ -20,7 +20,7 @@ class LoginForm extends Model
     {
         return [
             [['login', 'password'],'required','on' => 'default'],
-            ['email','email'],
+           /* ['email','email'],*/
             ['rememberMe','boolean'],
             ['password','validatePassword']
 
@@ -48,8 +48,8 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
-            $this->status = ($user = $this->getUser()) ? $user->status : User::STATUS_NOT_ACTIVE;
-            if ($this->status == User::STATUS_ACTIVE)
+            $this->is_active = ($user = $this->getUser()) ? $user->is_active : User::STATUS_NOT_ACTIVE;
+            if ($this->is_active == User::STATUS_ACTIVE)
                 return Yii::$app->user->login($user, $this->rememberMe ?  3600*24*30 : 0);
             else
                 return false;
@@ -59,7 +59,7 @@ class LoginForm extends Model
 
     public function getUser() {
         if ($this->_user === false)
-            $this->_user = User::findByUsername($this->ls);
+            $this->_user = User::findByUsername($this->login);
         return $this->_user;
     }
 }

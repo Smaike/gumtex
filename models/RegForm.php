@@ -23,7 +23,7 @@ class RegForm extends Model
     {
         return [
             [['login','password','password2','first_name','email','last_name','middle_name'],'filter','filter'=>'trim'],
-            [['login','email','password','fio','password2'],'required'],
+            [['login','email','password','password2'],'required'],
             ['email','email'],
             [['password' ,'password2'], 'string', 'min'=>6, 'max' => 255],
             ['password2', 'compare', 'compareAttribute'=>'password','message'=>'Пароли должны совпадать'],
@@ -33,7 +33,7 @@ class RegForm extends Model
             ['email','unique',
                 'targetClass' => User::className(),
                 'message' => 'Email уже занят'],
-            ['status','default','value' => User::STATUS_NOT_ACTIVE,'on' => 'default'],
+            ['status','default','value' => User::STATUS_ACTIVE,'on' => 'default'],
           //  ['rights','default','value' => 'user','on' => 'default'],
             ['status','in','range' =>[
                 User::STATUS_ACTIVE,
@@ -69,6 +69,7 @@ class RegForm extends Model
         $user->updated_at = date('Y-m-d h:i:s');
         $user->setPassword($this->password);
         $user->generateAuthKey();
+
 //        $user->generateSecretKey();
         return $user->save() ? $user : null;
     }

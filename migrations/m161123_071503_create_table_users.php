@@ -21,6 +21,7 @@ class m161123_071503_create_table_users extends Migration
             'sessionkey' => $this->string(60),
             'created_at' => $this->datetime(),
             'updated_at' => $this->datetime(),
+            'password_hash' => $this->string(255),
         ]);
         $this->createTable('user_types', [
             'id' => $this->primaryKey(),
