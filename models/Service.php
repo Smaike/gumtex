@@ -31,7 +31,7 @@ class Service extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cost'], 'integer'],
+            [['cost', 'type_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['name'], 'string', 'max' => 60],
             [['ht_name'], 'string', 'max' => 50],

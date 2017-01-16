@@ -65,12 +65,20 @@ class Controller extends \yii\web\Controller {
 					['label' => 'Пользователи', 'url' => ['/directory/user'], 'active' => $this->id == 'user'],
 					['label' => 'Типы пользователей', 'url' => ['/directory/user-type'], 'active' => $this->id == 'user-type'],
 					['label' => 'Типы клиентов', 'url' => ['/directory/client-type'], 'active' => $this->id == 'client-type'],
-					['label' => 'Услуги', 'url' => ['/directory/service'], 'active' => $this->id == 'service'],
 					['label' => 'Учебные заведения', 'url' => ['/directory/lib-school'], 'active' => $this->id == 'lib-school'],
 					['label' => 'IP компьютеров', 'url' => ['/directory/computer'], 'active' => $this->id == 'computer'],
 					['label' => 'Помещения для бронирования', 'url' => ['/directory/room'], 'active' => $this->id == 'room'],
 				]
-			]
+			],
+			[
+				'label' => 'Услуги', 'items' => [
+					['label' => 'Услуги', 'url' => ['/directory/service'], 'active' => $this->id == 'service'],
+					['label' => 'Типы услуг', 'url' => ['/directory/service-type'], 'active' => $this->id == 'service-type'],
+					['label' => 'Стоимость услуг', 'url' => ['/directory/price'], 'active' => $this->id == 'price'],
+					['label' => 'График работы услуг', 'url' => ['/directory/service-time'], 'active' => $this->id == 'service-time'],
+				]
+			],
+
 
 			// ['label' => 'Агентства', 'items' => [
 			// 	['label' => 'Агентства', 'url' => ['/directories/agency'], 'active' => $this->id == 'agency'],

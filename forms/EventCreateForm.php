@@ -38,7 +38,7 @@ class EventCreateForm extends Model
     {
         return [
             [['first_name', 'last_name'], 'required'],
-            [['birthday'], 'safe'],
+            [['birthday'], 'date', 'format' => 'dd-mm-yyyy'],
             [['type', 'category', 'id_consultant'], 'integer'],
             [['comment', 'where_know'], 'string'],
             [['first_name', 'last_name', 'middle_name', 'p_first_name', 'p_last_name', 'p_middle_name'], 'string', 'max' => 60],
@@ -78,8 +78,10 @@ class EventCreateForm extends Model
     {
         $client = new Client();
         $event = new Event();
-        $client->attributes = $this->attributes;
         $event->attributes = $this->attributes;
+        $client->attributes = $this->attributes;
+        $date = strtotime($client->birthday);
+        $client->birthday = date('Y-m-d', $date);
         if($client->save()){
             $event->id_client = $client->id;
             if($event->save() && !empty($this->services)){

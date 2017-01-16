@@ -19,7 +19,6 @@ $consultants = ArrayHelper::map($models, 'id', 'fullName');
             <div class='col-sm-6'>
             <?php $form = ActiveForm::begin(); ?>
 
-            <?= $form->field($model, 'name') ?>
             <?= $form->field($model, 'first_name') ?>
             <?= $form->field($model, 'last_name') ?>
             <?= $form->field($model, 'middle_name') ?>
