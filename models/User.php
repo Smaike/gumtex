@@ -52,6 +52,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             [['created_at', 'updated_at'], 'safe'],
             [['first_name', 'last_name', 'middle_name', 'email', 'login', 'authkey', 'sessionkey'], 'string', 'max' => 60],
             [['password'], 'string', 'max' => 20],
+            ['secret_key', 'unique']
             //[['type'], 'exist', 'skipOnEmpty' => false, 'targetClass' => UserType::className(), 'targetAttribute' => ['type' => 'id']],
         ];
     }
@@ -73,7 +74,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'is_active' => 'Активен?',
             'is_notice' => 'Включить оповещения?',
             'authkey' => 'Authkey',
-            //'secretkey' => 'Secretkey',
+            'secret_key' => 'Secretkey',
             'sessionkey' => 'Sessionkey',
             'created_at' => 'Дата создания',
             'updated_at' => 'Дата изменения',
@@ -173,5 +174,33 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function generateSecretKey()
     {
         $this->secretkey = Yii::$app->security->generateRandomString().'_'.time();
+    }
+
+    public static function findBySecretKey($key)
+    {
+        if (!static::isSecretKeyExpire($key))
+        {
+            return null;
+        }
+        return static::findOne([
+            'secret_key' => $key,
+        ]);
+    }
+
+    public static function isSecretKeyExpire($key)
+    {
+        if (empty($key))
+        {
+            return false;
+        }
+        $expire =  60 * 60;
+        $parts = explode('_', $key);
+        $timestamp = (int) end($parts);
+        return $timestamp + $expire >= time();
+    }
+
+    public function removeSecretKey()
+    {
+        $this->secret_key = null;
     }
 }
