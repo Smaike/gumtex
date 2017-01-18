@@ -54,4 +54,9 @@ class Price extends \yii\db\ActiveRecord
             'client_category_id' => 'Категория клиента',
         ];
     }
+
+    public function getService()
+    {
+        return $this->hasOne(Service::className(), ['id' => 'id_service']);
+    }
 }

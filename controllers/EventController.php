@@ -13,6 +13,7 @@ use yii\web\NotFoundHttpException;
 use app\models\Event;
 use app\models\Service;
 use app\models\ServiceTime;
+use app\models\Price;
 use app\models\search\EventSearch;
 use app\forms\EventCreateForm;
 
@@ -75,7 +76,11 @@ class EventController extends Controller
         $model = new EventCreateForm();
         $model->date = $date;
 
-        $services = ServiceTime::find()->where(['<=', 'date_start', $date])->andWhere(['>=', 'date_end', $date])->with('service')->all();
+        $services = ServiceTime::find()
+            ->where(['<=', 'date_start', $date])
+            ->andWhere(['>=', 'date_end', $date])
+            ->with('service')
+            ->all();
         $aServices = ArrayHelper::map($services, 'service.id', 'service.name');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -126,10 +131,23 @@ class EventController extends Controller
             return "Oh, go away";
         }
         $post = Yii::$app->request->post('services');
-        $services = Service::findAll(['id' => $post]);
-        $cost=0;
+        $date = Yii::$app->request->post('date');
+        $cat = Yii::$app->request->post('category');
+        $type = Yii::$app->request->post('type');
+
+        $query = Price::find()
+            ->where(['<=', 'date_start', $date])
+            ->andWhere(['>=', 'date_end', $date])
+            ->andWhere(['id' => $post]);
+        $services = $query->all();
         foreach ($services as $service) {
-            $cost+= $service->cost;
+            $price = $service->price;
+            if((!empty($service->client_type_id) && ($service->client_type_id == $type))||
+                (!empty($service->client_category_id) && ($service->client_category_id == $cat)))
+            {
+                $price = $price - $price*$service->discount/100;
+            }
+            $cost+= $price;
         }
         return $cost;
     }

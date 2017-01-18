@@ -87,7 +87,12 @@ $types = ArrayHelper::map($models, 'id', 'name');
         $.ajax({
           url: '" . Url::to('event/cost', true) . "',
           type: 'POST',   
-          data: {'services':data['user_ids[]'], 'type':$('#eventcreateform-type').val(), 'category':$('#eventcreateform-category').val()}, 
+          data: {
+            'services':data['user_ids[]'], 
+            'type':$('#eventcreateform-type').val(), 
+            'category':$('#eventcreateform-category').val(),
+            'date':$('#eventcreateform-date').val(),
+          }, 
           success: function(response){
             $('#cost').html(response);
           }

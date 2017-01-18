@@ -95,7 +95,12 @@ $services = ArrayHelper::map($models, 'id', 'name');
 
 </div>
 <?php $this->registerJs("
-    var is_dis = false;
+    var is_dis;
+    if($('#price-discount').val() != ''){
+        is_dis = true;
+    }else{
+        is_dis=false;
+    }
     var price = 0;
     $('.ch_disc').change(function(){
         $.each($('.ch_disc'), function(key, value){
