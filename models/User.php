@@ -50,8 +50,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return [
             [['type', 'is_active', 'is_notice'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['first_name', 'last_name', 'middle_name', 'email', 'login', 'authkey', 'sessionkey'], 'string', 'max' => 60],
-            [['password'], 'string', 'max' => 20],
+            [['first_name', 'last_name', 'middle_name', 'email', 'login', 'authkey', 'sessionkey', 'secret_key'], 'string', 'max' => 60],
+            [['password'], 'string', 'max' => 60],
             ['secret_key', 'unique']
             //[['type'], 'exist', 'skipOnEmpty' => false, 'targetClass' => UserType::className(), 'targetAttribute' => ['type' => 'id']],
         ];
@@ -173,7 +173,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
     public function generateSecretKey()
     {
-        $this->secretkey = Yii::$app->security->generateRandomString().'_'.time();
+        $this->secret_key = Yii::$app->security->generateRandomString().'_'.time();
     }
 
     public static function findBySecretKey($key)
