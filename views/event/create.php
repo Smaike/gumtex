@@ -8,10 +8,18 @@ use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
 use yii\web\View;
 
+use app\models\ClientCategory;
+use app\models\ClientType;
 use app\models\User;
 
 $models = User::find()->where(['type' => 1])->select(['id', 'first_name', 'last_name'])->all();
 $consultants = ArrayHelper::map($models, 'id', 'fullName');
+
+$models = ClientCategory::find()->all();
+$categories = ArrayHelper::map($models, 'id', 'name');
+
+$models = ClientType::find()->all();
+$types = ArrayHelper::map($models, 'id', 'name');
 ?>
 <div class="event-create row">
     <h2>Вы заполняете событие на <?=$model->date?></h2>
@@ -39,8 +47,14 @@ $consultants = ArrayHelper::map($models, 'id', 'fullName');
                             'placeholder' => '31-12-1999'
             ]]) ?>
             <?= $form->field($model, 'mobile') ?>
-            <?= $form->field($model, 'type') ?>
-            <?= $form->field($model, 'category') ?>
+            <?= $form->field($model, 'type', ['inputOptions' => [
+                'class' =>'form-control'
+                ]
+            ])->dropDownList($types, ['prompt' => 'Выберите Тип']) ?>
+            <?= $form->field($model, 'category', ['inputOptions' => [
+                'class' =>'form-control'
+                ]
+            ])->dropDownList($categories, ['prompt' => 'Выберите Категорию']) ?>
             <?= $form->field($model, 'id_consultant')->dropDownList($consultants, ['prompt' => '']) ?>
             <?= $form->field($model, 'comment') ?>
             <?= $form->field($model, 'where_know') ?>
@@ -73,7 +87,7 @@ $consultants = ArrayHelper::map($models, 'id', 'fullName');
         $.ajax({
           url: '" . Url::to('event/cost', true) . "',
           type: 'POST',   
-          data: {'services':data['user_ids[]']}, 
+          data: {'services':data['user_ids[]'], 'type':$('#eventcreateform-type').val(), 'category':$('#eventcreateform-category').val()}, 
           success: function(response){
             $('#cost').html(response);
           }

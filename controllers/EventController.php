@@ -3,15 +3,18 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Event;
-use app\models\search\EventSearch;
-use app\models\Service;
-use app\forms\EventCreateForm;
+use yii\helpers\ArrayHelper;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\helpers\ArrayHelper;
-use yii\filters\AccessControl;
+
+
+use app\models\Event;
+use app\models\Service;
+use app\models\ServiceTime;
+use app\models\search\EventSearch;
+use app\forms\EventCreateForm;
 
 /**
  * EventController implements the CRUD actions for Event model.
@@ -67,10 +70,14 @@ class EventController extends Controller
      */
     public function actionCreate()
     {
+        $date = Yii::$app->request->get('date');
+
         $model = new EventCreateForm();
-        $services = Service::find()->all();
-        $aServices = ArrayHelper::map($services, 'id', 'name');
-        $model->date = Yii::$app->request->get('date');
+        $model->date = $date;
+
+        $services = ServiceTime::find()->where(['<=', 'date_start', $date])->andWhere(['>=', 'date_end', $date])->with('service')->all();
+        $aServices = ArrayHelper::map($services, 'service.id', 'service.name');
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['calendar/index', 'date' => date("Y-m-d",strtotime($model->date)), 'viewMode' => 'day']);
         } else {

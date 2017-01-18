@@ -45,4 +45,9 @@ class ServiceTime extends \yii\db\ActiveRecord
             'date_end' => 'Дата конца',
         ];
     }
+
+    public function getService()
+    {
+        return $this->hasOne(Service::className(), ['id' => 'id_service']);
+    }
 }
