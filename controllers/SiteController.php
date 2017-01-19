@@ -11,6 +11,8 @@ use yii\filters\VerbFilter;
 //use app\forms\LoginForm;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\SendEmailForm;
+use app\models\ResetPasswordForm;
 use yii\web\JsExpression;
 
 class SiteController extends Controller
@@ -131,5 +133,44 @@ class SiteController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function actionSendEmail()
+    {
+        $model = new SendEmailForm();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                if ($model->sendEmail()):
+                    Yii::$app->getSession()->setFlash('warning', 'Проверьте емайл.');
+                    return $this->goHome();
+                else:
+                    Yii::$app->getSession()->setFlash('error', 'Нельзя сбросить пароль.');
+                endif;
+            }
+        }
+        return $this->render('send-email', [
+            'model' => $model,
+        ]);
+    }
+
+    public function actionResetPassword($key = '')
+    {
+        /*try {
+            $model = new ResetPasswordForm($key);
+        }
+        catch (InvalidParamException $e) {
+            throw new BadRequestHttpException($e->getMessage());
+        }*/
+        $key = $_GET['key'];
+        $model = new ResetPasswordForm($key);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate() && $model->resetPassword()) {
+                Yii::$app->getSession()->setFlash('warning', 'Пароль изменен.');
+                return $this->redirect(['/site/login']);
+            }
+        }
+        return $this->render('reset-password', [
+            'model' => $model,
+        ]);
     }
 }

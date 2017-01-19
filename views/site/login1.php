@@ -22,5 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
         </div>
     <?php ActiveForm::end(); ?>
+    <div class="reg-or-recovery">
+        <a href="/web/site/reg/" class="">Зарегистрироваться</a>
+        <a href="/web/site/send-email/">Напомнить пароль</a>
+    </div>
 
 </div><!-- login1 -->
