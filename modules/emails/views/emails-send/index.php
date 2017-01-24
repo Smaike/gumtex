@@ -4,13 +4,14 @@
 <h1>Создать рассылку</h1>
 
 <h3>Выберите шаблон</h3>
-<input type="text" name="search_tpl" id="search_tpl" placeholder="Поиск по шаблонам" style="width:200px; margin-bottom:20px; "/><br/>
-<select id="tpls" name="tpls" style="width:200px; margin-bottom:20px; ">
+<? /*<input type="text" name="search_tpl" id="search_tpl" placeholder="Поиск по шаблонам" style="width:200px; margin-bottom:20px; "/><br/> */ ?>
+<select id="tpls" name="tpls" class="selectpicker" data-live-search="true">
     <option>Выберите шаблон</option>
     <? foreach ($tpls as $v) { ?>
-        <option value="<?=$v->id?>"><?=$v->name?></option>
+        <option  data-tokens="ketchup mustard" value="<?=$v->id?>"><?=$v->name?></option>
     <? } ?>
 </select>
+
 <? /*<div class="btn-group">
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Шаблоны <span class="caret"></span>
@@ -24,12 +25,32 @@
     </ul>
 </div>*/ ?>
 
-<div id="example"></div>
-<form id="newcontent">
+<? /*<div id="example" style="margin-top:20px;"></div> */ ?>
+
+
+<form id="newcontent" style="margin-top:30px;">
     <input type="hidden" id="parent_id" name="parent_id" value="5" />
-    <textarea id="newtpl"></textarea>
+    <textarea id="newtpl" style="display:none"></textarea>
+    <label>Редактирование шаблона</label><br/>
+    <div style="border:1px solid #000;">
+    <?php skeeks\widget\ckeditor\CKEditorInline::begin(['preset' => skeeks\yii2\ckeditor\CKEditorPresets::BASIC]);?>
+
+    <?php skeeks\widget\ckeditor\CKEditorInline::end();?>
+    </div>
     <div class="row">
         <div class="col-md-4">
+
+            <div class="row" style="margin-top:10px; margin-bottom:10px;">
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                          <input type="checkbox" id="label1">
+                        </span>
+                        <label for ="email1">Email@email.sd</label>
+                    </div>
+                </div>
+            </div>
+
             <label for="email1" style="width:33%; float:left;">asd@asd.sd (Vasya) <input type="checkbox" id="email1" name="email[1]" /> </label>
             <label for="email1" style="width:33%; float:left;">asd@asd.sd (Vasya) <input type="checkbox" id="email1" name="email[1]" /> </label>
             <label for="email1" style="width:33%; float:left;">asd@asd.sd (Vasya) <input type="checkbox" id="email1" name="email[1]" /> </label>
@@ -81,12 +102,13 @@ $script = <<< JS
                 alert(resp.msg)
             } else {
                 $('#parent_id').val(newid);
-                $('#example').html(resp.html);
+                //$('#example').html(resp.html);
                 // $('#newtpl').html(resp.editor);
                  $('#newtpl').val(resp.html);
+                 $('#w0').html(resp.html);
             }
          });
-    })
+    });
     $('#send').click(function() {
         var data = $('#newcontent').serialize();
          $.ajax({
@@ -105,5 +127,7 @@ $script = <<< JS
     })
 JS;
 $this->registerJs($script, yii\web\View::POS_READY);
+$this->registerJsFile('/web/js/bootstrap-select.min.js', ['position' => \yii\web\View::POS_END]);
+$this->registerCssFile('/web/css/bootstrap-select.min.css', ['position' => \yii\web\View::POS_END]);
 ?>
 

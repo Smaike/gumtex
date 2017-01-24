@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8d48764359c1495f67a38461eb16abda",
+    "content-hash": "1ea6ba953bf9bcd437eae248c6897c7c",
     "packages": [
         {
             "name": "2amigos/yii2-date-time-picker-widget",
@@ -462,6 +462,47 @@
             "time": "2016-09-14T20:40:20+00:00"
         },
         {
+            "name": "ckeditor/ckeditor",
+            "version": "4.6.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ckeditor/ckeditor-releases.git",
+                "reference": "268078ab43195b6004d64bc8764c41f2f829640e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/268078ab43195b6004d64bc8764c41f2f829640e",
+                "reference": "268078ab43195b6004d64bc8764c41f2f829640e",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+",
+                "LGPL-2.1+",
+                "MPL-1.1+"
+            ],
+            "authors": [
+                {
+                    "name": "CKSource",
+                    "homepage": "http://cksource.com"
+                }
+            ],
+            "description": "JavaScript WYSIWYG web text editor.",
+            "homepage": "http://ckeditor.com",
+            "keywords": [
+                "CKEditor",
+                "editor",
+                "fckeditor",
+                "html",
+                "javascript",
+                "richtext",
+                "text",
+                "wysiwyg"
+            ],
+            "time": "2017-01-12T17:36:48+00:00"
+        },
+        {
             "name": "ezyang/htmlpurifier",
             "version": "v4.9.0",
             "source": {
@@ -761,6 +802,50 @@
                 "yii2"
             ],
             "time": "2016-12-18T15:18:23+00:00"
+        },
+        {
+            "name": "skeeks/yii2-widget-ckeditor",
+            "version": "1.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/skeeks-semenov/yii2-widget-ckeditor.git",
+                "reference": "3b8fd9d76ddb44641f69046a867510cdfaa9c512"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/skeeks-semenov/yii2-widget-ckeditor/zipball/3b8fd9d76ddb44641f69046a867510cdfaa9c512",
+                "reference": "3b8fd9d76ddb44641f69046a867510cdfaa9c512",
+                "shasum": ""
+            },
+            "require": {
+                "ckeditor/ckeditor": ">=4.4.7",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "autoload": {
+                "psr-4": {
+                    "skeeks\\widget\\ckeditor\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Semenov Alexander",
+                    "email": "semenov@skeeks.com"
+                }
+            ],
+            "description": "CKEditor widget for Yii2.",
+            "homepage": "http://www.skeeks.com",
+            "keywords": [
+                "CKEditor",
+                "extension",
+                "widget",
+                "yii"
+            ],
+            "time": "2015-06-07T14:41:23+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

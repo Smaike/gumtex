@@ -35,6 +35,7 @@ class ComposerStaticInit12d30b8fa1152da55d3304ad27e06e5e
         's' => 
         array (
             'skeeks\\yii2\\ckeditor\\' => 21,
+            'skeeks\\widget\\ckeditor\\' => 23,
         ),
         'p' => 
         array (
@@ -143,6 +144,10 @@ class ComposerStaticInit12d30b8fa1152da55d3304ad27e06e5e
         'skeeks\\yii2\\ckeditor\\' => 
         array (
             0 => __DIR__ . '/..' . '/skeeks/yii2-ckeditor',
+        ),
+        'skeeks\\widget\\ckeditor\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/skeeks/yii2-widget-ckeditor',
         ),
         'phpDocumentor\\Reflection\\' => 
         array (

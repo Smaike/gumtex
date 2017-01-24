@@ -102,4 +102,13 @@ return array (
       '@yii2fullcalendar' => $vendorDir . '/philippfrenzel/yii2fullcalendar',
     ),
   ),
+  'skeeks/yii2-widget-ckeditor' => 
+  array (
+    'name' => 'skeeks/yii2-widget-ckeditor',
+    'version' => '1.0.6.0',
+    'alias' => 
+    array (
+      '@skeeks/widget/ckeditor' => $vendorDir . '/skeeks/yii2-widget-ckeditor',
+    ),
+  ),
 );
