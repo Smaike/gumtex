@@ -10,7 +10,6 @@ class EmailsSendController extends Controller
     public function actionIndex()
     {
         $tpls = EmailsTpls::find()->orderBy(['id' => SORT_DESC])->all();
-
         return $this->render('index',[
             'tpls' => $tpls,
         ]);

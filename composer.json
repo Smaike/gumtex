@@ -22,7 +22,8 @@
         "understeam/yii2-calendar-widget": "0.1",
         "kartik-v/yii2-widget-fileinput": "@dev",
         "skeeks/yii2-ckeditor": "*",
-        "2amigos/yii2-date-time-picker-widget": "~1.0"
+        "2amigos/yii2-date-time-picker-widget": "~1.0",
+        "skeeks/yii2-widget-ckeditor": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

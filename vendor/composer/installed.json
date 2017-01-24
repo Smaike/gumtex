@@ -3113,41 +3113,6 @@
         ]
     },
     {
-        "name": "bower-asset/smalot-bootstrap-datetimepicker",
-        "version": "2.3.1",
-        "version_normalized": "2.3.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/smalot/bootstrap-datetimepicker.git",
-            "reference": "c893c91872d273bcea1bd806d03eb624c91a4cac"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/smalot/bootstrap-datetimepicker/zipball/c893c91872d273bcea1bd806d03eb624c91a4cac",
-            "reference": "c893c91872d273bcea1bd806d03eb624c91a4cac",
-            "shasum": ""
-        },
-        "type": "bower-asset-library",
-        "extra": {
-            "bower-asset-main": [
-                "js/bootstrap-datetimepicker.min.js",
-                "css/bootstrap-datetimepicker.min.css"
-            ],
-            "bower-asset-ignore": [
-                "build",
-                "sample in bootstrap v2",
-                "sample in bootstrap v3",
-                "screenshot",
-                "tests",
-                ".gitattributes",
-                ".gitignore",
-                ".travis.yml",
-                "minify.sh"
-            ]
-        },
-        "installation-source": "dist"
-    },
-    {
         "name": "2amigos/yii2-date-time-picker-widget",
         "version": "1.0.2",
         "version_normalized": "1.0.2.0",
@@ -3209,6 +3174,130 @@
             "yii",
             "yii 2",
             "yii2"
+        ]
+    },
+    {
+        "name": "bower-asset/smalot-bootstrap-datetimepicker",
+        "version": "2.3.1",
+        "version_normalized": "2.3.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/smalot/bootstrap-datetimepicker.git",
+            "reference": "c893c91872d273bcea1bd806d03eb624c91a4cac"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/smalot/bootstrap-datetimepicker/zipball/c893c91872d273bcea1bd806d03eb624c91a4cac",
+            "reference": "c893c91872d273bcea1bd806d03eb624c91a4cac",
+            "shasum": ""
+        },
+        "type": "bower-asset-library",
+        "extra": {
+            "bower-asset-main": [
+                "js/bootstrap-datetimepicker.min.js",
+                "css/bootstrap-datetimepicker.min.css"
+            ],
+            "bower-asset-ignore": [
+                "build",
+                "sample in bootstrap v2",
+                "sample in bootstrap v3",
+                "screenshot",
+                "tests",
+                ".gitattributes",
+                ".gitignore",
+                ".travis.yml",
+                "minify.sh"
+            ]
+        },
+        "installation-source": "dist"
+    },
+    {
+        "name": "ckeditor/ckeditor",
+        "version": "4.6.2",
+        "version_normalized": "4.6.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ckeditor/ckeditor-releases.git",
+            "reference": "268078ab43195b6004d64bc8764c41f2f829640e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/268078ab43195b6004d64bc8764c41f2f829640e",
+            "reference": "268078ab43195b6004d64bc8764c41f2f829640e",
+            "shasum": ""
+        },
+        "time": "2017-01-12 17:36:48",
+        "type": "library",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+",
+            "LGPL-2.1+",
+            "MPL-1.1+"
+        ],
+        "authors": [
+            {
+                "name": "CKSource",
+                "homepage": "http://cksource.com"
+            }
+        ],
+        "description": "JavaScript WYSIWYG web text editor.",
+        "homepage": "http://ckeditor.com",
+        "keywords": [
+            "CKEditor",
+            "editor",
+            "fckeditor",
+            "html",
+            "javascript",
+            "richtext",
+            "text",
+            "wysiwyg"
+        ]
+    },
+    {
+        "name": "skeeks/yii2-widget-ckeditor",
+        "version": "1.0.6",
+        "version_normalized": "1.0.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/skeeks-semenov/yii2-widget-ckeditor.git",
+            "reference": "3b8fd9d76ddb44641f69046a867510cdfaa9c512"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/skeeks-semenov/yii2-widget-ckeditor/zipball/3b8fd9d76ddb44641f69046a867510cdfaa9c512",
+            "reference": "3b8fd9d76ddb44641f69046a867510cdfaa9c512",
+            "shasum": ""
+        },
+        "require": {
+            "ckeditor/ckeditor": ">=4.4.7",
+            "yiisoft/yii2": "*"
+        },
+        "time": "2015-06-07 14:41:23",
+        "type": "yii2-extension",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "skeeks\\widget\\ckeditor\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Semenov Alexander",
+                "email": "semenov@skeeks.com"
+            }
+        ],
+        "description": "CKEditor widget for Yii2.",
+        "homepage": "http://www.skeeks.com",
+        "keywords": [
+            "CKEditor",
+            "extension",
+            "widget",
+            "yii"
         ]
     }
 ]
