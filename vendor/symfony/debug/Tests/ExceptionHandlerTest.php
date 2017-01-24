@@ -100,16 +100,15 @@ class ExceptionHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $exception = new \Exception('foo');
 
-        $handler = $this->getMock('Symfony\Component\Debug\ExceptionHandler', array('sendPhpResponse'));
+        $handler = $this->getMockBuilder('Symfony\Component\Debug\ExceptionHandler')->setMethods(array('sendPhpResponse'))->getMock();
         $handler
             ->expects($this->exactly(2))
             ->method('sendPhpResponse');
 
         $handler->handle($exception);
 
-        $that = $this;
-        $handler->setHandler(function ($e) use ($exception, $that) {
-            $that->assertSame($exception, $e);
+        $handler->setHandler(function ($e) use ($exception) {
+            $this->assertSame($exception, $e);
         });
 
         $handler->handle($exception);
@@ -119,14 +118,13 @@ class ExceptionHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $exception = new OutOfMemoryException('foo', 0, E_ERROR, __FILE__, __LINE__);
 
-        $handler = $this->getMock('Symfony\Component\Debug\ExceptionHandler', array('sendPhpResponse'));
+        $handler = $this->getMockBuilder('Symfony\Component\Debug\ExceptionHandler')->setMethods(array('sendPhpResponse'))->getMock();
         $handler
             ->expects($this->once())
             ->method('sendPhpResponse');
 
-        $that = $this;
-        $handler->setHandler(function ($e) use ($that) {
-            $that->fail('OutOfMemoryException should bypass the handler');
+        $handler->setHandler(function ($e) {
+            $this->fail('OutOfMemoryException should bypass the handler');
         });
 
         $handler->handle($exception);

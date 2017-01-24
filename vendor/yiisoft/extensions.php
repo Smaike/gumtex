@@ -21,15 +21,6 @@ return array (
       '@yii/bootstrap' => $vendorDir . '/yiisoft/yii2-bootstrap',
     ),
   ),
-  'yiisoft/yii2-debug' => 
-  array (
-    'name' => 'yiisoft/yii2-debug',
-    'version' => '2.0.6.0',
-    'alias' => 
-    array (
-      '@yii/debug' => $vendorDir . '/yiisoft/yii2-debug',
-    ),
-  ),
   'yiisoft/yii2-gii' => 
   array (
     'name' => 'yiisoft/yii2-gii',
@@ -91,6 +82,24 @@ return array (
     'alias' => 
     array (
       '@dosamigos/datetimepicker' => $vendorDir . '/2amigos/yii2-date-time-picker-widget/src',
+    ),
+  ),
+  'yiisoft/yii2-debug' => 
+  array (
+    'name' => 'yiisoft/yii2-debug',
+    'version' => '2.0.7.0',
+    'alias' => 
+    array (
+      '@yii/debug' => $vendorDir . '/yiisoft/yii2-debug',
+    ),
+  ),
+  'philippfrenzel/yii2fullcalendar' => 
+  array (
+    'name' => 'philippfrenzel/yii2fullcalendar',
+    'version' => '3.0.3.0',
+    'alias' => 
+    array (
+      '@yii2fullcalendar' => $vendorDir . '/philippfrenzel/yii2fullcalendar',
     ),
   ),
 );

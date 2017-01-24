@@ -101,6 +101,28 @@ class PhpBrowserTest extends TestsForBrowsers
         $this->module->dontSeeCookie($cookie_name_2);
     }
 
+    public function testSessionsHaveIndependentCookies()
+    {
+        $this->module->amOnPage('/');
+        $cookie_name_1  = 'test_cookie';
+        $cookie_value_1 = 'this is a test';
+        $this->module->setCookie($cookie_name_1, $cookie_value_1);
+
+        $session = $this->module->_backupSession();
+        $this->module->_initializeSession();
+
+        $this->module->dontSeeCookie($cookie_name_1);
+
+        $cookie_name_2  = '2_test_cookie';
+        $cookie_value_2 = '2 this is a test';
+        $this->module->setCookie($cookie_name_2, $cookie_value_2);
+
+        $this->module->_loadSession($session);
+
+        $this->module->dontSeeCookie($cookie_name_2);
+        $this->module->seeCookie($cookie_name_1);
+    }
+
     public function testSubmitFormGet()
     {
         $I = $this->module;
@@ -589,4 +611,21 @@ class PhpBrowserTest extends TestsForBrowsers
         $this->module->click(['css' => '.link']);
         $this->module->seeCurrentUrlEquals('/info');
     }
+
+    /**
+     * @expectedException PHPUnit_Framework_AssertionFailedError
+     */
+    public function testClickingOnButtonOutsideFormDoesNotCauseFatalError()
+    {
+        $this->module->amOnPage('/form/button-not-in-form');
+        $this->module->click('The Button');
+    }
+
+    public function testSubmitFormWithoutEmptyOptionsInSelect()
+    {
+        $this->module->amOnPage('/form/bug3824');
+        $this->module->submitForm('form', []);
+        $this->module->dontSee('ERROR');
+    }
+
 }
