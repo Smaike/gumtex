@@ -16,6 +16,18 @@ $models = ClientType::find()->all();
 $types = ArrayHelper::map($models, 'id', 'name');
 $models = Service::find()->all();
 $services = ArrayHelper::map($models, 'id', 'name');
+
+
+$events = array();
+$Event = new \yii2fullcalendar\models\Event();
+$Event->id = 2;
+$Event->title = 'Testing';
+$Event->allDay = false;
+$Event->ranges[]= ['start' => "2017-01-11", 'end' => '2017-01-31'];
+$Event->start = '10:00';
+$Event->end = '17:00';
+$Event->dow = [2,4];
+$events[] = $Event;
 ?>
 
 <div class="price-form">
@@ -90,7 +102,13 @@ $services = ArrayHelper::map($models, 'id', 'name');
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Изменить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
-
+    <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+            <?= \yii2fullcalendar\yii2fullcalendar::widget(array(
+              'events'=> $events,
+            ));?>
+        </div>
+    </div>
     <?php ActiveForm::end(); ?>
 
 </div>
