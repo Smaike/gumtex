@@ -23,7 +23,7 @@
             "facebook/xhprof": "*@dev",
             "phpunit/phpunit": "4.1.*"
         },
-        "time": "2016-09-14T20:40:20+00:00",
+        "time": "2016-09-14 20:40:20",
         "bin": [
             "bin/markdown"
         ],
@@ -89,7 +89,7 @@
             "php": ">=5.4.0",
             "yiisoft/yii2-composer": "~2.0.4"
         },
-        "time": "2016-10-20T12:02:50+00:00",
+        "time": "2016-10-20 12:02:50",
         "bin": [
             "yii"
         ],
@@ -176,7 +176,7 @@
             "swiftmailer/swiftmailer": "~5.0",
             "yiisoft/yii2": "~2.0.4"
         },
-        "time": "2016-09-09T11:48:11+00:00",
+        "time": "2016-09-09 11:48:11",
         "type": "yii2-extension",
         "extra": {
             "branch-alias": {
@@ -228,7 +228,7 @@
             "bower-asset/bootstrap": "3.3.* | 3.2.* | 3.1.*",
             "yiisoft/yii2": ">=2.0.6"
         },
-        "time": "2016-03-17T03:29:28+00:00",
+        "time": "2016-03-17 03:29:28",
         "type": "yii2-extension",
         "extra": {
             "branch-alias": {
@@ -276,7 +276,7 @@
             "reference": "0464787bfa7cd13576c5a1e318709768798bec6a",
             "shasum": ""
         },
-        "time": "2016-04-07T12:29:16+00:00",
+        "time": "2016-04-07 12:29:16",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -322,7 +322,7 @@
             "yiisoft/yii2": ">=2.0.4",
             "yiisoft/yii2-bootstrap": "~2.0"
         },
-        "time": "2016-03-18T14:09:46+00:00",
+        "time": "2016-03-18 14:09:46",
         "type": "yii2-extension",
         "extra": {
             "branch-alias": {
@@ -379,7 +379,7 @@
             "phpunit/phpunit": "~4.0",
             "squizlabs/php_codesniffer": "~1.5"
         },
-        "time": "2016-04-29T12:21:54+00:00",
+        "time": "2016-04-29 12:21:54",
         "type": "library",
         "extra": {
             "branch-alias": []
@@ -425,7 +425,7 @@
             "fzaninotto/faker": "*",
             "yiisoft/yii2": "*"
         },
-        "time": "2015-03-01T06:22:44+00:00",
+        "time": "2015-03-01 06:22:44",
         "type": "yii2-extension",
         "extra": {
             "branch-alias": {
@@ -476,7 +476,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.8"
         },
-        "time": "2015-12-08T07:14:41+00:00",
+        "time": "2015-12-08 07:14:41",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -535,7 +535,7 @@
         "suggest": {
             "symfony/yaml": "If you want to parse features, represented in YAML files"
         },
-        "time": "2016-10-30T11:50:56+00:00",
+        "time": "2016-10-30 11:50:56",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -588,7 +588,7 @@
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2016-10-10T12:19:37+00:00",
+        "time": "2016-10-10 12:19:37",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -637,7 +637,7 @@
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2016-08-06T14:39:51+00:00",
+        "time": "2016-08-06 14:39:51",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -696,7 +696,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.0"
         },
-        "time": "2016-06-24T23:00:38+00:00",
+        "time": "2016-06-24 23:00:38",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -749,7 +749,7 @@
         "require": {
             "php": ">=5.3.3"
         },
-        "time": "2015-06-21T13:50:34+00:00",
+        "time": "2015-06-21 13:50:34",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -798,7 +798,7 @@
         "suggest": {
             "ext-uopz": "*"
         },
-        "time": "2015-10-12T03:26:01+00:00",
+        "time": "2015-10-12 03:26:01",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -852,7 +852,7 @@
             "phpunit/phpunit": "~4.0",
             "squizlabs/php_codesniffer": "~2.0"
         },
-        "time": "2015-06-14T21:17:01+00:00",
+        "time": "2015-06-14 21:17:01",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -904,7 +904,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4|~5"
         },
-        "time": "2016-05-12T18:03:57+00:00",
+        "time": "2016-05-12 18:03:57",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -951,7 +951,7 @@
             "doctrine/collections": "1.*",
             "phpunit/phpunit": "~4.1"
         },
-        "time": "2016-10-31T17:19:45+00:00",
+        "time": "2016-10-31 17:19:45",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -991,7 +991,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.0"
         },
-        "time": "2016-08-29T22:49:25+00:00",
+        "time": "2016-08-29 22:49:25",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1033,7 +1033,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.0"
         },
-        "time": "2016-10-17T22:28:20+00:00",
+        "time": "2016-10-17 22:28:20",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1069,7 +1069,7 @@
             "bower-asset/jquery-ui": "1.11.*@stable",
             "yiisoft/yii2": ">=2.0.4"
         },
-        "time": "2016-07-22T22:26:59+00:00",
+        "time": "2016-07-22 22:26:59",
         "type": "yii2-extension",
         "extra": {
             "branch-alias": {
@@ -1125,7 +1125,7 @@
         "require-dev": {
             "phpunit/phpunit": "^5.4"
         },
-        "time": "2016-07-26T23:03:05+00:00",
+        "time": "2016-07-26 23:03:05",
         "type": "extension",
         "installation-source": "dist",
         "autoload": {
@@ -1164,7 +1164,7 @@
         "require": {
             "yiisoft/yii2-bootstrap": "@dev"
         },
-        "time": "2016-09-04T09:25:29+00:00",
+        "time": "2016-09-04 09:25:29",
         "type": "yii2-extension",
         "extra": {
             "branch-alias": {
@@ -1218,7 +1218,7 @@
             "kartik-v/bootstrap-fileinput": "~4.2",
             "kartik-v/yii2-krajee-base": "~1.7"
         },
-        "time": "2016-10-18T06:35:15+00:00",
+        "time": "2016-10-18 06:35:15",
         "type": "yii2-extension",
         "extra": {
             "branch-alias": {
@@ -1511,54 +1511,6 @@
         "installation-source": "dist"
     },
     {
-        "name": "skeeks/yii2-ckeditor",
-        "version": "1.1.0",
-        "version_normalized": "1.1.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/skeeks-semenov/yii2-ckeditor.git",
-            "reference": "b8a53845972e2dceeb36edb82e448e77984ef63d"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/skeeks-semenov/yii2-ckeditor/zipball/b8a53845972e2dceeb36edb82e448e77984ef63d",
-            "reference": "b8a53845972e2dceeb36edb82e448e77984ef63d",
-            "shasum": ""
-        },
-        "require": {
-            "yiisoft/yii2": "*"
-        },
-        "time": "2016-12-18T15:18:23+00:00",
-        "type": "yii2-extension",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "skeeks\\yii2\\ckeditor\\": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Semenov Alexander",
-                "email": "semenov@skeeks.com"
-            },
-            {
-                "name": "SkeekS",
-                "email": "support@skeeks.com",
-                "homepage": "http://www.skeeks.com"
-            }
-        ],
-        "description": "CKEditor extension for Yii2.",
-        "keywords": [
-            "CKEditor",
-            "extension",
-            "yii2"
-        ]
-    },
-    {
         "name": "2amigos/yii2-date-time-picker-widget",
         "version": "1.0.2",
         "version_normalized": "1.0.2.0",
@@ -1582,7 +1534,7 @@
             "phpunit/phpunit": "4.*",
             "scrutinizer/ocular": "~1.1"
         },
-        "time": "2015-04-02T10:59:30+00:00",
+        "time": "2015-04-02 10:59:30",
         "type": "yii2-extension",
         "extra": {
             "branch-alias": {
@@ -1643,7 +1595,7 @@
         "require-dev": {
             "composer/composer": "^1.0"
         },
-        "time": "2016-12-20T13:26:02+00:00",
+        "time": "2016-12-20 13:26:02",
         "type": "composer-plugin",
         "extra": {
             "class": "yii\\composer\\Plugin",
@@ -1695,7 +1647,7 @@
         "require-dev": {
             "simpletest/simpletest": "^1.1"
         },
-        "time": "2017-01-13T12:31:37+00:00",
+        "time": "2017-01-13 12:31:37",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -1742,7 +1694,7 @@
             "yiisoft/yii2": "~2.0.4",
             "yiisoft/yii2-bootstrap": "~2.0.0"
         },
-        "time": "2016-11-24T09:42:29+00:00",
+        "time": "2016-11-24 09:42:29",
         "type": "yii2-extension",
         "extra": {
             "branch-alias": {
@@ -1793,7 +1745,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.4"
         },
-        "time": "2016-11-19T07:33:16+00:00",
+        "time": "2016-11-19 07:33:16",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1850,7 +1802,7 @@
             "ext-mbstring": "*",
             "phpunit/phpunit": "~4.4"
         },
-        "time": "2016-11-19T08:54:04+00:00",
+        "time": "2016-11-19 08:54:04",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1919,7 +1871,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.4"
         },
-        "time": "2016-11-19T09:18:40+00:00",
+        "time": "2016-11-19 09:18:40",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1983,7 +1935,7 @@
         "suggest": {
             "ext-mbstring": "For best performance"
         },
-        "time": "2016-11-14T01:06:16+00:00",
+        "time": "2016-11-14 01:06:16",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2048,7 +2000,7 @@
         "suggest": {
             "symfony/css-selector": ""
         },
-        "time": "2017-01-02T20:32:22+00:00",
+        "time": "2017-01-02 20:32:22",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2099,7 +2051,7 @@
         "require": {
             "php": ">=5.5.9"
         },
-        "time": "2017-01-02T20:32:22+00:00",
+        "time": "2017-01-02 20:32:22",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2162,7 +2114,7 @@
         "suggest": {
             "symfony/process": ""
         },
-        "time": "2017-01-02T20:32:22+00:00",
+        "time": "2017-01-02 20:32:22",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2219,7 +2171,7 @@
         "suggest": {
             "symfony/console": "For validating YAML files using the lint command"
         },
-        "time": "2017-01-03T13:51:32+00:00",
+        "time": "2017-01-03 13:51:32",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2281,7 +2233,7 @@
             "symfony/dependency-injection": "",
             "symfony/http-kernel": ""
         },
-        "time": "2017-01-02T20:32:22+00:00",
+        "time": "2017-01-02 20:32:22",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2340,7 +2292,7 @@
             "symfony/class-loader": "~2.8|~3.0",
             "symfony/http-kernel": "~2.8|~3.0"
         },
-        "time": "2017-01-02T20:32:22+00:00",
+        "time": "2017-01-02 20:32:22",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2405,7 +2357,7 @@
             "symfony/filesystem": "",
             "symfony/process": ""
         },
-        "time": "2017-01-08T20:47:33+00:00",
+        "time": "2017-01-08 20:47:33",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2456,7 +2408,7 @@
         "require": {
             "php": ">=5.5.9"
         },
-        "time": "2017-01-02T20:32:22+00:00",
+        "time": "2017-01-02 20:32:22",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2511,7 +2463,7 @@
         "require-dev": {
             "phpunit/phpunit": "~4.2"
         },
-        "time": "2016-11-15T14:06:22+00:00",
+        "time": "2016-11-15 14:06:22",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2558,7 +2510,7 @@
         "require": {
             "php": ">=5.3.3"
         },
-        "time": "2016-10-03T07:40:28+00:00",
+        "time": "2016-10-03 07:40:28",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2607,7 +2559,7 @@
         "require": {
             "php": ">=5.6"
         },
-        "time": "2016-10-03T07:35:21+00:00",
+        "time": "2016-10-03 07:35:21",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2655,7 +2607,7 @@
         "require-dev": {
             "phpunit/phpunit": "^5.0"
         },
-        "time": "2016-11-26T07:53:53+00:00",
+        "time": "2016-11-26 07:53:53",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2707,7 +2659,7 @@
         "require-dev": {
             "phpunit/phpunit": "~5"
         },
-        "time": "2016-02-13T06:45:14+00:00",
+        "time": "2016-02-13 06:45:14",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2766,7 +2718,7 @@
             "ext-xdebug": ">=2.4.0",
             "ext-xmlwriter": "*"
         },
-        "time": "2017-01-20T15:06:43+00:00",
+        "time": "2017-01-20 15:06:43",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2820,7 +2772,7 @@
             "phpunit/phpunit": "^4.6",
             "sebastian/version": "^1.0.1"
         },
-        "time": "2016-11-23T20:04:58+00:00",
+        "time": "2016-11-23 20:04:58",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2871,7 +2823,7 @@
         "require-dev": {
             "phpunit/phpunit": "^4.6"
         },
-        "time": "2015-12-27T11:43:31+00:00",
+        "time": "2015-12-27 11:43:31",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2929,7 +2881,7 @@
             "mockery/mockery": "^0.9.4",
             "phpunit/phpunit": "^5.2||^4.8.24"
         },
-        "time": "2016-11-25T06:54:22+00:00",
+        "time": "2016-11-25 06:54:22",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2980,7 +2932,7 @@
             "mockery/mockery": "^0.9.4",
             "phpunit/phpunit": "^4.4"
         },
-        "time": "2016-09-30T07:12:33+00:00",
+        "time": "2016-09-30 07:12:33",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -3028,7 +2980,7 @@
             "phpspec/phpspec": "^2.0",
             "phpunit/phpunit": "^4.8 || ^5.6.5"
         },
-        "time": "2016-11-21T14:58:47+00:00",
+        "time": "2016-11-21 14:58:47",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3085,7 +3037,7 @@
         "require": {
             "php": ">=5.6.0"
         },
-        "time": "2015-07-28T20:34:47+00:00",
+        "time": "2015-07-28 20:34:47",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3133,7 +3085,7 @@
         "require-dev": {
             "phpunit/phpunit": "~5"
         },
-        "time": "2016-11-19T07:35:10+00:00",
+        "time": "2016-11-19 07:35:10",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3189,7 +3141,7 @@
         "suggest": {
             "ext-soap": "*"
         },
-        "time": "2016-12-08T20:27:08+00:00",
+        "time": "2016-12-08 20:27:08",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3269,7 +3221,7 @@
             "ext-xdebug": "*",
             "phpunit/php-invoker": "~1.1"
         },
-        "time": "2017-01-22T08:39:59+00:00",
+        "time": "2017-01-22 08:39:59",
         "bin": [
             "phpunit"
         ],
@@ -3360,7 +3312,7 @@
             "phpseclib/phpseclib": "for SFTP option in FTP Module",
             "symfony/phpunit-bridge": "For phpunit-bridge support"
         },
-        "time": "2017-01-20T01:01:44+00:00",
+        "time": "2017-01-20 01:01:44",
         "bin": [
             "codecept"
         ],
@@ -3418,7 +3370,7 @@
             "mockery/mockery": "~0.9.1",
             "symfony/phpunit-bridge": "~3.2"
         },
-        "time": "2016-12-29T10:02:40+00:00",
+        "time": "2016-12-29 10:02:40",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3467,7 +3419,7 @@
             "reference": "ad0ddced480efdd38051d02b1ef28a2749bcc48a",
             "shasum": ""
         },
-        "time": "2016-12-17T16:49:33+00:00",
+        "time": "2016-12-17 16:49:33",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -3505,6 +3457,181 @@
             "preview",
             "progress",
             "upload"
+        ]
+    },
+    {
+        "name": "philippfrenzel/yii2fullcalendar",
+        "version": "3.0.3",
+        "version_normalized": "3.0.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/philippfrenzel/yii2fullcalendar.git",
+            "reference": "4b287f2d5a5ccf6720e66b63c7f29e41f025bb6b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/philippfrenzel/yii2fullcalendar/zipball/4b287f2d5a5ccf6720e66b63c7f29e41f025bb6b",
+            "reference": "4b287f2d5a5ccf6720e66b63c7f29e41f025bb6b",
+            "shasum": ""
+        },
+        "require": {
+            "bower-asset/fullcalendar": "3.*",
+            "php": ">=5.4.0",
+            "yiisoft/yii2": "*",
+            "yiisoft/yii2-jui": "*"
+        },
+        "require-dev": {
+            "codeception/codeception": "*"
+        },
+        "time": "2016-09-23 10:20:14",
+        "type": "yii2-extension",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "yii2fullcalendar\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Philipp Frenzel",
+                "email": "philipp@frenzel.net",
+                "homepage": "http://www.frenzel.net/",
+                "role": "Developer"
+            }
+        ],
+        "description": "Yii2 fullcalendar Widgets",
+        "homepage": "http://www.frenzel.net/",
+        "keywords": [
+            "fullcalendar",
+            "yii2"
+        ]
+    },
+    {
+        "name": "ckeditor/ckeditor",
+        "version": "4.6.2",
+        "version_normalized": "4.6.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ckeditor/ckeditor-releases.git",
+            "reference": "268078ab43195b6004d64bc8764c41f2f829640e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/268078ab43195b6004d64bc8764c41f2f829640e",
+            "reference": "268078ab43195b6004d64bc8764c41f2f829640e",
+            "shasum": ""
+        },
+        "time": "2017-01-12 17:36:48",
+        "type": "library",
+        "installation-source": "dist",
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+",
+            "LGPL-2.1+",
+            "MPL-1.1+"
+        ],
+        "authors": [
+            {
+                "name": "CKSource",
+                "homepage": "http://cksource.com"
+            }
+        ],
+        "description": "JavaScript WYSIWYG web text editor.",
+        "homepage": "http://ckeditor.com",
+        "keywords": [
+            "CKEditor",
+            "editor",
+            "fckeditor",
+            "html",
+            "javascript",
+            "richtext",
+            "text",
+            "wysiwyg"
+        ]
+    },
+    {
+        "name": "bower-asset/smalot-bootstrap-datetimepicker",
+        "version": "2.3.1",
+        "version_normalized": "2.3.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/smalot/bootstrap-datetimepicker.git",
+            "reference": "c893c91872d273bcea1bd806d03eb624c91a4cac"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/smalot/bootstrap-datetimepicker/zipball/c893c91872d273bcea1bd806d03eb624c91a4cac",
+            "reference": "c893c91872d273bcea1bd806d03eb624c91a4cac",
+            "shasum": ""
+        },
+        "type": "bower-asset-library",
+        "extra": {
+            "bower-asset-main": [
+                "js/bootstrap-datetimepicker.min.js",
+                "css/bootstrap-datetimepicker.min.css"
+            ],
+            "bower-asset-ignore": [
+                "build",
+                "sample in bootstrap v2",
+                "sample in bootstrap v3",
+                "screenshot",
+                "tests",
+                ".gitattributes",
+                ".gitignore",
+                ".travis.yml",
+                "minify.sh"
+            ]
+        },
+        "installation-source": "dist"
+    },
+    {
+        "name": "skeeks/yii2-widget-ckeditor",
+        "version": "1.0.6",
+        "version_normalized": "1.0.6.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/skeeks-semenov/yii2-widget-ckeditor.git",
+            "reference": "3b8fd9d76ddb44641f69046a867510cdfaa9c512"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/skeeks-semenov/yii2-widget-ckeditor/zipball/3b8fd9d76ddb44641f69046a867510cdfaa9c512",
+            "reference": "3b8fd9d76ddb44641f69046a867510cdfaa9c512",
+            "shasum": ""
+        },
+        "require": {
+            "ckeditor/ckeditor": ">=4.4.7",
+            "yiisoft/yii2": "*"
+        },
+        "time": "2015-06-07 14:41:23",
+        "type": "yii2-extension",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "skeeks\\widget\\ckeditor\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Semenov Alexander",
+                "email": "semenov@skeeks.com"
+            }
+        ],
+        "description": "CKEditor widget for Yii2.",
+        "homepage": "http://www.skeeks.com",
+        "keywords": [
+            "CKEditor",
+            "extension",
+            "widget",
+            "yii"
         ]
     },
     {
@@ -3599,178 +3726,51 @@
         ]
     },
     {
-        "name": "philippfrenzel/yii2fullcalendar",
-        "version": "3.0.3",
-        "version_normalized": "3.0.3.0",
+        "name": "skeeks/yii2-ckeditor",
+        "version": "1.1.0",
+        "version_normalized": "1.1.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/philippfrenzel/yii2fullcalendar.git",
-            "reference": "4b287f2d5a5ccf6720e66b63c7f29e41f025bb6b"
+            "url": "https://github.com/skeeks-semenov/yii2-ckeditor.git",
+            "reference": "b8a53845972e2dceeb36edb82e448e77984ef63d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/philippfrenzel/yii2fullcalendar/zipball/4b287f2d5a5ccf6720e66b63c7f29e41f025bb6b",
-            "reference": "4b287f2d5a5ccf6720e66b63c7f29e41f025bb6b",
+            "url": "https://api.github.com/repos/skeeks-semenov/yii2-ckeditor/zipball/b8a53845972e2dceeb36edb82e448e77984ef63d",
+            "reference": "b8a53845972e2dceeb36edb82e448e77984ef63d",
             "shasum": ""
         },
         "require": {
-            "bower-asset/fullcalendar": "3.*",
-            "php": ">=5.4.0",
-            "yiisoft/yii2": "*",
-            "yiisoft/yii2-jui": "*"
-        },
-        "require-dev": {
-            "codeception/codeception": "*"
-        },
-        "time": "2016-09-23T10:20:14+00:00",
-        "type": "yii2-extension",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "yii2fullcalendar\\": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Philipp Frenzel",
-                "email": "philipp@frenzel.net",
-                "homepage": "http://www.frenzel.net/",
-                "role": "Developer"
-            }
-        ],
-        "description": "Yii2 fullcalendar Widgets",
-        "homepage": "http://www.frenzel.net/",
-        "keywords": [
-            "fullcalendar",
-            "yii2"
-        ]
-    },
-    {
-        "name": "ckeditor/ckeditor",
-        "version": "4.6.2",
-        "version_normalized": "4.6.2.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/ckeditor/ckeditor-releases.git",
-            "reference": "268078ab43195b6004d64bc8764c41f2f829640e"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/ckeditor/ckeditor-releases/zipball/268078ab43195b6004d64bc8764c41f2f829640e",
-            "reference": "268078ab43195b6004d64bc8764c41f2f829640e",
-            "shasum": ""
-        },
-        "time": "2017-01-12T17:36:48+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0+",
-            "LGPL-2.1+",
-            "MPL-1.1+"
-        ],
-        "authors": [
-            {
-                "name": "CKSource",
-                "homepage": "http://cksource.com"
-            }
-        ],
-        "description": "JavaScript WYSIWYG web text editor.",
-        "homepage": "http://ckeditor.com",
-        "keywords": [
-            "CKEditor",
-            "editor",
-            "fckeditor",
-            "html",
-            "javascript",
-            "richtext",
-            "text",
-            "wysiwyg"
-        ]
-    },
-    {
-        "name": "bower-asset/smalot-bootstrap-datetimepicker",
-        "version": "2.3.1",
-        "version_normalized": "2.3.1.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/smalot/bootstrap-datetimepicker.git",
-            "reference": "c893c91872d273bcea1bd806d03eb624c91a4cac"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/smalot/bootstrap-datetimepicker/zipball/c893c91872d273bcea1bd806d03eb624c91a4cac",
-            "reference": "c893c91872d273bcea1bd806d03eb624c91a4cac",
-            "shasum": ""
-        },
-        "type": "bower-asset-library",
-        "extra": {
-            "bower-asset-main": [
-                "js/bootstrap-datetimepicker.min.js",
-                "css/bootstrap-datetimepicker.min.css"
-            ],
-            "bower-asset-ignore": [
-                "build",
-                "sample in bootstrap v2",
-                "sample in bootstrap v3",
-                "screenshot",
-                "tests",
-                ".gitattributes",
-                ".gitignore",
-                ".travis.yml",
-                "minify.sh"
-            ]
-        },
-        "installation-source": "dist"
-    },
-    {
-        "name": "skeeks/yii2-widget-ckeditor",
-        "version": "1.0.6",
-        "version_normalized": "1.0.6.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/skeeks-semenov/yii2-widget-ckeditor.git",
-            "reference": "3b8fd9d76ddb44641f69046a867510cdfaa9c512"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/skeeks-semenov/yii2-widget-ckeditor/zipball/3b8fd9d76ddb44641f69046a867510cdfaa9c512",
-            "reference": "3b8fd9d76ddb44641f69046a867510cdfaa9c512",
-            "shasum": ""
-        },
-        "require": {
-            "ckeditor/ckeditor": ">=4.4.7",
             "yiisoft/yii2": "*"
         },
-        "time": "2015-06-07T14:41:23+00:00",
+        "time": "2016-12-18 15:18:23",
         "type": "yii2-extension",
         "installation-source": "dist",
         "autoload": {
             "psr-4": {
-                "skeeks\\widget\\ckeditor\\": ""
+                "skeeks\\yii2\\ckeditor\\": ""
             }
         },
         "notification-url": "https://packagist.org/downloads/",
         "license": [
-            "MIT"
+            "BSD-3-Clause"
         ],
         "authors": [
             {
                 "name": "Semenov Alexander",
                 "email": "semenov@skeeks.com"
+            },
+            {
+                "name": "SkeekS",
+                "email": "support@skeeks.com",
+                "homepage": "http://www.skeeks.com"
             }
         ],
-        "description": "CKEditor widget for Yii2.",
-        "homepage": "http://www.skeeks.com",
+        "description": "CKEditor extension for Yii2.",
         "keywords": [
             "CKEditor",
             "extension",
-            "widget",
-            "yii"
+            "yii2"
         ]
     }
 ]

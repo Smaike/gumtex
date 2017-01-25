@@ -30,11 +30,11 @@ class EmailsTpls extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name','content'/*, 'date_add', 'date_send', 'date_update', 'user_id'*/], 'required'],
-            [['content'], 'string'],
+            [['name','content', 'subject'/*, 'date_add', 'date_send', 'date_update', 'user_id'*/], 'required'],
+            [['content', 'subject'], 'string'],
             [['date_add', 'date_send', 'date_update'], 'safe'],
             [['user_id'], 'integer'],
-            [['name'], 'string', 'max' => 255],
+            [['name', 'subject'], 'string', 'max' => 255],
         ];
     }
 
@@ -46,6 +46,7 @@ class EmailsTpls extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Название',
+            'subject' => 'Тема письма',
             'content' => 'Текст письма',
             'date_add' => 'Дата создания',
             'date_send' => 'Дата последней отправки',
@@ -57,7 +58,7 @@ class EmailsTpls extends \yii\db\ActiveRecord
     public function beforeSave($insert)
     {
         $date = new \DateTime();
-        $this->user_id = 2;
+        $this->user_id = Yii::$app->user->identity->id;
         $this->date_update = $date->format('Y-m-d H:i:s');
         if ($insert)
             $this->date_add = $date->format('Y-m-d H:i:s');
