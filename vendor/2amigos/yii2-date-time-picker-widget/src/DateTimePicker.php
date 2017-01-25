@@ -161,7 +161,8 @@ class DateTimePicker extends InputWidget
             }
         }
         // @codeCoverageIgnoreEnd
-
+        // var_dump($js);
+        // die;
         $view->registerJs(implode("\n", $js));
     }
 }

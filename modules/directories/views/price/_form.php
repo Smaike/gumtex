@@ -2,9 +2,10 @@
 
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\web\View;
 use yii\widgets\ActiveForm;
-use dosamigos\datetimepicker\DateTimePicker;
+use yii\jui\DatePicker;
 
 use app\models\ClientCategory;
 use app\models\ClientType;
@@ -17,17 +18,6 @@ $types = ArrayHelper::map($models, 'id', 'name');
 $models = Service::find()->all();
 $services = ArrayHelper::map($models, 'id', 'name');
 
-
-$events = array();
-$Event = new \yii2fullcalendar\models\Event();
-$Event->id = 2;
-$Event->title = 'Testing';
-$Event->allDay = false;
-$Event->ranges[]= ['start' => "2017-01-11", 'end' => '2017-01-31'];
-$Event->start = '10:00';
-$Event->end = '17:00';
-$Event->dow = [2,4];
-$events[] = $Event;
 ?>
 
 <div class="price-form">
@@ -37,32 +27,80 @@ $events[] = $Event;
 
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($model, 'date_start', ['template' => "{label}<br />{input}\n{hint}\n{error}"])->widget(DateTimePicker::className(),
-                [
-                    'clientOptions' => [
-                        'format' => 'yyyy-mm-dd hh:ii',
-                        'startView' => 1,
-                        'minView' => 0,
-                        'autoclose' => true, // if inline = true
-                        'todayBtn' => true,
-                        'minuteStep' => 30,
-                    ]
-                ]
-            )?>
+            <?= $form->field($model, 'date_start', ['template' => "{label}<br />{input}\n{hint}\n{error}"])->widget(DatePicker::className(),[
+                'dateFormat' => 'yyyy-MM-dd',
+                'clientOptions' => [
+                    'changeMonth' => true,
+                    'yearRange' => '1907:2016',
+                    'changeYear' => true,
+                    'showOn' => 'button',
+                    'buttonImage' => Url::base().'/images/calendar.png',
+                    'buttonImageOnly' => true,
+                ]])->widget(\yii\widgets\MaskedInput::className(), [
+                        'mask' => '9999-99-99',
+                        'options'=>[
+                            'class' => 'form-control form_contact',
+                            'style' => "width:80%; display:inline-block; margin-right:10px;",
+                            'placeholder' => '1999-12-31'
+            ]])?>
         </div>
         <div class="col-sm-6">
-        <?= $form->field($model, 'date_end', ['template' => "{label}<br />{input}\n{hint}\n{error}"])->widget(DateTimePicker::className(),
-            [
-                'clientOptions' => [
-                    'format' => 'yyyy-mm-dd hh:ii',
-                    'startView' => 1,
-                    'minView' => 0,
-                    'autoclose' => true, // if inline = true
-                    'todayBtn' => true,
-                    'minuteStep' => 30,
+        <?= $form->field($model, 'date_end', ['template' => "{label}<br />{input}\n{hint}\n{error}"])->widget(DatePicker::className(),[
+            'dateFormat' => 'yyyy-MM-dd',
+            'clientOptions' => [
+                'changeMonth' => true,
+                'yearRange' => '1907:2016',
+                'changeYear' => true,
+                'showOn' => 'button',
+                'buttonImage' => Url::base().'/images/calendar.png',
+                'buttonImageOnly' => true,
+            ]])->widget(\yii\widgets\MaskedInput::className(), [
+                    'mask' => '9999-99-99',
+                    'options'=>[
+                        'class' => 'form-control form_contact',
+                        'style' => "width:80%; display:inline-block; margin-right:10px;",
+                        'placeholder' => '1999-12-31'
+        ]])?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <?= $form->field($model, 'time_start', ['inputOptions' => [
+                'class' => 'form-control'
                 ]
-            ]
-        )?>
+            ])->textInput()->widget(\yii\widgets\MaskedInput::className(), [
+                    'mask' => '99:99',
+                    'options'=>[
+                        'class' => 'form-control form_contact',
+                        'placeholder' => '12:00'
+        ]]) ?>
+        </div>
+        <div class="col-sm-6">
+            <?= $form->field($model, 'time_end', ['inputOptions' => [
+                'class' => 'form-control'
+                ]
+            ])->textInput()->widget(\yii\widgets\MaskedInput::className(), [
+                    'mask' => '99:99',
+                    'options'=>[
+                        'class' => 'form-control form_contact',
+                        'placeholder' => '19:00'
+        ]]) ?>
+        </div>
+    </div>
+    <div class = "row">
+        <div class="col-sm-6">
+            <?= $form->field($model, 'dow', ['inputOptions' => [
+                'class' => 'form-control'
+                ]
+            ])->checkboxList([
+                0 => 'Понедельник',
+                1 => 'Вторник',
+                2 => 'Среда',
+                3 => 'Четверг',
+                4 => 'Пятница',
+                5 => 'Суббота',
+                6 => 'Воскресенье',
+            ], ['separator' => "<br>"]) ?>
         </div>
     </div>
     <div class="row">
@@ -103,7 +141,7 @@ $events[] = $Event;
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Изменить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
     <div class="row">
-        <div class="col-sm-8 col-sm-offset-2">
+        <div class="col-sm-12">
             <?= \yii2fullcalendar\yii2fullcalendar::widget(array(
               'events'=> $events,
             ));?>

@@ -64,14 +64,31 @@ class PriceController extends Controller
     public function actionCreate()
     {
         $model = new Price();
+        $models = Price::find()->all();
+
+        $events = [];
+        foreach ($models as $key => $price) {
+            $Event = new \yii2fullcalendar\models\Event();
+            $Event->id = $key;
+            $Event->title = $price->service->name;
+            $Event->allDay = false;
+            $Event->ranges = [
+                ['start' => $price->date_start, 'end' => $price->date_end]
+            ];
+            $Event->start = $price->time_start;
+            $Event->end = $price->time_end;
+            $Event->dow = $price->dow;
+            $events[] = $Event;
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            // return $this->redirect(['view', 'id' => $model->id]);
         }
+        return $this->render('create', [
+            'model' => $model,
+            'events' => $events,
+        ]);
+        
     }
 
     /**
@@ -120,5 +137,13 @@ class PriceController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionAddPeriod()
+    {
+        $model = new Price();
+        return $this->renderAjax('_period', [
+            'model' => $model,
+        ]);
     }
 }
