@@ -1,12 +1,17 @@
 <?php
 /* @var $this yii\web\View */
 ?>
+<? if (empty($users)) {
+    echo 'В таблицу users нет записей' ;
+    return;
+}
+?>
 <h1>Создать рассылку</h1>
 
 <h3>Выберите шаблон</h3>
 <? /*<input type="text" name="search_tpl" id="search_tpl" placeholder="Поиск по шаблонам" style="width:200px; margin-bottom:20px; "/><br/> */ ?>
 <select id="tpls" name="tpls" class="selectpicker" data-live-search="true">
-    <option>Выберите шаблон</option>
+    <option value="">Выберите шаблон</option>
     <? foreach ($tpls as $v) { ?>
         <option  data-tokens="ketchup mustard" value="<?=$v->id?>"><?=$v->name?></option>
     <? } ?>
@@ -30,32 +35,31 @@
 
 <form id="newcontent" style="margin-top:30px;">
     <input type="hidden" id="parent_id" name="parent_id" value="5" />
-    <textarea id="newtpl" style="display:none"></textarea>
-    <label>Редактирование шаблона</label><br/>
+    <label>Редактирование шаблона</label>
+    <textarea id="newtpl" name="newtpl" style="display:none"></textarea>
+    <label>Тема письма</label><br/>
+    <input type="text" name="subject" id="subject" value="" />
+
     <div style="border:1px solid #000;">
     <?php skeeks\widget\ckeditor\CKEditorInline::begin(['preset' => skeeks\yii2\ckeditor\CKEditorPresets::BASIC]);?>
 
     <?php skeeks\widget\ckeditor\CKEditorInline::end();?>
     </div>
+    <label><br/>Выберите письма для отправки</label>
     <div class="row">
-        <div class="col-md-4">
-
+        <div class="col-md-8">
             <div class="row" style="margin-top:10px; margin-bottom:10px;">
-                <div class="col-xs-12">
-                    <div class="input-group">
+                <? foreach ($users as $user) { ?>
+                    <div class="col-xs-4">
+                        <div class="input-group">
                         <span class="input-group-addon">
-                          <input type="checkbox" id="label1">
+                          <input type="checkbox" class="emailcheck" name="emails[]" id="email<?= $user->id ?>" value="<?= $user->id ?>">
                         </span>
-                        <label for ="email1">Email@email.sd</label>
+                            <label class="input-group-addon" for="email<?= $user->id ?>"><?=$user->last_name?> <?=$user->first_name?><br/><?=$user->email?></label>
+                        </div>
                     </div>
-                </div>
+                <? } ?>
             </div>
-
-            <label for="email1" style="width:33%; float:left;">asd@asd.sd (Vasya) <input type="checkbox" id="email1" name="email[1]" /> </label>
-            <label for="email1" style="width:33%; float:left;">asd@asd.sd (Vasya) <input type="checkbox" id="email1" name="email[1]" /> </label>
-            <label for="email1" style="width:33%; float:left;">asd@asd.sd (Vasya) <input type="checkbox" id="email1" name="email[1]" /> </label>
-            <label for="email1" style="width:33%; float:left;">asd@asd.sd (Vasya) <input type="checkbox" id="email1" name="email[1]" /> </label>
-            <label for="email1" style="width:33%; float:left;">asd@asd.sd (Vasya) <input type="checkbox" id="email1" name="email[1]" /> </label>
         </div>
     </div>
     <button id="send">Отправить</button>
@@ -106,10 +110,32 @@ $script = <<< JS
                 // $('#newtpl').html(resp.editor);
                  $('#newtpl').val(resp.html);
                  $('#w0').html(resp.html);
+                 $('#subject').val(resp.subj);
             }
          });
     });
     $('#send').click(function() {
+        if (!$('.emailcheck:checked').length) {
+            alert('выберите хоть один email');
+            return false;
+        }
+        $('#newtpl').val($('#w0 p').html());
+        
+        
+     
+       if ($('#newtpl').val()=='' || $('#newtpl').val()=='<br>') { //костылина(
+               alert('заполните шаблон');
+               return false;
+           }
+           
+       
+        if ($('#tpls').val()=='') {
+           alert('Выберите шаблон');
+           return false;
+        } if ($('#subject').val()=='') {
+           alert('Тема письма пустая');
+           return false;
+        }
         var data = $('#newcontent').serialize();
          $.ajax({
             type: 'POST',
@@ -117,6 +143,8 @@ $script = <<< JS
             data: data,
             dataType: 'json'
          }).done(function (resp) {
+             console.log(resp);
+             return false;
             if (!resp.status) {
                 alert(resp.msg)
             } else {
