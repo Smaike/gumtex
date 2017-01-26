@@ -100,7 +100,6 @@ class yii2fullcalendar extends elWidget
      * @var string the javascript code that implements the eventRender function
      */
     public $eventRender = "function(event, element, view){
-        console.log(event.start.format());
         return (event.ranges.filter(function(range){
             return (event.start.isBefore(range.end) &&
                     event.end.isAfter(range.start));

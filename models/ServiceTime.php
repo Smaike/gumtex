@@ -29,7 +29,7 @@ class ServiceTime extends \yii\db\ActiveRecord
     {
         return [
             [['id_service'], 'integer'],
-            [['date_start', 'date_end'], 'safe'],
+            [['date_start', 'date_end', 'time_start', 'time_end', 'dow'], 'safe'],
         ];
     }
 
@@ -39,15 +39,33 @@ class ServiceTime extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id'         => 'ID',
             'id_service' => 'Название услуги',
             'date_start' => 'Дата начала',
-            'date_end' => 'Дата конца',
+            'date_end'   => 'Дата конца',
+            'time_start' => 'Время начала',
+            'time_end'   => 'Время конца',
+            'dow'        => 'Дни недели',
         ];
     }
 
     public function getService()
     {
         return $this->hasOne(Service::className(), ['id' => 'id_service']);
+    }
+
+    public function __set($name, $value) {
+       if ($name === 'dow') {
+          $this->setAttribute('dow', serialize($value));
+       } else {
+          parent::__set($name, $value);
+       }
+    }
+     
+    public function __get($name) {
+       if ($name === 'dow') {
+          return unserialize($this->getAttribute('dow'));
+       }
+       return parent::__get($name);
     }
 }

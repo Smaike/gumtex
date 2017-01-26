@@ -65,13 +65,38 @@ class ServiceTimeController extends Controller
     {
         $model = new ServiceTime();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        $models = ServiceTime::find()->all();
+
+        $events = [];
+        foreach ($models as $key => $price) {
+            $Event = new \yii2fullcalendar\models\Event();
+            $Event->id = $key;
+            $Event->title = $price->service->name;
+            $Event->allDay = false;
+            $Event->dow = $price->dow;
+            if(empty($price->dow)){
+                $Event->start = $price->date_start . " " . $price->time_start;
+                $Event->end = $price->date_end . " " . $price->time_end;
+                $Event->ranges = [
+                    ['start' => $Event->start, 'end' => $Event->end]
+                ];
+            }else{
+                $Event->ranges = [
+                    ['start' => $price->date_start, 'end' => $price->date_end]
+                ];
+                $Event->start = $price->time_start;
+                $Event->end = $price->time_end;
+            }
+            $events[] = $Event;
         }
+        if ($model->load(Yii::$app->request->post()) && $model->save()){
+            $this->refresh();
+        }
+        return $this->render('create', [
+            'model' => $model,
+            'events' => $events,
+        ]);
+        
     }
 
     /**

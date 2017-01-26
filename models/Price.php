@@ -33,7 +33,7 @@ class Price extends \yii\db\ActiveRecord
     {
         return [
             [['id_service', 'discount', 'client_type_id', 'client_category_id'], 'integer'],
-            [['date_start', 'date_end', 'time_start', 'time_end', 'dow'], 'safe'],
+            [['date_start'], 'safe'],
             [['price'], 'string', 'max' => 50],
         ];
     }
@@ -60,18 +60,5 @@ class Price extends \yii\db\ActiveRecord
         return $this->hasOne(Service::className(), ['id' => 'id_service']);
     }
 
-    public function __set($name, $value) {
-   if ($name === 'dow') {
-      $this->setAttribute('dow', serialize($value));
-   } else {
-      parent::__set($name, $value);
-   }
-}
- 
-public function __get($name) {
-   if ($name === 'dow') {
-      return unserialize($this->getAttribute('dow'));
-   }
-   return parent::__get($name);
-}
+    
 }
