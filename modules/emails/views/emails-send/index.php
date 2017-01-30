@@ -35,16 +35,22 @@
 
 <form id="newcontent" style="margin-top:30px;">
     <input type="hidden" id="parent_id" name="parent_id" value="5" />
+
+    <div class="form-group">
+
     <label>Редактирование шаблона</label>
+        <div style="border:1px solid #000;">
+            <?php skeeks\widget\ckeditor\CKEditorInline::begin(['preset' => skeeks\yii2\ckeditor\CKEditorPresets::BASIC]);?>
+
+            <?php skeeks\widget\ckeditor\CKEditorInline::end();?>
+        </div>
     <textarea id="newtpl" name="newtpl" style="display:none"></textarea>
+    </div>
+    <div class="form-group">
     <label>Тема письма</label><br/>
     <input type="text" name="subject" id="subject" value="" />
-
-    <div style="border:1px solid #000;">
-    <?php skeeks\widget\ckeditor\CKEditorInline::begin(['preset' => skeeks\yii2\ckeditor\CKEditorPresets::BASIC]);?>
-
-    <?php skeeks\widget\ckeditor\CKEditorInline::end();?>
     </div>
+
     <label><br/>Выберите письма для отправки</label>
     <div class="row">
         <div class="col-md-8">

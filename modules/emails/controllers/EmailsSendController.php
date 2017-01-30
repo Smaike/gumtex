@@ -2,6 +2,7 @@
 
 namespace app\modules\emails\controllers;
 
+use app\models\EmailsHistory;
 use app\models\EmailsSend;
 use app\models\EmailsTpls;
 use app\models\User;
@@ -43,6 +44,42 @@ class EmailsSendController extends Controller
         $esend->recipients=$users;
 
         return ['status' => $esend->save()];
+    }
+
+    public function actionSend() {
+        $emails = EmailsSend::findAll(['is_send' => '!=1']);
+        if (empty($emails))
+            die('nothing to do');
+        $se = 0;
+        foreach ($emails as &$e)
+        {
+            $emailsend = unserialize($e->recipients);
+            if (!empty($emailsend))
+                foreach($emailsend as $es)
+                {
+                    $se++;
+                    $user = User::find()->where(['id'=>$es])->one();
+                    if (!empty($user))
+                        \Yii::$app->mailer->compose('sendings', ['content' => $e->content])
+                            ->setFrom(['from@from.fr' => \Yii::$app->name.''])
+                            ->setTo($user->email)
+                            ->setSubject($e->subject)
+                            ->send();
+                    else $status = false;
+
+                    $eh = new EmailsHistory();
+                    $eh->emails_send_id = $e->id;
+                    $eh->recipient = !empty($user) ? $user->id : '';
+                    $eh->date_send = date('Y-m-d h:i:s'); //дата отправки
+                    $eh->user_id = $es;
+                    $eh->save();
+                }
+            $e->date_send = date('Y-m-d h:i:s'); //дата отправки
+            $e->is_send = 1;
+            $e->save();
+        }
+        echo 'rassilok '.count($emails).PHP_EOL;
+        echo 'send '.$se.PHP_EOL;
     }
 
 }
