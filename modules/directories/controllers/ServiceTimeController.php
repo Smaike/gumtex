@@ -82,7 +82,7 @@ class ServiceTimeController extends Controller
                 ];
             }else{
                 $Event->ranges = [
-                    ['start' => $price->date_start, 'end' => $price->date_end]
+                    ['start' => '0001-01-01', 'end' => '3000-01-01']
                 ];
                 $Event->start = $price->time_start;
                 $Event->end = $price->time_end;

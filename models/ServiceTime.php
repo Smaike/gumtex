@@ -68,4 +68,15 @@ class ServiceTime extends \yii\db\ActiveRecord
        }
        return parent::__get($name);
     }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        parent::afterSave($insert, $changedAttributes);
+        foreach ($this->dow as $day) {
+            $daysServices = new DaysServices();
+            $daysServices->id_service = $this->id;
+            $daysServices->day = $day;
+            $daysServices->save();
+        }
+    }
 }

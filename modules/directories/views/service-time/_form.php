@@ -20,7 +20,7 @@ $services = ArrayHelper::map($models, 'id', 'name');
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'id_service')->dropDownList($services, ['prompt' => 'Выберите услугу']) ?>
-
+    <?php /*
     <div class="row">
         <div class="col-sm-6">
             <?= $form->field($model, 'date_start', ['template' => "{label}<br />{input}\n{hint}\n{error}"])->widget(DatePicker::className(),[
@@ -59,6 +59,7 @@ $services = ArrayHelper::map($models, 'id', 'name');
         ]])?>
         </div>
     </div>
+    */?>
     <div class="row">
         <div class="col-sm-6">
             <?= $form->field($model, 'time_start', ['inputOptions' => [
