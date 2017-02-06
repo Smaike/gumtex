@@ -21,7 +21,7 @@ class CalendarActionForm extends Model
 
     public $date;
 
-    public $minute_period = 30;
+    public $minute_period = 60;
 
     /**
      * @var CalendarInterface

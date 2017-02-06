@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 
+use app\models\ClientDiscount;
 use app\models\Event;
 use app\models\Service;
 use app\models\ServiceTime;
@@ -75,13 +76,19 @@ class EventController extends Controller
 
         $model = new EventCreateForm();
         $model->date = $date;
-
+        $p_time = explode(' ', $date)[1];
         $services = ServiceTime::find()
             ->where(['<=', 'date_start', $date])
             ->andWhere(['>=', 'date_end', $date])
+            ->andWhere(['<=', 'time_start', $p_time])
+            ->andWhere(['>=', 'time_end', $p_time])
             ->with('service')
             ->all();
-        $aServices = ArrayHelper::map($services, 'service.id', 'service.name');
+        foreach ($services as $key => $service) {
+            if(!empty($service->dow) && in_array(date('w', strtotime($date)), $service->dow)){
+                $aServices[$service->id_service] = $service->service->name;
+            }
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['calendar/index', 'date' => date("Y-m-d",strtotime($model->date)), 'viewMode' => 'day']);
@@ -137,15 +144,17 @@ class EventController extends Controller
 
         $query = Price::find()
             ->where(['<=', 'date_start', $date])
-            ->andWhere(['>=', 'date_end', $date])
-            ->andWhere(['id' => $post]);
+            ->andWhere(['id_service' => $post]);
         $services = $query->all();
         foreach ($services as $service) {
             $price = $service->price;
-            if((!empty($service->client_type_id) && ($service->client_type_id == $type))||
-                (!empty($service->client_category_id) && ($service->client_category_id == $cat)))
-            {
-                $price = $price - $price*$service->discount/100;
+            //Сделать херь со скидками
+            $dis1 = $service->getDiscountCategory($cat);
+            $dis2 = $service->getDiscountType($type);
+            if($dis1 > $dis2){
+                $price = $price - $price*$dis1/100;
+            }else{
+                $price = $price - $price*$dis2/100;
             }
             $cost+= $price;
         }

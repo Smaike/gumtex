@@ -3,11 +3,13 @@
 namespace app\modules\directories\controllers;
 
 use Yii;
-use app\models\Price;
-use app\models\search\PriceSearch;
 use app\modules\directories\components\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+
+use app\models\Price;
+use app\models\search\PriceSearch;
+use app\models\ClientDiscount;
 
 /**
  * PriceController implements the CRUD actions for Price model.
@@ -66,7 +68,8 @@ class PriceController extends Controller
         $model = new Price();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            // return $this->redirect(['view', 'id' => $model->id]);
+            $this->saveDiscounts($model);
+            return $this->redirect(['update', 'id' => $model->id]);
         }
         return $this->render('create', [
             'model' => $model,
@@ -85,12 +88,13 @@ class PriceController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            $this->saveDiscounts($model);
+            return $this->redirect(['update', 'id' => $model->id]);
         }
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+        
     }
 
     /**
@@ -128,5 +132,27 @@ class PriceController extends Controller
         return $this->renderAjax('_period', [
             'model' => $model,
         ]);
+    }
+
+    private function saveDiscounts($model)
+    {
+        foreach (Yii::$app->request->post('category') as $key => $row) {
+            if(!$discount = ClientDiscount::find()->where(['id_service' => $model->id, 'id_category' => $key])->one()){
+                $discount = new ClientDiscount();
+                $discount->id_service = $model->id;
+                $discount->id_category = $key;
+            }
+            $discount->value = $row;
+            $discount->save();
+        }
+        foreach (Yii::$app->request->post('type') as $key => $row) {
+            if(!$discount = ClientDiscount::find()->where(['id_service' => $model->id, 'id_type' => $key])->one()){
+                $discount = new ClientDiscount();
+                $discount->id_service = $model->id;
+                $discount->id_type = $key;
+            }
+            $discount->value = $row;
+            $discount->save();
+        }
     }
 }

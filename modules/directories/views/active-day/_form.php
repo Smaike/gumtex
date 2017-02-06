@@ -19,7 +19,7 @@ use yii\jui\DatePicker;
                 'dateFormat' => 'yyyy-MM-dd',
                 'clientOptions' => [
                     'changeMonth' => true,
-                    'yearRange' => '1907:2016',
+                    'yearRange' => '2017:2090',
                     'changeYear' => true,
                     'showOn' => 'button',
                     'buttonImage' => Url::base().'/images/calendar.png',

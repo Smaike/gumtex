@@ -12,14 +12,13 @@ use Yii;
 use yii\base\Widget;
 use yii\helpers\Html;
 use yii\helpers\Json;
+use app\models\ActiveDay;
 
 /**
  * Виджет для отображения календаря
- *
- * @property string $viewMode режим просмотра. Определяется на основе сессии, однако можно задать вручную
- *
- * @author Anatoly Rugalev
- * @link https://github.com/AnatolyRugalev
+ * Прости зашедший сюда человек и увидевший мои правки в vendor'e. 
+ * Видит Всевышний, я не хотел этого. Но на этот проект такое наплевательское отношение, что оно вызвало сие действие с моей стороны.
+ * Беги, если не поздно. Потраченные нервы не будут стоить полученных денег.
  */
 class CalendarWidget extends Widget
 {
@@ -242,5 +241,14 @@ class CalendarWidget extends Widget
             $condition = $condition && $date->getTimestamp() < $endTs;
         }
         return $condition;
+    }
+
+    public function isClosed(DateTime $date)
+    {
+        if($day = ActiveDay::find()->where(['date' => $date->format('Y-m-d')])->one()){
+            return !($day->is_active);
+        }else{
+            return in_array($date->format('N'), [6,7]);
+        }
     }
 }

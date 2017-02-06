@@ -60,5 +60,21 @@ class Price extends \yii\db\ActiveRecord
         return $this->hasOne(Service::className(), ['id' => 'id_service']);
     }
 
+    public function getDiscountCategory($id)
+    {
+        if($discount = ClientDiscount::find()->where(['id_service' => $this->id, 'id_category' => $id])->one()){
+            return $discount->value;
+        }
+        return 0;
+    }
+
+    public function getDiscountType($id)
+    {
+        if($discount = ClientDiscount::find()->where(['id_service' => $this->id, 'id_type' => $id])->one()){
+            return $discount->value;
+        }
+        return 0;
+    }
+    
     
 }

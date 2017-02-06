@@ -29,6 +29,8 @@ class ServiceTime extends \yii\db\ActiveRecord
     {
         return [
             [['id_service'], 'integer'],
+            ['date_start', 'default', 'value' => '0000-01-01'],
+            ['date_end', 'default', 'value' => '3000-01-01'],
             [['date_start', 'date_end', 'time_start', 'time_end', 'dow'], 'safe'],
         ];
     }

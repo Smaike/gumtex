@@ -21,8 +21,6 @@ $types = ArrayHelper::map($models, 'id', 'name');
 
     <?= $form->field($model, 'ht_name')->dropDownList($ht_names, ['prompt' => 'Выберите название из системы HT']) ?>
 
-    <?= $form->field($model, 'cost')->textInput() ?>
-
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Создать' : 'Изменить', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
