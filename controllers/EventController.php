@@ -84,12 +84,12 @@ class EventController extends Controller
             ->andWhere(['>=', 'time_end', $p_time])
             ->with('service')
             ->all();
+        $aServices = [];
         foreach ($services as $key => $service) {
             if(!empty($service->dow) && in_array(date('w', strtotime($date)), $service->dow)){
                 $aServices[$service->id_service] = $service->service->name;
             }
         }
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['calendar/index', 'date' => date("Y-m-d",strtotime($model->date)), 'viewMode' => 'day']);
         } else {
