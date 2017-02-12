@@ -66,7 +66,7 @@ class UserTypeController extends \app\modules\directories\components\web\Control
         $model = new UserType();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,

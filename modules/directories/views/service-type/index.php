@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\search\ServiceType */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Типы услуг';
+$this->title = 'Категории услуг';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="service-type-index">
@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Добавить тип услуг', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Добавить категорию услуг', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

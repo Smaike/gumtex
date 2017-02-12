@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\ServiceType */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Типы услуг', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Категории услуг', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="service-type-view">

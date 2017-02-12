@@ -13,6 +13,8 @@ use yii\base\Widget;
 use yii\helpers\Html;
 use yii\helpers\Json;
 use app\models\ActiveDay;
+use app\models\DaysServices;
+use app\models\ServiceTime;
 
 /**
  * Виджет для отображения календаря
@@ -250,5 +252,12 @@ class CalendarWidget extends Widget
         }else{
             return in_array($date->format('N'), [6,7]);
         }
+    }
+
+    public function getDateRange($day)
+    {
+        $id_services = DaysServices::find()->select(['id_service'])->where(['day' => $day])->column();
+        $serviceTime = ServiceTime::find()->select(['MIN(time_start) as start', 'MAX(time_end) as end'])->where(['id' => $id_services])->asArray()->one();
+        return $serviceTime;
     }
 }

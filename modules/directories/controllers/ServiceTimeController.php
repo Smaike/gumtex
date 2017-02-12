@@ -4,6 +4,7 @@ namespace app\modules\directories\controllers;
 
 use Yii;
 use app\models\ServiceTime;
+use app\models\ServiceType;
 use app\models\search\ServiceTimeSearch;
 use app\modules\directories\components\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -35,12 +36,18 @@ class ServiceTimeController extends Controller
      */
     public function actionIndex()
     {
+        if(!($type_id = Yii::$app->request->get('type_id'))){
+            return $this->redirect(['start']);
+        }
+        $params = Yii::$app->request->queryParams;
+        $params['ServiceTimeSearch']['type_id'] = $type_id;
         $searchModel = new ServiceTimeSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->search($params);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'type_id' => $type_id,
         ]);
     }
 
@@ -61,7 +68,7 @@ class ServiceTimeController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($type_id)
     {
         $model = new ServiceTime();
 
@@ -90,11 +97,12 @@ class ServiceTimeController extends Controller
             $events[] = $Event;
         }
         if ($model->load(Yii::$app->request->post()) && $model->save()){
-            $this->refresh();
+            return $this->redirect(['index', 'type_id' => $type_id]);
         }
         return $this->render('create', [
             'model' => $model,
             'events' => $events,
+            'type_id' => $type_id,
         ]);
         
     }
@@ -141,6 +149,14 @@ class ServiceTimeController extends Controller
             'events' => $events,
         ]);
         
+    }
+
+    public function actionStart()
+    {
+        $types = ServiceType::find()->all();
+        return $this->render('start', [
+            'types' => $types,
+        ]);
     }
 
     /**

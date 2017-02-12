@@ -14,10 +14,10 @@ $types = ArrayHelper::map($models, 'id', 'name');
 <div class="service-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    
+    <?= $form->field($model, 'type_id')->dropDownList($types, ['prompt' => 'Выберите категорию услуги'])?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'type_id')->dropDownList($types, ['prompt' => 'Выберите тип услуги'])?>
 
     <?= $form->field($model, 'ht_name')->dropDownList($ht_names, ['prompt' => 'Выберите название из системы HT']) ?>
 

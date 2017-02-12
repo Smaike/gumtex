@@ -144,7 +144,11 @@ a.desc:after {
 }
 
 .calendar-month-cell .panel-body.active{
-    background-color: #cfc;
+    background-color: #cfc!important;
+    color:#060;
+}
+.calendar-month-cell .panel-body.no-active.closed{
+    background-color: #ccc!important;
     color:#060;
 }
 .calendar-month-cell .panel-body {

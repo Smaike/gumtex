@@ -64,7 +64,6 @@ class Controller extends \yii\web\Controller {
 					['label' => 'Категории клиентов', 'url' => ['/directory/client-category'], 'active' => $this->id == 'client-category'],
 					['label' => 'Пользователи', 'url' => ['/directory/user'], 'active' => $this->id == 'user'],
 					['label' => 'Типы пользователей', 'url' => ['/directory/user-type'], 'active' => $this->id == 'user-type'],
-					['label' => 'Типы клиентов', 'url' => ['/directory/client-type'], 'active' => $this->id == 'client-type'],
 					['label' => 'Учебные заведения', 'url' => ['/directory/lib-school'], 'active' => $this->id == 'lib-school'],
 					['label' => 'IP компьютеров', 'url' => ['/directory/computer'], 'active' => $this->id == 'computer'],
 					['label' => 'Помещения для бронирования', 'url' => ['/directory/room'], 'active' => $this->id == 'room'],
@@ -73,8 +72,9 @@ class Controller extends \yii\web\Controller {
 			[
 				'label' => 'Услуги', 'items' => [
 					['label' => 'Услуги', 'url' => ['/directory/service'], 'active' => $this->id == 'service'],
-					['label' => 'Типы услуг', 'url' => ['/directory/service-type'], 'active' => $this->id == 'service-type'],
+					['label' => 'Категории услуг', 'url' => ['/directory/service-type'], 'active' => $this->id == 'service-type'],
 					['label' => 'Стоимость услуг', 'url' => ['/directory/price'], 'active' => $this->id == 'price'],
+					['label' => 'Типы скидок', 'url' => ['/directory/client-type'], 'active' => $this->id == 'client-type'],
 					['label' => 'График работы услуг', 'url' => ['/directory/service-time'], 'active' => $this->id == 'service-time'],
 				]
 			],

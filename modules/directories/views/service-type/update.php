@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\ServiceType */
 
-$this->title = 'Изменить тип услуг: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Типы услуг', 'url' => ['index']];
+$this->title = 'Изменить категорию услуг: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Категории услуг', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Изменить';
 ?>

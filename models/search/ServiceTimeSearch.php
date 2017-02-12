@@ -12,13 +12,14 @@ use app\models\ServiceTime as ServiceTimeModel;
  */
 class ServiceTimeSearch extends ServiceTimeModel
 {
+    public $type_id;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id', 'id_service'], 'integer'],
+            [['id', 'id_service', 'type_id'], 'integer'],
             [['date_start', 'date_end'], 'safe'],
         ];
     }
@@ -43,7 +44,9 @@ class ServiceTimeSearch extends ServiceTimeModel
     {
         $query = ServiceTimeModel::find();
 
-        // add conditions that should always apply here
+        $query->joinWith(['service']);
+
+        
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -56,7 +59,9 @@ class ServiceTimeSearch extends ServiceTimeModel
             // $query->where('0=1');
             return $dataProvider;
         }
-
+        $query->andWhere([
+            'services.type_id' => $this->type_id,
+        ]);
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,

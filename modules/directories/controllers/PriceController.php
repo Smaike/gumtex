@@ -69,7 +69,7 @@ class PriceController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $this->saveDiscounts($model);
-            return $this->redirect(['update', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
         return $this->render('create', [
             'model' => $model,

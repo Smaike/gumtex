@@ -10,8 +10,7 @@ use dosamigos\datetimepicker\DateTimePicker;
 
 use app\models\Service;
 
-
-$models = Service::find()->all();
+$models = Service::find()->where(['type_id' => $type_id])->all();
 $services = ArrayHelper::map($models, 'id', 'name');
 ?>
 

@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Типы клиентов';
+$this->title = 'Типы скидок';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="client-type-index">
@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Создать тип клиентов', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать тип скидок', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
