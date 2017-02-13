@@ -129,7 +129,7 @@ a.desc:after {
 }
 .calendar-week-column .panel-body{
     line-height: normal;
-    font-size: 18px;
+    font-size: 14px;
     background-color: inherit;
     
 }
@@ -144,11 +144,7 @@ a.desc:after {
 }
 
 .calendar-month-cell .panel-body.active{
-    background-color: #cfc!important;
-    color:#060;
-}
-.calendar-month-cell .panel-body.no-active.closed{
-    background-color: #ccc!important;
+    background-color: #cfc;
     color:#060;
 }
 .calendar-month-cell .panel-body {
@@ -180,4 +176,11 @@ a.desc:after {
 .pc.active{
     background: url('../images/pc-processed.png') no-repeat;
     background-size: 100px 100px;
+}
+
+.fc-widget-content.disabled{
+    background-color: #fdd;
+}
+.fc-past{
+    background-color: #ccc;
 }

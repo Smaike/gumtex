@@ -132,12 +132,13 @@ class Event extends Model
    * the unique resource for the event
    */
   public $resourceId;
+  public $rendering;
 
   public function rules()
   {
     return [
       [['id', 'resourceId'], 'integer'],
-      ['title, allDay, start, end, url, className, source, color, backgroundColor, borderColor, textColor', 'safe'],
+      ['title, allDay, start, end, url, className, source, color, backgroundColor, borderColor, textColor, rendering', 'safe'],
       ['editable, startEditable, durationEditable', 'boolean'],
     ];
   }

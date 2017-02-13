@@ -10,7 +10,7 @@ use yii\helpers\Url;
 $context = $this->context;
 $currentMonth = $context->isInPeriod($cell->date);
 $isActive = $context->isActive($cell->date);
-$isClosed = ($context->isClosed($cell->date) || (empty($context->getDateRange($cell->date->format('w'))['start'])));
+$isClosed = ($context->isClosed($cell->date) || (empty($context->getDateRange($cell->date->format('w'))['start'])) && ($cell->date->format('Y-m-d') >= date('Y-m-d')));
 
 
 $time = $cell->date->format('Y-m-d');
@@ -22,7 +22,7 @@ $link = ($isActive && !($isClosed))? Url::to(['calendar/index', 'date' => $time,
             <?= $cell->date->format('d') ?>
         </div>
         <a href = "<?=$link?>" style="text-decoration: none; color: inherit;">
-        <div class="panel-body <?=($isClosed) ? 'closed' : ''?><?=($isActive) ? ' active' : ' no-active' ?>">
+        <div class="panel-body <?=($isClosed) ? 'closed' : ''?><?=($isActive) ? ' active' : '' ?>">
             <span style="font-size: 12px;">К|У</span><br>
             <?= count($cell->items) ?>|<?= $cell->countServices() ?>
         </div>

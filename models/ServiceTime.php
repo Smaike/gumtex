@@ -56,29 +56,50 @@ class ServiceTime extends \yii\db\ActiveRecord
         return $this->hasOne(Service::className(), ['id' => 'id_service']);
     }
 
+    public function getDaysServices()
+    {
+        return $this->hasMany(DaysServices::className(), ['id_service' => 'id']);
+    }
+
     public function __set($name, $value) {
-       if ($name === 'dow') {
+        if ($name === 'dow') {
           $this->setAttribute('dow', serialize($value));
-       } else {
+        } else {
           parent::__set($name, $value);
-       }
+        }
     }
      
     public function __get($name) {
-       if ($name === 'dow') {
+        if ($name === 'dow') {
           return unserialize($this->getAttribute('dow'));
-       }
-       return parent::__get($name);
+        }
+        return parent::__get($name);
     }
 
     public function afterSave($insert, $changedAttributes)
     {
         parent::afterSave($insert, $changedAttributes);
+        if(!empty($this->daysServices)){
+            foreach ($this->daysServices as $row) {
+                $row->delete();
+            }
+        }
         foreach ($this->dow as $day) {
             $daysServices = new DaysServices();
             $daysServices->id_service = $this->id;
             $daysServices->day = $day;
             $daysServices->save();
+        }
+    }
+    public function beforeDelete()
+    {
+        if (parent::beforeDelete()) {
+            foreach ($this->daysServices as $row) {
+                $row->delete();
+            }
+            return true;
+        } else {
+            return false;
         }
     }
 }

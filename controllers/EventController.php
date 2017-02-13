@@ -73,6 +73,9 @@ class EventController extends Controller
     public function actionCreate()
     {
         $date = Yii::$app->request->get('date');
+        if(Event::find()->where(['date' => $date])->count() >= 6){
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
 
         $model = new EventCreateForm();
         $model->date = $date;

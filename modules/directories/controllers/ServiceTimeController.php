@@ -147,6 +147,7 @@ class ServiceTimeController extends Controller
         return $this->render('update', [
             'model' => $model,
             'events' => $events,
+            'type_id' => $model->service->type_id,
         ]);
         
     }

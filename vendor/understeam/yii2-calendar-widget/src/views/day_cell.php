@@ -78,7 +78,7 @@ $linkProfile = Url::to();
                     </td>
                 </tr>
             <?php }?>
-            <?php if(count(($cell->items) < 6)){?> 
+            <?php if(count($cell->items) < 6){?> 
             <tr>
                 <?php if(count($cell->items) == 0){?>
                     <td style="cursor:pointer; width:10%"><?= $cell->date->format('H:i') ?></td>

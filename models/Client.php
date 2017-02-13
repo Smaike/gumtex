@@ -41,7 +41,7 @@ class Client extends \yii\db\ActiveRecord
         return [
             [['first_name', 'last_name'], 'required'],
             [['birthday'], 'safe'],
-            [['type', 'category', 'id_consultant'], 'integer'],
+            [['type', 'category', 'id_consultant', 'age'], 'integer'],
             [['comment', 'where_know'], 'string'],
             [['first_name', 'last_name', 'middle_name', 'p_first_name', 'p_last_name', 'p_middle_name'], 'string', 'max' => 60],
             [['mobile', 'p_mobile'], 'string', 'max' => 20],
@@ -69,6 +69,7 @@ class Client extends \yii\db\ActiveRecord
             'id_consultant' => 'Консультант',
             'comment' => 'Комментарии',
             'where_know' => 'Откуда узнал',
+            'age' => 'Возраст',
         ];
     }
 
@@ -83,16 +84,6 @@ class Client extends \yii\db\ActiveRecord
     public function getConsultant()
     {
         return $this->hasOne(User::className(), ['id' => 'id_consultant']);
-    }
-
-    public function getAge()
-    {
-        $birthday_timestamp = strtotime($this->birthday);
-        $age = date('Y') - date('Y', $birthday_timestamp);
-        if (date('md', $birthday_timestamp) > date('md')) {
-            $age--;
-        }
-        return $age;
     }
 
     public function getFullName()

@@ -81,7 +81,7 @@ class yii2fullcalendar extends elWidget
      * tell the calendar, if you like to render google calendar events within the view
      * @var boolean
      */
-    public $googleCalendar = false;
+    public $googleCalendar = true;
 
     /**
      * the text that will be displayed on changing the pages
@@ -99,12 +99,9 @@ class yii2fullcalendar extends elWidget
      * The javascript function to us as en eventRender callback
      * @var string the javascript code that implements the eventRender function
      */
-    public $eventRender = "function(event, element, view){
-        return (event.ranges.filter(function(range){
-            return (event.start.isBefore(range.end) &&
-                    event.end.isAfter(range.start));
-        }).length)>0;
-    }";
+    public $eventRender = "";
+
+    public $dayRender = "";
 
     /**
      * The javascript function to us as en eventAfterRender callback
@@ -117,6 +114,7 @@ class yii2fullcalendar extends elWidget
      * @var string the javascript code that implements the eventAfterAllRender function
      */
     public $eventAfterAllRender = "";
+
 
     /**
      * Initializes the widget.
@@ -237,6 +235,9 @@ class yii2fullcalendar extends elWidget
         }");
         if ($this->eventRender){
             $options['eventRender'] = new JsExpression($this->eventRender);
+        }
+        if ($this->dayRender){
+            $options['dayRender'] = new JsExpression($this->dayRender);
         }
         if ($this->eventAfterRender){
             $options['eventAfterRender'] = new JsExpression($this->eventAfterRender);

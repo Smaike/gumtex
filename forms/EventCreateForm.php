@@ -30,6 +30,7 @@ class EventCreateForm extends Model
     public $date;
     public $name;
     public $services;
+    public $age;
 
     /**
      * @return array the validation rules.
@@ -39,7 +40,7 @@ class EventCreateForm extends Model
         return [
             [['first_name', 'last_name'], 'required'],
             [['birthday'], 'date', 'format' => 'dd-mm-yyyy'],
-            [['type', 'category', 'id_consultant'], 'integer'],
+            [['type', 'category', 'id_consultant', 'age'], 'integer'],
             [['comment', 'where_know'], 'string'],
             [['first_name', 'last_name', 'middle_name', 'p_first_name', 'p_last_name', 'p_middle_name'], 'string', 'max' => 60],
             [['mobile', 'p_mobile'], 'string', 'max' => 20],
@@ -71,6 +72,7 @@ class EventCreateForm extends Model
             'where_know' => 'Откуда узнал',
             'name' => "Название события",
             'services' => "Услуги",
+            'age' => "Возраст"
         ];
     }
 

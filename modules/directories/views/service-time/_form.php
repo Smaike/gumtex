@@ -9,9 +9,11 @@ use yii\web\View;
 use dosamigos\datetimepicker\DateTimePicker;
 
 use app\models\Service;
+use app\models\ActiveDay;
 
 $models = Service::find()->where(['type_id' => $type_id])->all();
 $services = ArrayHelper::map($models, 'id', 'name');
+$disable_days = ActiveDay::find()->select(['date'])->where(['is_active' => 0])->column();
 ?>
 
 <div class="service-time-form">
@@ -107,7 +109,20 @@ $services = ArrayHelper::map($models, 'id', 'name');
     <div class="row">
         <div class="col-sm-12">
             <?= \yii2fullcalendar\yii2fullcalendar::widget(array(
-              'events'=> $events,
+                'events'=> $events,
+                'dayRender' => "function(date, cell){
+                    if ($.inArray(date.format('YYYY-MM-DD').toString(), ['" . implode("', '", $disable_days) . "']) !== -1){
+                        $(cell).addClass('disabled');
+                    }
+                }",
+                'eventRender' => "function(event, element, view){
+                    return (event.ranges.filter(function(range){
+                        return (event.start.isBefore(range.end) &&
+                                event.end.isAfter(range.start) && 
+                                ($.inArray(event.end.format('YYYY-MM-DD').toString(), ['" . implode("', '", $disable_days) . "']) == -1)
+                        );
+                    }).length)>0;
+                }"
             ));?>
         </div>
     </div>
