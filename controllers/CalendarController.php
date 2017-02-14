@@ -33,9 +33,6 @@ class CalendarController extends Controller
         $grid = $model->getGrid();
         $viewFile = '@vendor/understeam/yii2-calendar-widget/src/views/calendar';
 
-        $options = [
-            'onClick' => new JsExpression("function(d,t){alert([d,t].join(' '))}"),
-        ];
 
         return $this->render($viewFile, [
             'usePjax' => true,
@@ -44,7 +41,6 @@ class CalendarController extends Controller
                 'viewMode' => $model->viewMode,
                 'period' => $model->getPeriod(),
                 'calendar' => $calendar,
-                'clientOptions' => $options,
             ],
         ]);
     }

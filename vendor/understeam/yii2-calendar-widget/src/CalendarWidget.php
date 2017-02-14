@@ -138,7 +138,7 @@ class CalendarWidget extends Widget
     {
         $url = $this->getActionUrl();
         $url[$this->actionDateParam] = $this->period->getStartDate()->format('Y-m-d');
-        $url[$this->actionViewModeParam] = CalendarInterface::VIEW_MODE_WEEK;
+        $url[$this->actionViewModeParam] = CalendarInterface::VIEW_MODE_DAY;
         return $url;
     }
 

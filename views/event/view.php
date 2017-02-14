@@ -44,18 +44,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'client.mobile',
             [
                 'attribute' => "client.p_first_name",
-                'visible' => $model->client->getAge()<18,
+                'visible' => $model->client->age<18,
             ],
             [
                 'attribute' => "client.p_last_name",
-                'visible' => $model->client->getAge()<18,
+                'visible' => $model->client->age<18,
             ],
             [
                 'attribute' => "client.p_middle_name",
-                'visible' => $model->client->getAge()<18,
+                'visible' => $model->client->age<18,
             ],[
                 'attribute' => "client.p_mobile",
-                'visible' => $model->client->getAge()<18,
+                'visible' => $model->client->age<18,
             ],
             'client.clientType.name',
             'client.clientCategory.name',
@@ -95,7 +95,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <?php $this->registerJs("
     $(document).on('click', '.start-serv', function(){
         var div = $(this);
-        console.log(div);
         $.ajax({
           url: '" . Url::to('directory/computer/list-activity', true) . "',
           type: 'POST',   

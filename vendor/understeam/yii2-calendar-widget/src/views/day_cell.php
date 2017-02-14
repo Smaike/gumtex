@@ -52,10 +52,11 @@ $linkProfile = Url::to();
             <tr>
                 <th >Время</th>
                 <th >ФИО клиента</th>
-                <th >Возраст</th>
+                <th >Возр.</th>
                 <th >Услуги</th>
                 <th >Консультант</th>
                 <th >Комментарии</th>
+                <th >Цена</th>
                 <th >#</th>
             <tr>
             <?php }?>
@@ -63,7 +64,7 @@ $linkProfile = Url::to();
             <?php foreach($cell->items as $item){
                 $count++;?>
                 <tr>
-                    <?php if($count==1){?><td rowspan="7" style="cursor:pointer; width:10%"><?= $cell->date->format('H:i') ?></td><?php }?>
+                    <?php if($count==1){?><td rowspan="7" style="cursor:pointer; width:7%"><?= $cell->date->format('H:i') ?></td><?php }?>
                     <td style="width:25%"><?=$item->client->last_name?> <?=$item->client->first_name?> <?=$item->client->middle_name?></td>
                     <td style="width:5%"><?=$item->client->age?></td>
                     <td style="width:15%"><?php foreach ($item->services as $service) {?>
@@ -71,9 +72,13 @@ $linkProfile = Url::to();
                     <?php }?></td>
                     <td style="width:15%"><?=$item->client->id_consultant?></td>
                     <td style="width:19%"><?=$item->client->comment?></td>
-                    <td style="width:1%">
-                        <a href = "<?=Url::to(['event/view', 'id' => $item->id])?>"">
+                    <td style="width:10%"><?=$item->price?></td>
+                    <td style="width:4%">
+                        <a href = "<?=Url::to(['event/view', 'id' => $item->id])?>" data-pjax = '0'>
                             <ico class="glyphicon glyphicon-search" style="font-size: 12px"></ico>
+                        </a>
+                        <a href = "<?=Url::to(['event/update', 'id' => $item->id])?>" data-pjax = '0'>
+                            <ico class="glyphicon glyphicon-pencil" style="font-size: 12px"></ico>
                         </a>
                     </td>
                 </tr>
@@ -81,11 +86,11 @@ $linkProfile = Url::to();
             <?php if(count($cell->items) < 6){?> 
             <tr>
                 <?php if(count($cell->items) == 0){?>
-                    <td style="cursor:pointer; width:10%"><?= $cell->date->format('H:i') ?></td>
+                    <td style="cursor:pointer; width:7%"><?= $cell->date->format('H:i') ?></td>
                 <?php }?>
-                <td colspan="6" class="panel-body<?=$isActive ? ' active' : '' ?>" style="width:90% cursor:pointer; line-height: 42px; height: 42px;" >
+                <td colspan="7" class="panel-body<?=$isActive ? ' active' : '' ?>" style="width:93% cursor:pointer; line-height: 42px; height: 42px;" >
                     <?php if($isActive){?>
-                        <a href = "<?=Url::to(['event/create', 'date' => $time])?>" style="text-decoration: none; color: inherit; font-size: 18px;"><div style="width:100%">+</div></a>
+                        <a href = "<?=Url::to(['event/create', 'date' => $time])?>" style="text-decoration: none; color: inherit; font-size: 18px;" data-pjax = '0'><div style="width:100%">+</div></a>
                     <?php }?>
                 </td>
             </tr>

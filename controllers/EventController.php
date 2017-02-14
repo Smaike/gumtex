@@ -39,21 +39,6 @@ class EventController extends Controller
     }
 
     /**
-     * Lists all Event models.
-     * @return mixed
-     */
-    public function actionIndex()
-    {
-        $searchModel = new EventSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-        ]);
-    }
-
-    /**
      * Displays a single Event model.
      * @param integer $id
      * @return mixed
@@ -112,12 +97,33 @@ class EventController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $form = new EventCreateForm();
+        $form->attributes = $model->client->attributes;
+        $form->attributes = $model->attributes;
+        $form->services = $model->getServices()->select(['id'])->column();
+        $date = $form->date;
+        $p_time = explode(' ', $date)[1];
+        $services = ServiceTime::find()
+            ->where(['<=', 'date_start', $date])
+            ->andWhere(['>=', 'date_end', $date])
+            ->andWhere(['<=', 'time_start', $p_time])
+            ->andWhere(['>=', 'time_end', $p_time])
+            ->with('service')
+            ->all();
+        $aServices = [];
+        foreach ($services as $key => $service) {
+            if(!empty($service->dow) && in_array(date('w', strtotime($date)), $service->dow)){
+                $aServices[$service->id_service] = $service->service->name;
+            }
+        }
+        if ($form->load(Yii::$app->request->post()) && $form->update()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            return $this->render('update', [
-                'model' => $model,
+            // $dt = strtotime($form->birthday);
+            // $form->birthday = date('d-m-Y', $dt);
+            return $this->render('create', [
+                'model' => $form,
+                'aServices' => $aServices,
             ]);
         }
     }

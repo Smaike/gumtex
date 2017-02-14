@@ -31,7 +31,7 @@ class Event extends \yii\db\ActiveRecord implements ItemInterface
     {
         return [
             [['date'], 'safe'],
-            [['name'], 'string', 'max' => 255],
+            [['price'], 'string', 'max' => 11],
         ];
     }
 
@@ -42,8 +42,7 @@ class Event extends \yii\db\ActiveRecord implements ItemInterface
     {
         return [
             'id' => 'ID',
-            'date' => 'Date',
-            'name' => 'Name',
+            'date' => 'Время',
         ];
     }
 

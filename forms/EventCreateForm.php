@@ -13,6 +13,7 @@ use app\models\EventsService;
  */
 class EventCreateForm extends Model
 {
+    public $id;
     public $first_name;
     public $last_name;
     public $middle_name;
@@ -31,6 +32,7 @@ class EventCreateForm extends Model
     public $name;
     public $services;
     public $age;
+    public $price;
 
     /**
      * @return array the validation rules.
@@ -40,11 +42,12 @@ class EventCreateForm extends Model
         return [
             [['first_name', 'last_name'], 'required'],
             [['birthday'], 'date', 'format' => 'dd-mm-yyyy'],
-            [['type', 'category', 'id_consultant', 'age'], 'integer'],
+            [['type', 'category', 'id_consultant', 'age', 'id'], 'integer'],
             [['comment', 'where_know'], 'string'],
             [['first_name', 'last_name', 'middle_name', 'p_first_name', 'p_last_name', 'p_middle_name'], 'string', 'max' => 60],
             [['mobile', 'p_mobile'], 'string', 'max' => 20],
             [['name'], 'string', 'max' => 255],
+            [['price'], 'string', 'max' => 11],
             ['date', 'date', 'format' => 'yyyy-mm-dd H:i'],
             ['services', 'each', 'rule' => 'integer'],
         ];
@@ -82,8 +85,10 @@ class EventCreateForm extends Model
         $event = new Event();
         $event->attributes = $this->attributes;
         $client->attributes = $this->attributes;
-        $date = strtotime($client->birthday);
-        $client->birthday = date('Y-m-d', $date);
+        if(!empty($client->birthday)){
+            $date = strtotime($client->birthday);
+            $client->birthday = date('Y-m-d', $date);
+        }
         if($client->save()){
             $event->id_client = $client->id;
             if($event->save() && !empty($this->services)){
@@ -91,6 +96,33 @@ class EventCreateForm extends Model
                     $eventService = new EventsService();
                     $eventService->id_event = $event->id;
                     $eventService->id_service = $service;
+                    $eventService->status = 'new';
+                    $eventService->save();
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public function update()
+    {
+        $event = Event::findOne($this->id);
+        $client = $event->client;
+        $event->attributes = $this->attributes;
+        $client->attributes = $this->attributes;
+        if(!empty($client->birthday)){
+            $date = strtotime($client->birthday);
+            $client->birthday = date('Y-m-d', $date);
+        }
+        if($client->save()){
+            EventsService::deleteAll(['id_event' => $this->id]);
+            if($event->save() && !empty($this->services)){
+                foreach ($this->services as $service) {
+                    $eventService = new EventsService();
+                    $eventService->id_event = $event->id;
+                    $eventService->id_service = $service;
+                    $eventService->status = 'new';
                     $eventService->save();
                 }
             }

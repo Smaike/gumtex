@@ -23,10 +23,10 @@ $types = ArrayHelper::map($models, 'id', 'name');
 ?>
 <div class="event-create row">
     <h2>Вы заполняете событие на <?=$model->date?></h2>
+    <?php $form = ActiveForm::begin(); ?>
         <div class="row">
             <div class='col-sm-6'>
-            <?php $form = ActiveForm::begin(); ?>
-
+            
             <?= $form->field($model, 'first_name') ?>
             <?= $form->field($model, 'last_name') ?>
             <?= $form->field($model, 'middle_name') ?>
@@ -58,7 +58,11 @@ $types = ArrayHelper::map($models, 'id', 'name');
                 ]
             ])->dropDownList($categories, ['prompt' => 'Выберите Категорию']) ?>
             <?= $form->field($model, 'id_consultant')->dropDownList($consultants, ['prompt' => '']) ?>
-            <?= $form->field($model, 'comment') ?>
+            <?= $form->field($model, 'comment')->textarea([
+                'rows' => 8, 
+                'class' => 'form-control', 
+                'placeholder' => 'Добавить комментарий',
+            ]) ?>
             <?= $form->field($model, 'where_know') ?>
             <?= $form->field($model, 'p_first_name') ?>
             <?= $form->field($model, 'p_last_name') ?>
@@ -67,11 +71,11 @@ $types = ArrayHelper::map($models, 'id', 'name');
             <?= $form->field($model, 'date', ['template' => '{input}'])->hiddenInput() ?>
         
             </div>
-            <div class='col-sm-6'>
+            <div class='col-sm-2'>
                 <?= $form->field($model, 'services')->checkboxList($aServices, ['separator' => "<br>"]) ?>
                 <br><br>
                 <h3>Стоимость:</h3>
-                <span id="cost" style="font-size: 18px;">0</span>
+                <?= $form->field($model, 'price') ?>
             </div>
         </div>
         <div class="form-group">
@@ -96,13 +100,14 @@ $types = ArrayHelper::map($models, 'id', 'name');
             'date':$('#eventcreateform-date').val(),
           }, 
           success: function(response){
-            $('#cost').html(response);
+            $('#eventcreateform-price').val(response);
           }
         });
     });
     $('#eventcreateform-birthday').on('change', function(){
         birthDate = $(this).val();
-        $('#eventcreateform-age').val(getAge(birthDate));
+        if(birthDate!='')
+            $('#eventcreateform-age').val(getAge(birthDate));
     });
     $('#eventcreateform-first_name').on('change', function(){
         var val = $(this).val();
