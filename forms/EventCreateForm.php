@@ -84,6 +84,7 @@ class EventCreateForm extends Model
         $client = new Client();
         $event = new Event();
         $event->attributes = $this->attributes;
+        $event->status = 1;
         $client->attributes = $this->attributes;
         if(!empty($client->birthday)){
             $date = strtotime($client->birthday);
