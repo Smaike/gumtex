@@ -23,20 +23,6 @@ use app\forms\EventCreateForm;
  */
 class EventController extends Controller
 {
-    /**
-     * @inheritdoc
-     */
-    public function behaviors()
-    {
-        return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
-    }
 
     /**
      * Displays a single Event model.
@@ -136,9 +122,11 @@ class EventController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->status = 0;
+        $model->save();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['calendar/index']);
     }
 
     public function actionCost()
@@ -168,6 +156,31 @@ class EventController extends Controller
             $cost+= $price;
         }
         return $cost;
+    }
+
+    public function actionSeparate($id)
+    {
+        $model = $this->findModel($id);
+        $model->status = 2;
+        $model->save();
+        return $this->redirect(['calendar/index']);
+    }
+
+    public function actionBind($date)
+    {
+        $models = Event::find()->where(['status' => 2])->all();
+
+        if($id = Yii::$app->request->post('id')){
+            $model = Event::findOne($id);
+            $model->date = $date;
+            $model->status = 1;
+            $model->save();
+            return $this->redirect(['calendar/index']);
+        }
+
+        return $this->render('bind', [
+            'models' => $models,
+        ]);
     }
 
     /**

@@ -23,6 +23,15 @@ use Yii;
  * @property string $comment
  * @property string $where_know
  */
+/**
+ *
+ * Значения статусов:
+ * 0 - удален
+ * 1 - активен
+ * 2 - переносится
+ *
+ */
+
 class Client extends \yii\db\ActiveRecord
 {
     /**

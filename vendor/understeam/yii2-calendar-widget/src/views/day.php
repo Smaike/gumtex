@@ -11,6 +11,7 @@ echo $this->render('header');
 $context = $this->context;
 $count = 0;
 $dateRange = $context->getDateRange(date('w', strtotime(Yii::$app->request->get('date'))));
+$separate = $context->hasSeparate();
 ?>
 <div class="row">
     <div class="calendar-week-column" style="border-bottom: 2px solid black; width:100%">
@@ -20,7 +21,7 @@ $dateRange = $context->getDateRange(date('w', strtotime(Yii::$app->request->get(
             <?php $count++;?>
             <?php $isActive = $context->isActive($cell->date);?>
             <div class="row <?=$isActive ? '' : 'active_row' ?>" style="border: 2px solid black; border-bottom:none;">
-                    <?= $this->render($context->dayCellView, ['cell' => $cell, 'count' => $count]) ?>
+                    <?= $this->render($context->dayCellView, ['cell' => $cell, 'count' => $count, 'separate' => $separate]) ?>
             </div>
             <?php }?>
         <?php endforeach; ?>

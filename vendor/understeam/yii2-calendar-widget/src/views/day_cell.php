@@ -80,6 +80,13 @@ $linkProfile = Url::to();
                         <a href = "<?=Url::to(['event/update', 'id' => $item->id])?>" data-pjax = '0'>
                             <ico class="glyphicon glyphicon-pencil" style="font-size: 12px"></ico>
                         </a>
+                        <a href = "<?=Url::to(['event/separate', 'id' => $item->id])?>" >
+                            <ico class="glyphicon glyphicon-sort" style="font-size: 12px"></ico>
+                        </a>
+
+                        <a href = "<?=Url::to(['event/delete', 'id' => $item->id])?>" >
+                            <ico class="glyphicon glyphicon-remove" style="font-size: 12px"></ico>
+                        </a>
                     </td>
                 </tr>
             <?php }?>
@@ -91,6 +98,9 @@ $linkProfile = Url::to();
                 <td colspan="7" class="panel-body<?=$isActive ? ' active' : '' ?>" style="width:93% cursor:pointer; line-height: 42px; height: 42px;" >
                     <?php if($isActive){?>
                         <a href = "<?=Url::to(['event/create', 'date' => $time])?>" style="text-decoration: none; color: inherit; font-size: 18px;" data-pjax = '0'><div style="width:100%">+</div></a>
+                        <?php if($separate){?>
+                            <a href = "<?=Url::to(['event/bind', 'date' => $time])?>" style="text-decoration: none; color: inherit; font-size: 18px;" data-pjax = '0'><div class="separate" style="width:100%">+</div></a>
+                        <?php }?>
                     <?php }?>
                 </td>
             </tr>

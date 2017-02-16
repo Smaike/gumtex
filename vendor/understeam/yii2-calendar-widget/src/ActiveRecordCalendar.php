@@ -68,6 +68,11 @@ class ActiveRecordCalendar extends Component implements CalendarInterface
                     $this->dateAttribute,
                     date('Y-m-d H:i:s', $endTime),
                 ],
+                [
+                    '=',
+                    'status',
+                    1,
+                ],
             ]);
         /** @var ItemInterface[] $models */
         $models = $query->all();

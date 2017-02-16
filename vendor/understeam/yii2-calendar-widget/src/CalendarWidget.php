@@ -15,6 +15,7 @@ use yii\helpers\Json;
 use app\models\ActiveDay;
 use app\models\DaysServices;
 use app\models\ServiceTime;
+use app\models\Event;
 
 /**
  * Виджет для отображения календаря
@@ -259,5 +260,14 @@ class CalendarWidget extends Widget
         $id_services = DaysServices::find()->select(['id_service'])->where(['day' => $day])->column();
         $serviceTime = ServiceTime::find()->select(['MIN(time_start) as start', 'MAX(time_end) as end'])->where(['id' => $id_services])->asArray()->one();
         return $serviceTime;
+    }
+
+    public function hasSeparate()
+    {
+        if($event = Event::find()->where(['status' => 2])->one()){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
