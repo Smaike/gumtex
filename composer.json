@@ -24,7 +24,8 @@
         "skeeks/yii2-ckeditor": "*",
         "2amigos/yii2-date-time-picker-widget": "~1.0",
         "philippfrenzel/yii2fullcalendar": "^3.0",
-        "skeeks/yii2-widget-ckeditor": "*"
+        "skeeks/yii2-widget-ckeditor": "*",
+        "kartik-v/yii2-mpdf": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
