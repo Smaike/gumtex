@@ -183,6 +183,31 @@ class EventController extends Controller
         ]);
     }
 
+    public function actionPrint($date)
+    {
+        $period[0] = date('Y-m-d', strtotime($date));
+        $period[1] = date('Y-m-d H:i:s', strtotime($date)  + 60*60*24);
+        $models = Event::find()->andWhere([
+            'AND',
+            [
+                '>=',
+                'date',
+                $period[0],
+            ],
+            [
+                '<',
+                'date',
+                $period[1],
+            ],
+        ])->all();
+        $content = $this->renderPartial('_print', [
+            'models' => $models
+        ]);
+        $pdf = Yii::$app->pdf;
+        $pdf->content = $content;
+        return $pdf->render();
+    }
+
     /**
      * Finds the Event model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

@@ -6,6 +6,8 @@
  */
 use understeam\calendar\CalendarHelper;
 use app\models\DaysServices;
+use yii\helpers\Url;
+use yii\helpers\Html;
 
 echo $this->render('header');
 $context = $this->context;
@@ -26,5 +28,18 @@ $separate = $context->hasSeparate();
             <?php }?>
         <?php endforeach; ?>
     </div>
+</div>
+<div style="margin-top:40px" class="row pull-right">
+    <?=Html::a('<ico class="glyphicon glyphicon-print" style="font-size: 30px"></ico>', 
+    [
+        'event/print', 
+        'date' => Yii::$app->request->get('date')
+    ], 
+    [
+        'encode' => false,
+        'data-pjax' => '0',
+        'target' => '_blank'
+        
+    ])?>
 </div>
 
