@@ -57,16 +57,21 @@ $types = ArrayHelper::map($models, 'id', 'name');
                 'class' =>'form-control'
                 ]
             ])->dropDownList($categories, ['prompt' => 'Выберите Категорию']) ?>
-            <?= $form->field($model, 'id_consultant')->dropDownList($consultants, ['prompt' => '']) ?>
+            <?= $form->field($model, 'id_consultant')->dropDownList($consultants, ['prompt' => 'Выберите консультанта']) ?>
             <?= $form->field($model, 'comment')->textarea([
                 'rows' => 8, 
                 'class' => 'form-control', 
                 'placeholder' => 'Добавить комментарий',
             ]) ?>
-            <?= $form->field($model, 'where_know') ?>
-            <?= $form->field($model, 'p_first_name') ?>
-            <?= $form->field($model, 'p_last_name') ?>
-            <?= $form->field($model, 'p_middle_name') ?>
+            <?= $form->field($model, 'where_know')->dropDownList([
+                1 => "Интернет",
+                2 => "Реклама",
+                3 => "От друзей",
+                4 => "Нашел сам"
+            ], ['prompt' => 'Откуда узнал']) ?>
+            <?= $form->field($model, 'fio_mother') ?>
+            <?= $form->field($model, 'fio_father') ?>
+            <?= $form->field($model, 'fio_sup') ?>
             <?= $form->field($model, 'p_mobile') ?>
             <?= $form->field($model, 'date', ['template' => '{input}'])->hiddenInput() ?>
         

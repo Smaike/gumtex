@@ -18,9 +18,9 @@ class EventCreateForm extends Model
     public $last_name;
     public $middle_name;
     public $birthday;
-    public $p_first_name;
-    public $p_last_name;
-    public $p_middle_name;
+    public $fio_mother;
+    public $fio_father;
+    public $fio_sup;
     public $mobile;
     public $p_mobile;
     public $type;
@@ -44,7 +44,7 @@ class EventCreateForm extends Model
             [['birthday'], 'date', 'format' => 'dd-mm-yyyy'],
             [['type', 'category', 'id_consultant', 'age', 'id'], 'integer'],
             [['comment', 'where_know'], 'string'],
-            [['first_name', 'last_name', 'middle_name', 'p_first_name', 'p_last_name', 'p_middle_name'], 'string', 'max' => 60],
+            [['first_name', 'last_name', 'middle_name', 'fio_mother', 'fio_father', 'fio_sup'], 'string', 'max' => 60],
             [['mobile', 'p_mobile'], 'string', 'max' => 20],
             [['name'], 'string', 'max' => 255],
             [['price'], 'string', 'max' => 11],
@@ -63,9 +63,9 @@ class EventCreateForm extends Model
             'last_name' => 'Фамилия тестируемого',
             'middle_name' => 'Отчество тестируемого',
             'birthday' => 'День рождения',
-            'p_first_name' => 'Имя родителя',
-            'p_last_name' => 'Фамилия родителя',
-            'p_middle_name' => 'Отчество родителя',
+            'fio_mother' => 'ФИО матери',
+            'fio_father' => 'ФИО отца',
+            'fio_sup' => 'ФИО сопровождающего',
             'mobile' => 'Мобильный телефон',
             'p_mobile' => 'Мобильный телефон родителя',
             'type' => 'Тип',
