@@ -52,7 +52,7 @@ class Client extends \yii\db\ActiveRecord
             [['birthday'], 'safe'],
             [['type', 'category', 'id_consultant', 'age'], 'integer'],
             [['comment', 'where_know'], 'string'],
-            [['first_name', 'last_name', 'middle_name', 'p_first_name', 'p_last_name', 'p_middle_name'], 'string', 'max' => 60],
+            [['first_name', 'last_name', 'middle_name', 'fio_mother', 'fio_father', 'fio_sup'], 'string', 'max' => 60],
             [['mobile', 'p_mobile'], 'string', 'max' => 20],
         ];
     }
