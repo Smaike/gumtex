@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
@@ -27,9 +28,32 @@ $types = ArrayHelper::map($models, 'id', 'name');
         <div class="row">
             <div class='col-sm-6'>
             
-            <?= $form->field($model, 'first_name') ?>
             <?= $form->field($model, 'last_name') ?>
+            <?= $form->field($model, 'first_name') ?>
             <?= $form->field($model, 'middle_name') ?>
+            <?= $form->field($model, 'age') ?>
+            <?= $form->field($model, 'fio_sup') ?>
+            <?= $form->field($model, 'mobile') ?>
+            <?= $form->field($model, 'category', ['inputOptions' => [
+                'class' =>'form-control'
+                ]
+            ])->dropDownList($categories, ['prompt' => 'Выберите Категорию']) ?>
+            <?= $form->field($model, 'type', ['inputOptions' => [
+                'class' =>'form-control'
+                ]
+            ])->dropDownList($types, ['prompt' => 'Выберите Тип']) ?>
+            <?= $form->field($model, 'id_consultant')->dropDownList($consultants, ['prompt' => 'Выберите консультанта']) ?>
+            <?= $form->field($model, 'comment')->textarea([
+                'rows' => 8, 
+                'class' => 'form-control', 
+                'placeholder' => 'Добавить комментарий',
+            ]) ?>
+            <?= $form->field($model, 'where_know')->dropDownList([
+                1 => "Интернет",
+                2 => "Реклама",
+                3 => "От друзей",
+                4 => "Нашел сам"
+            ], ['prompt' => 'Откуда узнал']) ?>
             <?= $form->field($model, 'birthday', ['template' => "{label}<br />{input}\n{hint}\n{error}"])->widget(DatePicker::className(),[
                 'dateFormat' => 'dd-MM-yyyy',
                 'clientOptions' => [
@@ -47,37 +71,22 @@ $types = ArrayHelper::map($models, 'id', 'name');
                             'style' => "width:80%; display:inline-block; margin-right:10px;",
                             'placeholder' => '31-12-1999'
             ]]) ?>
-            <?= $form->field($model, 'age') ?>
-            <?= $form->field($model, 'mobile') ?>
-            <?= $form->field($model, 'type', ['inputOptions' => [
-                'class' =>'form-control'
-                ]
-            ])->dropDownList($types, ['prompt' => 'Выберите Тип']) ?>
-            <?= $form->field($model, 'category', ['inputOptions' => [
-                'class' =>'form-control'
-                ]
-            ])->dropDownList($categories, ['prompt' => 'Выберите Категорию']) ?>
-            <?= $form->field($model, 'id_consultant')->dropDownList($consultants, ['prompt' => 'Выберите консультанта']) ?>
-            <?= $form->field($model, 'comment')->textarea([
-                'rows' => 8, 
-                'class' => 'form-control', 
-                'placeholder' => 'Добавить комментарий',
-            ]) ?>
-            <?= $form->field($model, 'where_know')->dropDownList([
-                1 => "Интернет",
-                2 => "Реклама",
-                3 => "От друзей",
-                4 => "Нашел сам"
-            ], ['prompt' => 'Откуда узнал']) ?>
             <?= $form->field($model, 'fio_mother') ?>
             <?= $form->field($model, 'fio_father') ?>
-            <?= $form->field($model, 'fio_sup') ?>
             <?= $form->field($model, 'p_mobile') ?>
             <?= $form->field($model, 'date', ['template' => '{input}'])->hiddenInput() ?>
         
             </div>
             <div class='col-sm-2'>
+                <?php Modal::begin([
+                    'header' => '<h2>Услуги</h2>',
+                    'toggleButton' => [
+                        'label' => 'Услуги',
+                        'class' => "btn btn-success start-serv",
+                    ],
+                ]);?>
                 <?= $form->field($model, 'services')->checkboxList($aServices, ['separator' => "<br>"]) ?>
+                <?php Modal::end();?>
                 <br><br>
                 <h3>Стоимость:</h3>
                 <?= $form->field($model, 'price') ?>
@@ -89,6 +98,7 @@ $types = ArrayHelper::map($models, 'id', 'name');
     <?php ActiveForm::end(); ?>
 
 </div><!-- event-create -->
+
 <?php $this->registerJs("
     $('input[name=\"EventCreateForm[services][]\"]').change(function(){
         var data = { 'user_ids[]' : []};

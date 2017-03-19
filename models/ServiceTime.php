@@ -91,6 +91,7 @@ class ServiceTime extends \yii\db\ActiveRecord
             $daysServices->save();
         }
     }
+    
     public function beforeDelete()
     {
         if (parent::beforeDelete()) {

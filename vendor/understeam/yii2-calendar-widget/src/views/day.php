@@ -19,7 +19,7 @@ $separate = $context->hasSeparate();
     <div class="calendar-week-column" style="border-bottom: 2px solid black; width:100%">
         <?php $day = reset($grid);?><br><br>
         <?php foreach ($day as $cell): ?>
-            <?php if($cell->date->format('H:i') >= $dateRange['start'] and $cell->date->format('H:i') < $dateRange['end']){?>
+            <?php if($cell->date->format('H:i') >= $dateRange['start'] and $cell->date->format('H:i') <= $dateRange['end']){?>
             <?php $count++;?>
             <?php $isActive = $context->isActive($cell->date);?>
             <div class="row <?=$isActive ? '' : 'active_row' ?>" style="border: 2px solid black; border-bottom:none;">

@@ -237,8 +237,14 @@ class CalendarWidget extends Widget
         $startTs = isset($bounds[0]) ? $bounds[0] : null;
         $endTs = isset($bounds[1]) ? $bounds[1] : null;
         $condition = true;
+        $range = $this->getDateRange($date->format('w'));
+        $end = ($range)? $range['end'] : '19';
         if ($startTs !== null) {
-            $condition = $condition && ($date->getTimestamp() >= $startTs || ($this->viewMode == CalendarInterface::VIEW_MODE_MONTH && $date->format('Y-m-d') == date('Y-m-d') && date('H') < '19'));
+            $condition = $condition && ($date->getTimestamp() >= $startTs || (
+                ($this->viewMode == CalendarInterface::VIEW_MODE_MONTH) && 
+                ($date->format('Y-m-d') == date('Y-m-d')) && 
+                (date('H') <= $end)
+            ));
         }
         if ($endTs !== null) {
             $condition = $condition && $date->getTimestamp() < $endTs;
@@ -251,7 +257,7 @@ class CalendarWidget extends Widget
         if($day = ActiveDay::find()->where(['date' => $date->format('Y-m-d')])->one()){
             return !($day->is_active);
         }else{
-            return in_array($date->format('N'), [6,7]);
+            return false;
         }
     }
 
