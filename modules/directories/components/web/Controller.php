@@ -60,31 +60,24 @@ class Controller extends \yii\web\Controller {
 		$this->menus = [
 			[
 				'label' => 'Справочники', 'items' => [
-					['label' => 'Активные дни и интервалы', 'url' => ['/directory/active-day'], 'active' => $this->id == 'active-day'],
-					['label' => 'Категории клиентов', 'url' => ['/directory/client-category'], 'active' => $this->id == 'client-category'],
-					['label' => 'Пользователи', 'url' => ['/directory/user'], 'active' => $this->id == 'user'],
-					['label' => 'Типы пользователей', 'url' => ['/directory/user-type'], 'active' => $this->id == 'user-type'],
-					['label' => 'Учебные заведения', 'url' => ['/directory/lib-school'], 'active' => $this->id == 'lib-school'],
 					['label' => 'IP компьютеров', 'url' => ['/directory/computer'], 'active' => $this->id == 'computer'],
+					['label' => 'Активные дни и интервалы', 'url' => ['/directory/active-day'], 'active' => $this->id == 'active-day'],
+					['label' => 'Типы пользователей', 'url' => ['/directory/user-type'], 'active' => $this->id == 'user-type'],
+					['label' => 'Пользователи', 'url' => ['/directory/user'], 'active' => $this->id == 'user'],
 					['label' => 'Помещения для бронирования', 'url' => ['/directory/room'], 'active' => $this->id == 'room'],
+					['label' => 'Учебные заведения', 'url' => ['/directory/lib-school'], 'active' => $this->id == 'lib-school'],
 				]
 			],
 			[
 				'label' => 'Услуги', 'items' => [
-					['label' => 'Услуги', 'url' => ['/directory/service'], 'active' => $this->id == 'service'],
+					['label' => 'График работы услуг', 'url' => ['/directory/service-time'], 'active' => $this->id == 'service-time'],
 					['label' => 'Категории услуг', 'url' => ['/directory/service-type'], 'active' => $this->id == 'service-type'],
+					['label' => 'Категории клиентов', 'url' => ['/directory/client-category'], 'active' => $this->id == 'client-category'],
 					['label' => 'Стоимость услуг', 'url' => ['/directory/price'], 'active' => $this->id == 'price'],
 					['label' => 'Типы скидок', 'url' => ['/directory/client-type'], 'active' => $this->id == 'client-type'],
-					['label' => 'График работы услуг', 'url' => ['/directory/service-time'], 'active' => $this->id == 'service-time'],
+					['label' => 'Услуги', 'url' => ['/directory/service'], 'active' => $this->id == 'service'],
 				]
 			],
-
-
-			// ['label' => 'Агентства', 'items' => [
-			// 	['label' => 'Агентства', 'url' => ['/directories/agency'], 'active' => $this->id == 'agency'],
-			// 	['label' => 'Хостес', 'url' => ['/directories/hostess'], 'active' => $this->id == 'hostess'],
-			// 	['label' => 'Фотографы', 'url' => ['/directories/photographer'], 'active' => $this->id == 'photographer'],
-			// ]],
 		];
 
 		return true;
