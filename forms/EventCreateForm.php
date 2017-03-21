@@ -33,6 +33,8 @@ class EventCreateForm extends Model
     public $services;
     public $age;
     public $price;
+    public $discount;
+    public $why;
 
     /**
      * @return array the validation rules.

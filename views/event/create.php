@@ -89,7 +89,10 @@ $types = ArrayHelper::map($models, 'id', 'name');
                 <?php Modal::end();?>
                 <br><br>
                 <h3>Стоимость:</h3>
-                <?= $form->field($model, 'price') ?>
+                <?= $form->field($model, 'price')->label(false) ?>
+                <h4>Скидка:</h4>
+                <?= $form->field($model, 'discount')->label(false) ?>
+                <?= $form->field($model, 'why', ['options' => ['style' => 'display:none']])->textarea(['rows' => 4])->label("Почему:") ?>
             </div>
         </div>
         <div class="form-group">
@@ -135,6 +138,15 @@ $types = ArrayHelper::map($models, 'id', 'name');
     $('#eventcreateform-middle_name').on('change', function(){
         var val = $(this).val();
         $(this).val(ucfirst(val));
+    });
+
+    $('#eventcreateform-discount').on('keyup', function(){
+        var skidka = $(this).val();
+        if(skidka!=''){
+            $('.field-eventcreateform-why').css({'display':'block'});
+        }else{
+            $('.field-eventcreateform-why').css({'display':'none'});
+        }
     });
 
     function getAge(dateString) {
