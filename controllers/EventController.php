@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 
+use app\models\Client;
 use app\models\ClientDiscount;
 use app\models\Event;
 use app\models\Service;
@@ -207,6 +208,25 @@ class EventController extends Controller
         $pdf = Yii::$app->pdf;
         $pdf->content = $content;
         return $pdf->render();
+    }
+
+    public function actionCopies()
+    {
+        $last = Yii::$app->request->post('last');
+        $first = Yii::$app->request->post('first');
+        $middle = Yii::$app->request->post('middle');
+        $age = Yii::$app->request->post('age');
+        if($last || $first || $middle || $age){
+            $models = Client::find()->andFilterWhere(['like', 'last_name', $last])
+            ->andFilterWhere(['like', 'first_name', $first])
+            ->andFilterWhere(['like', 'middle_name', $middle])
+            ->andFilterWhere(['age' => $age])->all();
+        }else{
+            $models = [];
+        }
+        return $this->renderPartial('_copies', [
+            'models' => $models
+        ]);
     }
 
     /**

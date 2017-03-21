@@ -28,10 +28,22 @@ $types = ArrayHelper::map($models, 'id', 'name');
         <div class="row">
             <div class='col-sm-6'>
             
-            <?= $form->field($model, 'last_name') ?>
-            <?= $form->field($model, 'first_name') ?>
-            <?= $form->field($model, 'middle_name') ?>
-            <?= $form->field($model, 'age') ?>
+            <?= $form->field($model, 'last_name', ['inputOptions' => [
+                'class' =>'form-control find-copies'
+                ]
+            ]) ?>
+            <?= $form->field($model, 'first_name', ['inputOptions' => [
+                'class' =>'form-control find-copies'
+                ]
+            ]) ?>
+            <?= $form->field($model, 'middle_name', ['inputOptions' => [
+                'class' =>'form-control find-copies'
+                ]
+            ]) ?>
+            <?= $form->field($model, 'age', ['inputOptions' => [
+                'class' =>'form-control find-copies'
+                ]
+            ]) ?>
             <?= $form->field($model, 'fio_sup') ?>
             <?= $form->field($model, 'mobile') ?>
             <?= $form->field($model, 'category', ['inputOptions' => [
@@ -93,6 +105,12 @@ $types = ArrayHelper::map($models, 'id', 'name');
                 <h4>Скидка:</h4>
                 <?= $form->field($model, 'discount')->label(false) ?>
                 <?= $form->field($model, 'why', ['options' => ['style' => 'display:none']])->textarea(['rows' => 4])->label("Почему:") ?>
+                <hr>
+                <h4>Уже есть в базе:</h4>
+                <img id="LoadingImage" src = "<?=Url::base(true)?>/images/loading.gif" width="30" style="display:none">
+                <div class="clones">
+                Нет результатов
+                </div>
             </div>
         </div>
         <div class="form-group">
@@ -147,6 +165,24 @@ $types = ArrayHelper::map($models, 'id', 'name');
         }else{
             $('.field-eventcreateform-why').css({'display':'none'});
         }
+    });
+
+    $('.find-copies').on('change', function(){
+        $('#LoadingImage').show();
+        $.ajax({
+          url: '" . Url::to('event/copies', true) . "',
+          type: 'POST',   
+          data: {
+            'last':$('#eventcreateform-last_name').val(), 
+            'first':$('#eventcreateform-first_name').val(), 
+            'middle':$('#eventcreateform-middle_name').val(),
+            'age':$('#eventcreateform-age').val(),
+          }, 
+          success: function(response){
+            $('#LoadingImage').hide();
+            $('.clones').html(response);
+          }
+        });
     });
 
     function getAge(dateString) {
