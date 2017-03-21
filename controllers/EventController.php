@@ -143,6 +143,7 @@ class EventController extends Controller
             ->where(['<=', 'date_start', $date])
             ->andWhere(['id_service' => $post]);
         $services = $query->all();
+        $cost = 0;
         foreach ($services as $service) {
             $price = $service->price;
             //Сделать херь со скидками
