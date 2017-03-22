@@ -16,7 +16,7 @@ $categories = $models;
 // $categories = ArrayHelper::map($models, 'id', 'name');
 $models = ClientType::find()->all();
 $types = $models;
-$models = Service::find()->all();
+$models = Service::find()->andWhere(['status' => 1])->all();
 $services = ArrayHelper::map($models, 'id', 'name');
 
 ?>

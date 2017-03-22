@@ -263,8 +263,17 @@ class CalendarWidget extends Widget
 
     public function getDateRange($day)
     {
-        $id_services = DaysServices::find()->select(['id_service'])->where(['day' => $day])->column();
-        $serviceTime = ServiceTime::find()->select(['MIN(time_start) as start', 'MAX(time_end) as end'])->where(['id' => $id_services])->asArray()->one();
+        $id_services = DaysServices::find()
+        ->select(['id_service'])
+        ->where(['day' => $day])
+        ->column();
+        $serviceTime = ServiceTime::find()
+        ->select(['MIN(time_start) as start', 'MAX(time_end) as end'])
+        ->where(['service_times.id' => $id_services])
+        ->joinWith('service', true, 'INNER JOIN')
+        ->andWhere(['services.status' => 1])
+        ->asArray()
+        ->one();
         return $serviceTime;
     }
 

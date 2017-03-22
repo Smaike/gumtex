@@ -66,6 +66,7 @@ class ServiceSearch extends Service
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['status' => 1]);
 
         return $dataProvider;
     }

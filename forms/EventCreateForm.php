@@ -35,6 +35,7 @@ class EventCreateForm extends Model
     public $price;
     public $discount;
     public $why;
+    public $copy_id;
 
     /**
      * @return array the validation rules.
@@ -44,8 +45,8 @@ class EventCreateForm extends Model
         return [
             [['first_name', 'last_name'], 'required'],
             [['birthday'], 'date', 'format' => 'dd-mm-yyyy'],
-            [['type', 'category', 'id_consultant', 'age', 'id'], 'integer'],
-            [['comment', 'where_know'], 'string'],
+            [['type', 'category', 'id_consultant', 'age', 'id', 'copy_id', 'discount'], 'integer'],
+            [['comment', 'where_know', 'why'], 'string'],
             [['first_name', 'last_name', 'middle_name', 'fio_mother', 'fio_father', 'fio_sup'], 'string', 'max' => 60],
             [['mobile', 'p_mobile'], 'string', 'max' => 20],
             [['name'], 'string', 'max' => 255],
@@ -83,17 +84,22 @@ class EventCreateForm extends Model
 
     public function save()
     {
-        $client = new Client();
+        if(empty($this->copy_id)){
+            $client = new Client();
+            $client->attributes = $this->attributes;
+        }else{
+            $client = Client::findOne($this->copy_id);
+        }
         $event = new Event();
         $event->attributes = $this->attributes;
         $event->status = 1;
-        $client->attributes = $this->attributes;
         if(!empty($client->birthday)){
             $date = strtotime($client->birthday);
             $client->birthday = date('Y-m-d', $date);
         }
         if($client->save()){
             $event->id_client = $client->id;
+            $event->created_by = (Yii::$app->user->id)?Yii::$app->user->id:0;
             if($event->save() && !empty($this->services)){
                 foreach ($this->services as $service) {
                     $eventService = new EventsService();

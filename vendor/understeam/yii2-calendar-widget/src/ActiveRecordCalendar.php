@@ -7,6 +7,7 @@
 
 namespace understeam\calendar;
 
+use Yii;
 use yii\base\Component;
 use yii\base\InvalidConfigException;
 use yii\db\ActiveRecord;
@@ -54,7 +55,9 @@ class ActiveRecordCalendar extends Component implements CalendarInterface
     public function findItems($startTime, $endTime)
     {
         $modelClass = $this->modelClass;
-        $query = $modelClass::find()->joinWith('services', true, 'INNER JOIN')->andWhere(['services.type_id' => 1]);
+        $query = $modelClass::find()->joinWith('services', true, 'INNER JOIN')
+        ->andWhere(['services.type_id' => Yii::$app->session->get('type_id')])
+        ->andWhere(['services.status' => 1]);
         $query
             ->andWhere([
                 'AND',

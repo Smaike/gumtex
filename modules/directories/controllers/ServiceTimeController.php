@@ -72,7 +72,9 @@ class ServiceTimeController extends Controller
     {
         $model = new ServiceTime();
 
-        $models = ServiceTime::find()->all();
+        $models = ServiceTime::find()
+        ->joinWith('service', true, 'INNER JOIN')
+        ->andWhere(['services.status' => 1])->all();
 
         $events = [];
         foreach ($models as $key => $price) {
@@ -117,7 +119,9 @@ class ServiceTimeController extends Controller
     {
         $model = $this->findModel($id);
 
-        $models = ServiceTime::find()->all();
+        $models = ServiceTime::find()
+        ->joinWith('service', true, 'INNER JOIN')
+        ->andWhere(['services.status' => 1])->all();
 
         $events = [];
         foreach ($models as $key => $price) {

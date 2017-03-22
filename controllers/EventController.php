@@ -57,7 +57,8 @@ class EventController extends Controller
             ->andWhere(['>=', 'date_end', $date])
             ->andWhere(['<=', 'time_start', $p_time])
             ->andWhere(['>=', 'time_end', $p_time])
-            ->with('service')
+            ->joinWith('service')
+            ->andWhere(['services.status' => 1])
             ->all();
         $aServices = [];
         foreach ($services as $key => $service) {
@@ -220,7 +221,7 @@ class EventController extends Controller
             $models = Client::find()->andFilterWhere(['like', 'last_name', $last])
             ->andFilterWhere(['like', 'first_name', $first])
             ->andFilterWhere(['like', 'middle_name', $middle])
-            ->andFilterWhere(['age' => $age])->all();
+            ->andFilterWhere(['age' => $age])->limit(10)->all();
         }else{
             $models = [];
         }

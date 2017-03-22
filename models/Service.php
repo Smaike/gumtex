@@ -35,6 +35,7 @@ class Service extends \yii\db\ActiveRecord
             [['created_at', 'updated_at'], 'safe'],
             [['name'], 'string', 'max' => 60],
             [['ht_name'], 'string', 'max' => 50],
+            ['status', 'default', 'value' => 1],
         ];
     }
 

@@ -11,7 +11,7 @@ use dosamigos\datetimepicker\DateTimePicker;
 use app\models\Service;
 use app\models\ActiveDay;
 
-$models = Service::find()->where(['type_id' => $type_id])->all();
+$models = Service::find()->where(['type_id' => $type_id, 'status' => 1])->all();
 $services = ArrayHelper::map($models, 'id', 'name');
 $disable_days = ActiveDay::find()->select(['date'])->where(['is_active' => 0])->column();
 ?>

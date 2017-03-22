@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php foreach($types as $type){?>
-    	<?=Html::a($type->name, Url::to(['index', 'type_id' => $type->id]), ['class' => 'btn btn-success'])?><br>
+    	<?=Html::a($type->name, Url::to(['index', 'type_id' => $type->id]), ['class' => 'btn btn-success'])?><br><br>
     <?php }?>
 
 </div>

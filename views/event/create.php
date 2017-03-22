@@ -23,10 +23,14 @@ $models = ClientType::find()->all();
 $types = ArrayHelper::map($models, 'id', 'name');
 ?>
 <div class="event-create row">
-    <h2>Вы заполняете событие на <?=$model->date?></h2>
     <?php $form = ActiveForm::begin(); ?>
         <div class="row">
-            <div class='col-sm-6'>
+            <div class="col-sm-offset-1">
+                <h2>Вы заполняете событие на <?=$model->date?></h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class='col-sm-5 col-sm-offset-1'>
             
             <?= $form->field($model, 'last_name', ['inputOptions' => [
                 'class' =>'form-control find-copies'
@@ -95,14 +99,15 @@ $types = ArrayHelper::map($models, 'id', 'name');
                     'toggleButton' => [
                         'label' => 'Услуги',
                         'class' => "btn btn-success start-serv",
+                        'style' => 'margin-top:25px'
                     ],
                 ]);?>
                 <?= $form->field($model, 'services')->checkboxList($aServices, ['separator' => "<br>"]) ?>
                 <?php Modal::end();?>
                 <br><br>
-                <h3>Стоимость:</h3>
+                <label class="control-label">Стоимость:</label>
                 <?= $form->field($model, 'price')->label(false) ?>
-                <h4>Скидка:</h4>
+                <label class="control-label">Скидка:</label>
                 <?= $form->field($model, 'discount')->label(false) ?>
                 <?= $form->field($model, 'why', ['options' => ['style' => 'display:none']])->textarea(['rows' => 4])->label("Почему:") ?>
                 <hr>
@@ -113,8 +118,10 @@ $types = ArrayHelper::map($models, 'id', 'name');
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
+        <div class="row">
+            <div class="col-sm-offset-1 col-sm-11">
+                    <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
+            </div>
         </div>
     <?php ActiveForm::end(); ?>
 
