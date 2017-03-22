@@ -61,7 +61,7 @@ class EventController extends Controller
             ->all();
         $aServices = [];
         foreach ($services as $key => $service) {
-            if(!empty($service->dow) && in_array(date('w', strtotime($date)), $service->dow)){
+            if(!empty($service->dow) && in_array(date('w', strtotime($date)), $service->dow) && !empty($service->service)){
                 $aServices[$service->id_service] = $service->service->name;
             }
         }
