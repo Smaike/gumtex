@@ -73,4 +73,12 @@ class Service extends \yii\db\ActiveRecord
         }
         return false;
     }
+    // public function afterDelete()
+    // {
+    //     if (parent::afterDelete()) {
+    //         ServiceTime::find()->where(['id_service' => $this->])
+    //         return true;
+    //     }
+    //     return false;
+    // }
 }
