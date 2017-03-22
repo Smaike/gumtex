@@ -78,7 +78,7 @@ class ServiceTimeController extends Controller
         foreach ($models as $key => $price) {
             $Event = new \yii2fullcalendar\models\Event();
             $Event->id = $key;
-            $Event->title = $price->service->name;
+            $Event->title = ($price->service)?$price->service->name:'Не определено';
             $Event->allDay = false;
             $Event->dow = $price->dow;
             if(empty($price->dow)){
@@ -123,7 +123,7 @@ class ServiceTimeController extends Controller
         foreach ($models as $key => $price) {
             $Event = new \yii2fullcalendar\models\Event();
             $Event->id = $key;
-            $Event->title = $price->service->name;
+            $Event->title = ($price->service)?$price->service->name:'Не определено';
             $Event->allDay = false;
             $Event->dow = $price->dow;
             if(empty($price->dow)){
