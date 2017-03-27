@@ -9,7 +9,16 @@ use Yii;
  *
  * @property integer $id
  * @property integer $id_service
- * @property integer $day
+ * @property integer $service_type
+ * @property integer $monday
+ * @property integer $tuesday
+ * @property integer $wednesday
+ * @property integer $thursday
+ * @property integer $friday
+ * @property integer $saturday
+ * @property integer $sunday
+ * @property string $start
+ * @property string $end
  */
 class DaysServices extends \yii\db\ActiveRecord
 {
@@ -27,7 +36,8 @@ class DaysServices extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_service', 'day'], 'integer'],
+            [['id_service', 'service_type', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'], 'integer'],
+            [['start', 'end'], 'string', 'max' => 5],
         ];
     }
 
@@ -39,7 +49,16 @@ class DaysServices extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_service' => 'Id Service',
-            'day' => 'Day',
+            'service_type' => 'Service Type',
+            'monday' => 'Понедельник',
+            'tuesday' => 'Вторник',
+            'wednesday' => 'Среда',
+            'thursday' => 'Четверг',
+            'friday' => 'Пятница',
+            'saturday' => 'Суббота',
+            'sunday' => 'Воскресенье',
+            'start' => 'Начало',
+            'end' => 'Конец',
         ];
     }
 }

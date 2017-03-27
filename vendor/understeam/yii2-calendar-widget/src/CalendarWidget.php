@@ -237,7 +237,7 @@ class CalendarWidget extends Widget
         $startTs = isset($bounds[0]) ? $bounds[0] : null;
         $endTs = isset($bounds[1]) ? $bounds[1] : null;
         $condition = true;
-        $range = $this->getDateRange($date->format('w'));
+        $range = $this->getDateRange($date);
         $end = ($range)? $range['end'] : '19';
         if ($startTs !== null) {
             $condition = $condition && ($date->getTimestamp() >= $startTs || (
@@ -261,20 +261,22 @@ class CalendarWidget extends Widget
         }
     }
 
-    public function getDateRange($day)
+    public function getDateRange($date)
     {
-        $id_services = DaysServices::find()
-        ->select(['id_service'])
-        ->where(['day' => $day])
-        ->column();
-        $serviceTime = ServiceTime::find()
-        ->select(['MIN(time_start) as start', 'MAX(time_end) as end'])
-        ->where(['service_times.id' => $id_services])
-        ->joinWith('service', true, 'INNER JOIN')
-        ->andWhere(['services.status' => 1])
+        $info = ActiveDay::find()
+        ->select(['start', 'end'])
+        ->where(['date' => $date->format('Y-m-d')])
         ->asArray()
         ->one();
-        return $serviceTime;
+        if(empty($info)){
+            $info = DaysServices::find()
+            ->select(['start', 'end'])
+            ->where([strtolower($date->format('l')) => 1])
+            ->andWhere(['service_type' => 3])
+            ->asArray()
+            ->one();
+        }
+        return $info;
     }
 
     public function hasSeparate()

@@ -33,6 +33,7 @@ class ActiveDay extends \yii\db\ActiveRecord
 
             [['is_active'], 'integer'],
             [['split'], 'string', 'max' => 2],
+            [['start', 'end'], 'string', 'max' => 5],
         ];
     }
 
@@ -46,6 +47,8 @@ class ActiveDay extends \yii\db\ActiveRecord
             'date' => 'Дата',
             'split' => 'Разбитие',
             'is_active' => 'Активен?',
+            'start' => 'Начало',
+            'end' => 'Конец',
         ];
     }
 

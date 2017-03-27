@@ -12,7 +12,7 @@ use yii\helpers\Html;
 echo $this->render('header');
 $context = $this->context;
 $count = 0;
-$dateRange = $context->getDateRange(date('w', strtotime(Yii::$app->request->get('date'))));
+$dateRange = $context->getDateRange(new \DateTime(Yii::$app->request->get('date')));
 $separate = $context->hasSeparate();
 ?>
 <div class="row">

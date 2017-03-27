@@ -31,6 +31,33 @@ use yii\jui\DatePicker;
                             'style' => "width:80%; display:inline-block; margin-right:10px;",
                             'placeholder' => '1999-12-31'
             ]]) ?>
+            
+
+            
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <?= $form->field($model, 'start', [
+                'inputOptions' => [
+                    'class' => 'form-control'
+                ]])->textInput()->widget(\yii\widgets\MaskedInput::className(), [
+                    'mask' => '99:99',
+                    'options'=>[
+                        'class' => 'form-control form_contact',
+                        'placeholder' => '10:00'
+                ]]) ?>
+        </div>
+        <div class="col-sm-6">
+            <?= $form->field($model, 'end', [
+                'inputOptions' => [
+                    'class' => 'form-control'
+                ]])->textInput()->widget(\yii\widgets\MaskedInput::className(), [
+                    'mask' => '99:99',
+                    'options'=>[
+                        'class' => 'form-control form_contact',
+                        'placeholder' => '19:00'
+                ]]) ?>
         </div>
     </div>
     <div class="row">

@@ -3,12 +3,13 @@
 namespace app\modules\directories\controllers;
 
 use Yii;
-use app\models\ActiveDay;
 use yii\data\ActiveDataProvider;
-use app\modules\directories\components\web\Controller;
-use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\NotFoundHttpException;
 
+use app\models\ActiveDay;
+use app\models\DaysServices;
+use app\modules\directories\components\web\Controller;
 /**
  * ActiveDayController implements the CRUD actions for ActiveDay model.
  */
@@ -38,9 +39,16 @@ class ActiveDayController extends Controller
         $dataProvider = new ActiveDataProvider([
             'query' => ActiveDay::find(),
         ]);
-
+        if(!($proforientationDays = DaysServices::find()->where(['service_type' => 3])->one())){
+            $proforientationDays = new DaysServices();
+            $proforientationDays->service_type=3;
+        }
+        if ($proforientationDays->load(Yii::$app->request->post())) {
+            $proforientationDays->save();
+        }
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'proforientationDays' => $proforientationDays,
         ]);
     }
 

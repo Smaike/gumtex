@@ -70,7 +70,7 @@ class Controller extends \yii\web\Controller {
 			],
 			[
 				'label' => 'Услуги', 'items' => [
-					['label' => 'График работы услуг', 'url' => ['/directory/service-time'], 'active' => $this->id == 'service-time'],
+					// ['label' => 'График работы услуг', 'url' => ['/directory/service-time'], 'active' => $this->id == 'service-time'],
 					['label' => 'Категории услуг', 'url' => ['/directory/service-type'], 'active' => $this->id == 'service-type'],
 					['label' => 'Категории клиентов', 'url' => ['/directory/client-category'], 'active' => $this->id == 'client-category'],
 					['label' => 'Стоимость услуг', 'url' => ['/directory/price'], 'active' => $this->id == 'price'],

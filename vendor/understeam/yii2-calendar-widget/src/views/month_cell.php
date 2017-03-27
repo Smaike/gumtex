@@ -10,7 +10,7 @@ use yii\helpers\Url;
 $context = $this->context;
 $currentMonth = $context->isInPeriod($cell->date);
 $isActive = $context->isActive($cell->date);
-$isClosed = ($context->isClosed($cell->date) || (empty($context->getDateRange($cell->date->format('w'))['start'])) && ($cell->date->format('Y-m-d') >= date('Y-m-d')));
+$isClosed = ($context->isClosed($cell->date) || (empty($context->getDateRange($cell->date)['start'])) && ($cell->date->format('Y-m-d') >= date('Y-m-d')));
 
 
 $time = $cell->date->format('Y-m-d');
