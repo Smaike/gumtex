@@ -3,6 +3,7 @@
 namespace app\modules\directories\models;
 
 use Yii;
+use app\modules\directories\models\ConsultantsCost;
 
 /**
  * This is the model class for table "consultants_types".
@@ -28,6 +29,14 @@ class ConsultantsType extends \yii\db\ActiveRecord
         return [
             [['name'], 'string', 'max' => 255],
         ];
+    }
+
+    public function getCostService($id)
+    {
+        if($cost = ConsultantsCost::find()->where(['id_service' => $id, 'id_consultant_type' => $this->id])->one()){
+            return $cost->value;
+        }
+        return 0;
     }
 
     /**

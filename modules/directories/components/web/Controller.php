@@ -78,6 +78,13 @@ class Controller extends \yii\web\Controller {
 					['label' => 'Услуги', 'url' => ['/directory/service'], 'active' => $this->id == 'service'],
 				]
 			],
+			[
+				'label' => 'Консультанты', 'items' => [
+					// ['label' => 'График работы услуг', 'url' => ['/directory/service-time'], 'active' => $this->id == 'service-time'],
+					['label' => 'Тип консультантов', 'url' => ['/directory/consultants-type'], 'active' => $this->id == 'consultants-type'],
+					['label' => 'Категории консультантов', 'url' => ['/directory/consultants-category'], 'active' => $this->id == 'consultants-category'],
+				]
+			],
 		];
 
 		return true;

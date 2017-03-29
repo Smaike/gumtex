@@ -4,6 +4,7 @@ namespace app\modules\directories\controllers;
 
 use Yii;
 use app\modules\directories\models\ConsultantsType;
+use app\modules\directories\models\ConsultantsCost;
 use yii\data\ActiveDataProvider;
 use app\modules\directories\components\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -66,6 +67,7 @@ class ConsultantsTypeController extends Controller
         $model = new ConsultantsType();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $this->saveCosts($model);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('create', [
@@ -85,6 +87,7 @@ class ConsultantsTypeController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $this->saveCosts($model);
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
@@ -119,6 +122,19 @@ class ConsultantsTypeController extends Controller
             return $model;
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+
+    private function saveCosts($model)
+    {
+        foreach (Yii::$app->request->post('service') as $key => $row) {
+            if(!$discount = ConsultantsCost::find()->where(['id_consultant_type' => $model->id, 'id_service' => $key])->one()){
+                $discount = new ConsultantsCost();
+                $discount->id_consultant_type = $model->id;
+                $discount->id_service = $key;
+            }
+            $discount->value = $row;
+            $discount->save();
         }
     }
 }

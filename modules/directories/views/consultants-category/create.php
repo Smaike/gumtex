@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\modules\directories\models\ConsultantsCategory */
 
-$this->title = 'Create Consultants Category';
-$this->params['breadcrumbs'][] = ['label' => 'Consultants Categories', 'url' => ['index']];
+$this->title = 'Создание категории консультанта';
+$this->params['breadcrumbs'][] = ['label' => 'Категории консультанотов', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="consultants-category-create">
