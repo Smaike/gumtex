@@ -42,21 +42,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'client.middle_name',
             'client.birthday',
             'client.mobile',
-            [
-                'attribute' => "client.p_first_name",
-                'visible' => $model->client->age<18,
-            ],
-            [
-                'attribute' => "client.p_last_name",
-                'visible' => $model->client->age<18,
-            ],
-            [
-                'attribute' => "client.p_middle_name",
-                'visible' => $model->client->age<18,
-            ],[
-                'attribute' => "client.p_mobile",
-                'visible' => $model->client->age<18,
-            ],
             'client.clientType.name',
             'client.clientCategory.name',
         ],
@@ -73,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <tr>
                     <td><?=$service->name?></td>
                     <td><?php Modal::begin([
-                        'header' => '<h2>Выберите аудиторию</h2>',
+                        'header' => '<h2>Код для начала тестирования</h2>',
                         'toggleButton' => [
                             'label' => 'Начать',
                             'class' => "btn btn-success start-serv",
@@ -96,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
     $(document).on('click', '.start-serv', function(){
         var div = $(this);
         $.ajax({
-          url: '" . Url::to('directory/computer/list-activity', true) . "',
+          url: '" . Url::to('event/create-code', true) . "',
           type: 'POST',   
           data: {'service':div.data('service'), 'event':div.data('event')}, 
           success: function(response){

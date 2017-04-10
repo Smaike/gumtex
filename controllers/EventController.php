@@ -17,6 +17,7 @@ use app\models\Service;
 use app\models\ServiceTime;
 use app\models\Price;
 use app\models\search\EventSearch;
+use app\models\EventsService;
 use app\forms\EventCreateForm;
 
 /**
@@ -51,21 +52,11 @@ class EventController extends Controller
 
         $model = new EventCreateForm();
         $model->date = $date;
-        $p_time = explode(' ', $date)[1];
-        $services = ServiceTime::find()
-            ->where(['<=', 'date_start', $date])
-            ->andWhere(['>=', 'date_end', $date])
-            ->andWhere(['<=', 'time_start', $p_time])
-            ->andWhere(['>=', 'time_end', $p_time])
-            ->joinWith('service')
-            ->andWhere(['services.status' => 1])
+        $services = Service::find()
+            ->where(['type_id' => 3])
+            ->andWhere(['status' => 1])
             ->all();
-        $aServices = [];
-        foreach ($services as $key => $service) {
-            if(!empty($service->dow) && in_array(date('w', strtotime($date)), $service->dow) && !empty($service->service)){
-                $aServices[$service->id_service] = $service->service->name;
-            }
-        }
+        $aServices = ArrayHelper::map($services, 'id', 'name');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['calendar/index', 'date' => date("Y-m-d",strtotime($model->date)), 'viewMode' => 'day']);
         } else {
@@ -90,25 +81,14 @@ class EventController extends Controller
         $form->attributes = $model->attributes;
         $form->services = $model->getServices()->select(['id'])->column();
         $date = $form->date;
-        $p_time = explode(' ', $date)[1];
-        $services = ServiceTime::find()
-            ->where(['<=', 'date_start', $date])
-            ->andWhere(['>=', 'date_end', $date])
-            ->andWhere(['<=', 'time_start', $p_time])
-            ->andWhere(['>=', 'time_end', $p_time])
-            ->with('service')
+        $services = Service::find()
+            ->where(['type_id' => 3])
+            ->andWhere(['status' => 1])
             ->all();
-        $aServices = [];
-        foreach ($services as $key => $service) {
-            if(!empty($service->dow) && in_array(date('w', strtotime($date)), $service->dow)){
-                $aServices[$service->id_service] = $service->service->name;
-            }
-        }
+        $aServices = ArrayHelper::map($services, 'id', 'name');
         if ($form->load(Yii::$app->request->post()) && $form->update()) {
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            // $dt = strtotime($form->birthday);
-            // $form->birthday = date('d-m-Y', $dt);
             return $this->render('create', [
                 'model' => $form,
                 'aServices' => $aServices,
@@ -131,6 +111,12 @@ class EventController extends Controller
         return $this->redirect(['calendar/index']);
     }
 
+    /**
+     *
+     * Возвращает стоимость отмеченных услуг с учетом скидок через аякс
+     *
+     */
+    
     public function actionCost()
     {
         if(!Yii::$app->request->isAjax){
@@ -161,6 +147,12 @@ class EventController extends Controller
         return $cost;
     }
 
+    /**
+     *
+     * Отвязывание события от текущей даты
+     *
+     */
+    
     public function actionSeparate($id)
     {
         $model = $this->findModel($id);
@@ -169,6 +161,12 @@ class EventController extends Controller
         return $this->redirect(['calendar/index']);
     }
 
+    /**
+     *
+     * Привязывание собтия к выбранной дате
+     *
+     */
+    
     public function actionBind($date)
     {
         $models = Event::find()->where(['status' => 2])->all();
@@ -186,6 +184,12 @@ class EventController extends Controller
         ]);
     }
 
+    /**
+     *
+     * Распечатка для охраны
+     *
+     */
+    
     public function actionPrint($date)
     {
         $period[0] = date('Y-m-d', strtotime($date));
@@ -211,6 +215,12 @@ class EventController extends Controller
         return $pdf->render();
     }
 
+    /**
+     *
+     * Поиск дублей на странице добавления события
+     *
+     */
+    
     public function actionCopies()
     {
         $last = Yii::$app->request->post('last');
@@ -228,6 +238,26 @@ class EventController extends Controller
         return $this->renderPartial('_copies', [
             'models' => $models
         ]);
+    }
+
+    /**
+     *
+     * Генерация кода для прохождения услуги
+     *
+     */
+    
+    public function actionCreateCode()
+    {
+        $chars = array_merge(range(0,9), range('a','z'), range('A','Z'));
+        shuffle($chars);
+        $eventService = EventsService::find()->where([
+            'id_event' => Yii::$app->request->post('event'),
+            'id_service' => Yii::$app->request->post('service'),
+        ])->one();
+        $eventService->code = strtoupper(implode(array_slice($chars, 0, 8)));
+        // $eventService->status = "processed";
+        $eventService->save(false);
+        return "<h3 style='text-align:center'>".$eventService->code."</h3>";
     }
 
     /**
