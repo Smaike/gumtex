@@ -40,17 +40,16 @@ class TestingController extends Controller
     public function actionIndex()
     {   
         $this->layout = 'testing';
-        $computer = Computer::find(1)->one();
-        $eventsService = EventsService::find($computer->is_processed_by)->one();
-        // $eventsService->session = \Yii::$app->security->generateRandomString();
-        // $eventsService->save();
-        Yii::$app->soap->sc->createTestingSession($eventsService->idService->ht_name, $eventsService->session);
-        $url = Yii::$app->soap->sc->getTestingSessionUrl($eventsService->session);
-        return $this->redirect($url['TestingSessionUrl']);
-        //Вариант с фреймом
+        if(!empty(Yii::$app->request->post('code'))){
+            if($eventsService = EventsService::find()->where(['code' => Yii::$app->request->post('code')])->one()){
+                Yii::$app->soap->sc->createTestingSession($eventsService->idService->ht_name, $eventsService->session);
+                $url = Yii::$app->soap->sc->getTestingSessionUrl($eventsService->session);
+                return $this->redirect($url['TestingSessionUrl']);
+            }else{
+                Yii::$app->getSession()->setFlash('warning', 'Указанный код не найден');
+            }
+        }
         return $this->render('index', [
-            'eventsService' => $eventsService,
-            'url' => $url['TestingSessionUrl']
         ]);
     }
 
