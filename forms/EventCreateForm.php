@@ -106,6 +106,7 @@ class EventCreateForm extends Model
                     $eventService->id_event = $event->id;
                     $eventService->id_service = $service;
                     $eventService->status = 'new';
+                    $eventService->session = \Yii::$app->security->generateRandomString();
                     $eventService->save();
                 }
             }

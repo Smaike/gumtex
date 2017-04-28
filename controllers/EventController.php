@@ -80,6 +80,10 @@ class EventController extends Controller
         $form->attributes = $model->client->attributes;
         $form->attributes = $model->attributes;
         $form->services = $model->getServices()->select(['id'])->column();
+        if(!empty($form->birthday)){
+            $date = strtotime($form->birthday);
+            $form->birthday = date('d-m-Y', $date);
+        }
         $date = $form->date;
         $services = Service::find()
             ->where(['type_id' => 3])

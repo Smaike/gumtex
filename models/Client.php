@@ -79,6 +79,9 @@ class Client extends \yii\db\ActiveRecord
             'comment' => 'Комментарии',
             'where_know' => 'Откуда узнал',
             'age' => 'Возраст',
+            'fio_mother' => 'ФИО матери',
+            'fio_father' => 'ФИО отца',
+            'fio_sup' => 'ФИО сопровождающего',
         ];
     }
 
