@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\modules\directories\models\ConsultantsCategory */
 
-$this->title = 'Update Consultants Category: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Consultants Categories', 'url' => ['index']];
+$this->title = 'Править категорию консультантов: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Категории консультантов', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>

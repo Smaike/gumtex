@@ -80,7 +80,7 @@ class Controller extends \yii\web\Controller {
 			],
 			[
 				'label' => 'Консультанты', 'items' => [
-					// ['label' => 'График работы услуг', 'url' => ['/directory/service-time'], 'active' => $this->id == 'service-time'],
+					['label' => 'Список консультантов', 'url' => ['/directory/consultant'], 'active' => $this->id == 'consultant'],
 					['label' => 'Тип консультантов', 'url' => ['/directory/consultants-type'], 'active' => $this->id == 'consultants-type'],
 					['label' => 'Категории консультантов', 'url' => ['/directory/consultants-category'], 'active' => $this->id == 'consultants-category'],
 				]
