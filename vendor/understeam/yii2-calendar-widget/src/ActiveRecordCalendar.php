@@ -56,7 +56,6 @@ class ActiveRecordCalendar extends Component implements CalendarInterface
     {
         $modelClass = $this->modelClass;
         $query = $modelClass::find()->joinWith('services', true, 'INNER JOIN')
-        ->andWhere(['services.type_id' => Yii::$app->session->get('type_id')])
         ->andWhere(['services.status' => 1]);
         $query
             ->andWhere([

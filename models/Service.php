@@ -63,6 +63,11 @@ class Service extends \yii\db\ActiveRecord
         return $this->hasMany(EventsServices::className(), ['id_service' => 'id']);
     }
 
+    public function getServiceType()
+    {
+        return $this->hasOne(ServiceType::className(), ['id' => 'type_id']);
+    }
+
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {

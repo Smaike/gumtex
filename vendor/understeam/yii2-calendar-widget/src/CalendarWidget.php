@@ -272,7 +272,6 @@ class CalendarWidget extends Widget
             $info = DaysServices::find()
             ->select(['start', 'end'])
             ->where([strtolower($date->format('l')) => 1])
-            ->andWhere(['service_type' => 3])
             ->asArray()
             ->one();
         }

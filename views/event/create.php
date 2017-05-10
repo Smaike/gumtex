@@ -94,16 +94,18 @@ $types = ArrayHelper::map($models, 'id', 'name');
         
             </div>
             <div class='col-sm-2'>
-                <?php Modal::begin([
-                    'header' => '<h2>Услуги</h2>',
-                    'toggleButton' => [
-                        'label' => 'Услуги',
-                        'class' => "btn btn-success start-serv",
-                        'style' => 'margin-top:25px'
-                    ],
-                ]);?>
-                <?= $form->field($model, 'services')->checkboxList($aServices, ['separator' => "<br>"]) ?>
-                <?php Modal::end();?>
+                <?php foreach ($aServices as $key => $services){
+                    Modal::begin([
+                        'header' => '<h2>Услуги</h2>',
+                        'toggleButton' => [
+                            'label' => $key,
+                            'class' => "btn btn-success start-serv",
+                            'style' => 'margin-top:25px'
+                        ],
+                    ]);?>
+                    <?= $form->field($model, 'services')->checkboxList($services, ['separator' => "<br>"]) ?>
+                    <?php Modal::end();?>
+                <?php }?>
                 <br><br>
                 <label class="control-label">Стоимость:</label>
                 <?= $form->field($model, 'price')->label(false) ?>

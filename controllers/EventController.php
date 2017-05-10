@@ -53,10 +53,12 @@ class EventController extends Controller
         $model = new EventCreateForm();
         $model->date = $date;
         $services = Service::find()
-            ->where(['type_id' => 3])
             ->andWhere(['status' => 1])
             ->all();
-        $aServices = ArrayHelper::map($services, 'id', 'name');
+        foreach ($services as $key => $service) {
+            $aServices[$service->serviceType->name][$service->id] = $service->name;
+        }
+        // $aServices = ArrayHelper::map($services, 'id', 'name');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['calendar/index', 'date' => date("Y-m-d",strtotime($model->date)), 'viewMode' => 'day']);
         } else {
