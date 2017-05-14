@@ -102,8 +102,8 @@ $types = ArrayHelper::map($models, 'id', 'name');
                             'class' => "btn btn-success start-serv",
                             'style' => 'margin-top:25px'
                         ],
-                    ]);?>
-                    <?= $form->field($model, 'services')->checkboxList($services, ['separator' => "<br>"]) ?>
+                    ]);?> 
+                    <?= Html::checkboxList('services[]', $model->services, $services, ['separator' => "<br>"])?>
                     <?php Modal::end();?>
                 <?php }?>
                 <br><br>
@@ -130,9 +130,9 @@ $types = ArrayHelper::map($models, 'id', 'name');
 </div><!-- event-create -->
 
 <?php $this->registerJs("
-    $('input[name=\"EventCreateForm[services][]\"]').change(function(){
+    $('input[name=\"services[]\"]').change(function(){
         var data = { 'user_ids[]' : []};
-        $('input[name=\"EventCreateForm[services][]\"]:checked').each(function() {
+        $('input[name=\"services[]\"]:checked').each(function() {
           data['user_ids[]'].push($(this).val());
         });
         $.ajax({

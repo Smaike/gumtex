@@ -71,8 +71,9 @@ class Client extends \yii\db\ActiveRecord
             'p_first_name' => 'Имя родителя',
             'p_last_name' => 'Фамилия родителя',
             'p_middle_name' => 'Отчество родителя',
-            'mobile' => 'Телефон',
+            'mobile' => 'Телефон клиента',
             'p_mobile' => 'Телефон родителя',
+            's_mobile' => 'Телефон сопровождающего'
             'type' => 'Тип',
             'category' => 'Категория',
             'id_consultant' => 'Консультант',

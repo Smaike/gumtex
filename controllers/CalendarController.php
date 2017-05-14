@@ -20,13 +20,13 @@ class CalendarController extends Controller
      */
     public function actionIndex()
     {
-        if(!($type_id = Yii::$app->request->get('type_id')) && !($type_id = Yii::$app->session->get('type_id'))){
-            return $this->redirect(['start']);
-        }else{
-            if(!empty(Yii::$app->request->get('type_id'))){
-                Yii::$app->session->set('type_id', Yii::$app->request->get('type_id'));
-            }
-        }
+        // if(!($type_id = Yii::$app->request->get('type_id')) && !($type_id = Yii::$app->session->get('type_id'))){
+        //     return $this->redirect(['start']);
+        // }else{
+        //     if(!empty(Yii::$app->request->get('type_id'))){
+        //         Yii::$app->session->set('type_id', Yii::$app->request->get('type_id'));
+        //     }
+        // }
         $calendar = Yii::$app->get('calendar');
         $model = new CalendarActionForm($calendar);
         $model->load(Yii::$app->request->getQueryParams());
@@ -54,11 +54,11 @@ class CalendarController extends Controller
         ]);
     }
 
-    public function actionStart()
-    {
-        $types = ServiceType::find()->all();
-        return $this->render('@app/modules/directories/views/service-time/start', [
-            'types' => $types,
-        ]);
-    }
+    // public function actionStart()
+    // {
+    //     $types = ServiceType::find()->all();
+    //     return $this->render('@app/modules/directories/views/service-time/start', [
+    //         'types' => $types,
+    //     ]);
+    // }
 }

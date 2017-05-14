@@ -82,6 +82,14 @@ class EventCreateForm extends Model
         ];
     }
 
+    public function load($data, $formName = NULL)
+    {
+        if(parent::load($data, $formName)){
+            $this->services = Yii::$app->request->post('services');
+            return true;
+        }
+    }
+
     public function save()
     {
         if(empty($this->copy_id)){
@@ -101,6 +109,7 @@ class EventCreateForm extends Model
             $event->id_client = $client->id;
             $event->created_by = (Yii::$app->user->id)?Yii::$app->user->id:0;
             if($event->save() && !empty($this->services)){
+                $this->event = $event;
                 foreach ($this->services as $service) {
                     $eventService = new EventsService();
                     $eventService->id_event = $event->id;

@@ -72,7 +72,7 @@ $linkProfile = Url::to();
                     <?php }?></td>
                     <td style="width:15%"><?=$item->client->id_consultant?></td>
                     <td style="width:19%"><?=$item->client->comment?></td>
-                    <td style="width:10%"><?=$item->price?></td>
+                    <td style="width:10%"><?=$item->price-$item->discount?></td>
                     <td style="width:4%">
                         <a href = "<?=Url::to(['event/view', 'id' => $item->id])?>" data-pjax = '0'>
                             <ico class="glyphicon glyphicon-search" style="font-size: 12px"></ico>
