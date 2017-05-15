@@ -46,7 +46,7 @@ use yii\helpers\Url;
                 <?= $form->field($model, 'p_mobile') ?>
             
                 <div class="form-group">
-                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+                    <?= Html::submitButton('Начать тест', ['class' => 'btn btn-primary']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>

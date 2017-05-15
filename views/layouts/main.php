@@ -39,7 +39,7 @@ AppAsset::register($this);
             ['label' => 'Начало', 'url' => ['/site/index']],
             ['label' => 'Справочники', 'url' => ['/directory/default/index']],
             ['label' => 'Отчеты', 'url' => ['/report/index']],
-            ['label' => 'Консультации', 'url' => ['/consultant/index']],
+            ['label' => 'В работе', 'url' => ['/consultant/index']],
             ['label' => 'Генератор писем', 'url' => ['/emails/']],
             ['label' => 'Календарь услуг', 'url' => ['/calendar/index']],
             ['label' => 'Бронирование', 'url' => ['/booking/list']],
@@ -71,14 +71,6 @@ AppAsset::register($this);
         <?= $content ?>
     </div>
 </div>
-
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
 
 <?php $this->endBody() ?>
 </body>

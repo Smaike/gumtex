@@ -44,12 +44,14 @@ $types = ArrayHelper::map($models, 'id', 'name');
                 'class' =>'form-control find-copies'
                 ]
             ]) ?>
+            <?= $form->field($model, 'gender')->radioList(['М' => 'М', 'Ж' => 'Ж']) ?>
             <?= $form->field($model, 'age', ['inputOptions' => [
                 'class' =>'form-control find-copies'
                 ]
             ]) ?>
             <?= $form->field($model, 'fio_sup') ?>
             <?= $form->field($model, 'mobile') ?>
+            <?= $form->field($model, 's_mobile') ?>
             <?= $form->field($model, 'category', ['inputOptions' => [
                 'class' =>'form-control'
                 ]
@@ -93,25 +95,33 @@ $types = ArrayHelper::map($models, 'id', 'name');
             <?= $form->field($model, 'date', ['template' => '{input}'])->hiddenInput() ?>
         
             </div>
-            <div class='col-sm-2'>
-                <?php foreach ($aServices as $key => $services){
-                    Modal::begin([
-                        'header' => '<h2>Услуги</h2>',
-                        'toggleButton' => [
-                            'label' => $key,
-                            'class' => "btn btn-success start-serv",
-                            'style' => 'margin-top:25px'
-                        ],
-                    ]);?> 
-                    <?= Html::checkboxList('services[]', $model->services, $services, ['separator' => "<br>"])?>
-                    <?php Modal::end();?>
-                <?php }?>
-                <br><br>
-                <label class="control-label">Стоимость:</label>
-                <?= $form->field($model, 'price')->label(false) ?>
-                <label class="control-label">Скидка:</label>
-                <?= $form->field($model, 'discount')->label(false) ?>
-                <?= $form->field($model, 'why', ['options' => ['style' => 'display:none']])->textarea(['rows' => 4])->label("Почему:") ?>
+            <div class='col-sm-5'>
+                <div class="row">
+                    <div class='col-sm-12'>
+                        <?php foreach ($aServices as $key => $services){
+                            Modal::begin([
+                                'header' => '<h2>Услуги</h2>',
+                                'toggleButton' => [
+                                    'label' => $key,
+                                    'class' => "btn btn-success start-serv",
+                                    'style' => 'margin-top:25px'
+                                ],
+                            ]);?> 
+                            <?= Html::checkboxList('services[]', $model->services, $services, ['separator' => "<br>"])?>
+                            <?php Modal::end();?>
+                        <?php }?>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class='col-sm-6'>
+                        <label class="control-label">Стоимость:</label>
+                        <?= $form->field($model, 'price')->label(false) ?>
+                        <label class="control-label">Скидка:</label>
+                        <?= $form->field($model, 'discount')->label(false) ?>
+                        <?= $form->field($model, 'why', ['options' => ['style' => 'display:none']])->textarea(['rows' => 4])->label("Почему:") ?>
+                    </div>
+                </div>
                 <hr>
                 <h4>Уже есть в базе:</h4>
                 <img id="LoadingImage" src = "<?=Url::base(true)?>/images/loading.gif" width="30" style="display:none">
@@ -126,7 +136,10 @@ $types = ArrayHelper::map($models, 'id', 'name');
             </div>
         </div>
     <?php ActiveForm::end(); ?>
-
+    <?php Modal::begin([
+        'header' => '<h2>Информация</h2>',
+        'options' => ['id' => 'modal-info']
+    ]);?> 
 </div><!-- event-create -->
 
 <?php $this->registerJs("
@@ -213,6 +226,37 @@ $types = ArrayHelper::map($models, 'id', 'name');
         var f = str.charAt(0).toUpperCase();
         return f + str.substr(1, str.length-1);
     }
+
+    $(document).on('click', '.show_copy', function(){
+        $('#modal-info').modal('show');
+        $.ajax({
+          url: '" . Url::to('event/view-copy', true) . "',
+          type: 'GET',   
+          data: {'id':$(this).data('id')}, 
+          success: function(response){
+            $('#modal-info>.modal-dialog>.modal-content>.modal-body').html(response);
+          }
+        });
+    });
+
+    $(document).on('click', '.radio-select-copy', function(){
+        $.ajax({
+          url: '" . Url::to('event/fill-client', true) . "',
+          type: 'GET',   
+          data: {'id':$(this).val()}, 
+          success: function(response){
+            var arr = $.parseJSON(response);
+            $.each(arr, function(i, item ) {
+              if(i == 'gender'){
+                $('input[name=\'EventCreateForm[gender]\'][value=' + item + ']').attr('checked', 'checked');
+              }else{
+                $('#eventcreateform-'+i).val(item);
+              }
+            });
+          }
+        });
+    });
+
 ",
     View::POS_END,
      'my-options');

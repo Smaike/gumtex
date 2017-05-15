@@ -8,7 +8,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\search\EventSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Консультации';
+$this->title = 'В работе';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="event-index">
@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'idEvent.client.first_name',
+            'idEvent.client.fio',
             [
                 'attribute' => 'computer.name',
                 'label' => 'Номер компьютера',

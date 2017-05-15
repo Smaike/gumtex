@@ -255,16 +255,38 @@ class EventController extends Controller
     
     public function actionCreateCode()
     {
-        $chars = array_merge(range(0,9), range('a','z'), range('A','Z'));
-        shuffle($chars);
         $eventService = EventsService::find()->where([
             'id_event' => Yii::$app->request->post('event'),
             'id_service' => Yii::$app->request->post('service'),
         ])->one();
-        $eventService->code = strtoupper(implode(array_slice($chars, 0, 8)));
+        $eventService->code = mt_rand(10000000, 99999999);
         // $eventService->status = "processed";
         $eventService->save(false);
         return "<h3 style='text-align:center'>".$eventService->code."</h3>";
+    }
+
+    public function actionViewCopy($id)
+    {
+        if($model = Client::findOne($id)){
+            return $this->renderPartial('_view_copy', [
+                'model' => $model
+            ]);
+        }else{
+            return null;
+        }
+    }
+
+    public function actionFillClient($id)
+    {
+        if($model = Client::findOne($id)){
+            if(!empty($model->birthday)){
+                $date = strtotime($model->birthday);
+                $model->birthday = date('d-m-Y', $date);
+            }
+            return \yii\helpers\Json::encode($model->attributes);
+        }else{
+            return null;
+        }
     }
 
     /**

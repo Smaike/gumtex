@@ -53,7 +53,7 @@ class Client extends \yii\db\ActiveRecord
             [['type', 'category', 'id_consultant', 'age'], 'integer'],
             [['comment', 'where_know'], 'string'],
             [['first_name', 'last_name', 'middle_name', 'fio_mother', 'fio_father', 'fio_sup'], 'string', 'max' => 60],
-            [['mobile', 'p_mobile'], 'string', 'max' => 20],
+            [['mobile', 'p_mobile', 'gender'], 'string', 'max' => 20],
         ];
     }
 
@@ -73,7 +73,7 @@ class Client extends \yii\db\ActiveRecord
             'p_middle_name' => 'Отчество родителя',
             'mobile' => 'Телефон клиента',
             'p_mobile' => 'Телефон родителя',
-            's_mobile' => 'Телефон сопровождающего'
+            's_mobile' => 'Телефон сопровождающего',
             'type' => 'Тип',
             'category' => 'Категория',
             'id_consultant' => 'Консультант',
@@ -102,5 +102,16 @@ class Client extends \yii\db\ActiveRecord
     public function getFullName()
     {
         return $this->last_name . " " . $this->first_name;
+    }
+
+    public function getFio()
+    {
+        return $this->last_name . " " . $this->first_name . " " . $this->middle_name;
+    }
+
+    public function getDataForCopiesField()
+    {
+        $data = $this->fullName . " " . "<a href='#' data-id='" . $this->id . "' class='btn btn-info show_copy'>Просмотреть</a>";
+        return $data;
     }
 }

@@ -55,7 +55,7 @@ class TestingController extends Controller
     public function actionCheck($code)
     {   
         $this->layout = 'testing';
-        if($eventsService = EventsService::find()->where(['code' => Yii::$app->request->post('code')])->one()){
+        if($eventsService = EventsService::find()->where(['code' => Yii::$app->request->get('code')])->one()){
             $model = $eventsService->idEvent->client;
             if(!empty($model->birthday)){
                 $date = strtotime($model->birthday);
@@ -67,10 +67,8 @@ class TestingController extends Controller
                     $model->birthday = date('Y-m-d', $date);
                 }
                 $model->save();
-                Yii::$app->soap->sc->createTestingSession($eventsService->idService->ht_name, $eventsService->session);
-                $url = Yii::$app->soap->sc->getTestingSessionUrl($eventsService->session);
-                var_dump($url);
-                die;
+                Yii::$app->soap->sc->createTestingSession($eventsService->idService->ht_name, $eventsService->session, 1);
+                $url = Yii::$app->soap->sc->getTestingSessionUrlEx($eventsService->session);
                 return $this->redirect($url['TestingSessionUrl']);
             }
             return $this->render('check', [

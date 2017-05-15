@@ -23,6 +23,7 @@ class EventCreateForm extends Model
     public $fio_sup;
     public $mobile;
     public $p_mobile;
+    public $s_mobile;
     public $type;
     public $category;
     public $id_consultant;
@@ -36,6 +37,9 @@ class EventCreateForm extends Model
     public $discount;
     public $why;
     public $copy_id;
+    public $gender;
+
+    public $event;
 
     /**
      * @return array the validation rules.
@@ -48,7 +52,7 @@ class EventCreateForm extends Model
             [['type', 'category', 'id_consultant', 'age', 'id', 'copy_id', 'discount'], 'integer'],
             [['comment', 'where_know', 'why'], 'string'],
             [['first_name', 'last_name', 'middle_name', 'fio_mother', 'fio_father', 'fio_sup'], 'string', 'max' => 60],
-            [['mobile', 'p_mobile'], 'string', 'max' => 20],
+            [['mobile', 'p_mobile', 's_mobile', 'gender'], 'string', 'max' => 20],
             [['name'], 'string', 'max' => 255],
             [['price'], 'string', 'max' => 11],
             ['date', 'date', 'format' => 'yyyy-mm-dd H:i'],
@@ -69,8 +73,9 @@ class EventCreateForm extends Model
             'fio_mother' => 'ФИО матери',
             'fio_father' => 'ФИО отца',
             'fio_sup' => 'ФИО сопровождающего',
-            'mobile' => 'Мобильный телефон',
+            'mobile' => 'Мобильный телефон клиента',
             'p_mobile' => 'Мобильный телефон родителя',
+            's_mobile' => 'Мобильный телефон сопровождающего',
             'type' => 'Тип',
             'category' => 'Категория',
             'id_consultant' => 'Консультант',
@@ -78,7 +83,8 @@ class EventCreateForm extends Model
             'where_know' => 'Откуда узнал',
             'name' => "Название события",
             'services' => "Услуги",
-            'age' => "Возраст"
+            'age' => "Возраст",
+            'gender' => "Пол"
         ];
     }
 
@@ -97,6 +103,7 @@ class EventCreateForm extends Model
             $client->attributes = $this->attributes;
         }else{
             $client = Client::findOne($this->copy_id);
+            $client->attributes = $this->attributes;
         }
         $event = new Event();
         $event->attributes = $this->attributes;

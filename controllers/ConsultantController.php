@@ -16,7 +16,7 @@ class ConsultantController extends Controller
 {
     public function actionIndex()
     {   
-        $eventsServices = EventsService::find()->where(['status' => ['consultant', 'consultant_progress']])->with('idEvent.client', 'computer');
+        $eventsServices = EventsService::find()->where(['not', ['code' => null]])->with('idEvent.client', 'computer');
         $dp = new ActiveDataProvider([
             'query' => $eventsServices,
         ]);
