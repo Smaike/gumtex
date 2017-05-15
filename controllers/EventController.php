@@ -260,7 +260,7 @@ class EventController extends Controller
             'id_service' => Yii::$app->request->post('service'),
         ])->one();
         $eventService->code = mt_rand(10000000, 99999999);
-        // $eventService->status = "processed";
+        $eventService->code_generated = date("Y-m-d H:i:s");
         $eventService->save(false);
         return "<h3 style='text-align:center'>".$eventService->code."</h3>";
     }

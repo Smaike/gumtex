@@ -67,6 +67,8 @@ class TestingController extends Controller
                     $model->birthday = date('Y-m-d', $date);
                 }
                 $model->save();
+                $eventsService->status = 'processed';
+                $eventsService->save(false);
                 Yii::$app->soap->sc->createTestingSession($eventsService->idService->ht_name, $eventsService->session, 1);
                 $url = Yii::$app->soap->sc->getTestingSessionUrlEx($eventsService->session);
                 return $this->redirect($url['TestingSessionUrl']);

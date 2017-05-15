@@ -19,7 +19,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'idEvent.client.fio',
+            [
+                'attribute' => 'idEvent.client.fio',
+                'label' => 'ФИО'
+            ],
+            [
+                'attribute' => 'statusLabel',
+                'label' => 'Статус'
+            ],
             [
                 'attribute' => 'computer.name',
                 'label' => 'Номер компьютера',

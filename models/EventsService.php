@@ -16,6 +16,13 @@ use Yii;
  */
 class EventsService extends \yii\db\ActiveRecord
 {
+    private $statuses = [
+        'new' => "Код сгенерирован",
+        'processed' => "Тестируется",
+        'consultant' => "Закончил тестирование",
+        'consultant_progress' => "Консультация",
+        'consultant_finish' => "Закончил консультацию",
+    ];
     /**
      * @inheritdoc
      */
@@ -67,5 +74,10 @@ class EventsService extends \yii\db\ActiveRecord
     public function getComputer()
     {
         return $this->hasOne(Computer::className(), ['is_processed_by' => 'id']);
+    }
+
+    public function getStatusLabel()
+    {
+        return $this->statuses[$this->status];
     }
 }

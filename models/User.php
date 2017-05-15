@@ -1,10 +1,7 @@
 <?php
-
 namespace app\models;
 use yii\web\IdentityInterface;
-
 use Yii;
-
 /**
  * This is the model class for table "users".
  *
@@ -27,13 +24,7 @@ use Yii;
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
-
-    const STATUS_DELETED = 0;
-    const STATUS_NOT_ACTIVE = 1;
-    const STATUS_ACTIVE = 10;
-
     protected $__salt = '7z0ZzugKmnQW';
-
     /**
      * @inheritdoc
      */
@@ -41,7 +32,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return 'users';
     }
-
     /**
      * @inheritdoc
      */
@@ -50,13 +40,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return [
             [['type', 'is_active', 'is_notice'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
-            [['first_name', 'last_name', 'middle_name', 'email', 'login', 'authkey', 'sessionkey', 'secret_key'], 'string', 'max' => 60],
-            [['password'], 'string', 'max' => 60],
-            ['secret_key', 'unique']
-            //[['type'], 'exist', 'skipOnEmpty' => false, 'targetClass' => UserType::className(), 'targetAttribute' => ['type' => 'id']],
+            [['first_name', 'last_name', 'middle_name', 'email', 'login', 'authkey', 'sessionkey'], 'string', 'max' => 60],
+            [['password'], 'string', 'max' => 20],
+            [['type'], 'exist', 'skipOnEmpty' => false, 'targetClass' => UserType::className(), 'targetAttribute' => ['type' => 'id']],
         ];
     }
-
     /**
      * @inheritdoc
      */
@@ -74,13 +62,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'is_active' => 'Активен?',
             'is_notice' => 'Включить оповещения?',
             'authkey' => 'Authkey',
-            'secret_key' => 'Secretkey',
             'sessionkey' => 'Sessionkey',
             'created_at' => 'Дата создания',
             'updated_at' => 'Дата изменения',
         ];
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -88,35 +74,28 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->hasOne(UserType::className(), ['id' => 'type']);
     }
-
     public static function findIdentity($id)
     {
         return self::findOne($id);
     }
-
     public static function findIdentityByAccessToken($token, $type = null)
     {
         return null;
     }
-
     public static function findByUsername($username)
     {
         if($user = self::findOne(['login' => $username]))
             return $user;
-
         return null;
     }
-
     public function getAuthKey()
     {
         return $this->authkey;
     }
-
     public function getId()
     {
         return $this->id;
     }
-
     /**
      * @param string $authKey
      * @return boolean if auth key is valid for current user
@@ -125,22 +104,14 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->getAuthKey() === $authKey;
     }
-
-   /* public function validatePassword($password)
+    public function validatePassword($password)
     {
         return $this->hashPassword($password) === $this->password;
-    }*/
-
-    public function validatePassword($password) {
-        return Yii::$app->security->validatePassword($password,$this->password_hash);
     }
-
-
     public function hashPassword($password)
     {
         return md5($password . $this->__salt);
     }
-
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
@@ -155,52 +126,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         }
         return false;
     }
-
     public function getFullName()
     {
         return $this->last_name . " " . $this->first_name;
-    }
-
-    public function setPassword ($password)
-    {
-        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
-    }
-
-    public function generateAuthKey()
-    {
-        $this->authkey = Yii::$app->security->generateRandomString();
-    }
-
-    public function generateSecretKey()
-    {
-        $this->secret_key = Yii::$app->security->generateRandomString().'_'.time();
-    }
-
-    public static function findBySecretKey($key)
-    {
-        if (!static::isSecretKeyExpire($key))
-        {
-            return null;
-        }
-        return static::findOne([
-            'secret_key' => $key,
-        ]);
-    }
-
-    public static function isSecretKeyExpire($key)
-    {
-        if (empty($key))
-        {
-            return false;
-        }
-        $expire =  60 * 60;
-        $parts = explode('_', $key);
-        $timestamp = (int) end($parts);
-        return $timestamp + $expire >= time();
-    }
-
-    public function removeSecretKey()
-    {
-        $this->secret_key = null;
     }
 }
