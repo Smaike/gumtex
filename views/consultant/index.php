@@ -32,15 +32,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Номер компьютера',
             ],
             [
+                'attribute' => 'code_generated',
+                'label' => 'Время создания кода',
+            ],
+            [
                 'format' => 'raw',
                 'value' => function ($model, $key, $index, $column){
-                    if($model->status == "consultant"){
+                    if(empty($model->idEvent->client->consultant) && in_array($model->status, ["consultant", "new", "processed"])){
                         return Html::a("Консультировать", Url::to([
                             'consultant/take', 
                             'id' => $model->id
                         ]), ['class' => 'btn btn-primary']);
-                    }else{
-                        if($model->idEvent->client->consultant->id == Yii::$app->user->id){
+                    }elseif($model->status == 'consultant_progress'){
+                        if(!empty($model->idEvent->client->consultant) && $model->idEvent->client->consultant->id == Yii::$app->user->id){
                             return Html::a("Завершить", Url::to([
                                 'consultant/finish', 
                                 'id' => $model->id
@@ -48,9 +52,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         }else{
                             return "Консультирует " . $model->idEvent->client->consultant->fullName;
                         }
+                    }else{
+                        return null;
                     }
                 }
             ]
         ],
+        'rowOptions' => function ($model, $index, $widget, $grid){
+            return ['style'=> $model->getInWorkColor()];
+        },
+        'formatter' => ['class' => 'yii\i18n\Formatter','nullDisplay' => ''],
     ]); ?>
 </div>

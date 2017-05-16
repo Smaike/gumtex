@@ -17,11 +17,19 @@ use Yii;
 class EventsService extends \yii\db\ActiveRecord
 {
     private $statuses = [
-        'new' => "Код сгенерирован",
-        'processed' => "Тестируется",
-        'consultant' => "Закончил тестирование",
+        'new'                 => "Код сгенерирован",
+        'processed'           => "Тестируется",
+        'consultant'          => "Закончил тестирование",
         'consultant_progress' => "Консультация",
-        'consultant_finish' => "Закончил консультацию",
+        'consultant_finish'   => "Закончил консультацию",
+    ];
+
+    private $colors = [
+        'new'                 => "#93bbef",
+        'processed'           => "#cef790",
+        'consultant'          => "#f5e87a",
+        'consultant_progress' => "#e6a9f1",
+        'consultant_finish'   => "#f7a7a1",
     ];
     /**
      * @inheritdoc
@@ -79,5 +87,10 @@ class EventsService extends \yii\db\ActiveRecord
     public function getStatusLabel()
     {
         return $this->statuses[$this->status];
+    }
+
+    public function getInWorkColor()
+    {
+        return "background-color:" . $this->colors[$this->status];
     }
 }
