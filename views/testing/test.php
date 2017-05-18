@@ -10,7 +10,7 @@
 
         <!-- D3.js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
-        
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <style>
             body {
                 font-family: 'Open Sans', sans-serif;
@@ -34,9 +34,8 @@
     
     </head>
     <body>
-
+        <div id="barchart_values" style="width: 600px; height: 300px;"></div>
         <div class="circle1"></div>
-        <div class="circle2"></div>
         <script src="/js/radar.js"></script>   
         <script>
       
@@ -89,5 +88,36 @@
 
             /////////////////////////////////////////////////////////
 </script>
+<script type="text/javascript">
+    google.charts.load("current", {packages:["corechart"]});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ["Element", "Density", { role: "style" } ],
+        ["Copper", 8.94, ""],
+        ["Silver", 10.49, ""],
+        ["Gold", 19.30, ""],
+        ["Platinum", 26.45, ""]
+      ]);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        title: "Density of Precious Metals, in g/cm^3",
+        width: 600,
+        height: 400,
+        bar: {groupWidth: "95%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
+      chart.draw(view, options);
+  }
+  </script>
     </body>
 </html>
