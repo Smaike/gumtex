@@ -97,22 +97,26 @@ class TestingController extends Controller
 
     public function actionReport($id)
     {
+        $this->layout = 'testing';
         $eventsService = EventsService::findOne($id);
         // Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
         // Yii::$app->response->headers->add('Content-Type', 'text/xml');
-        $content = Yii::$app->soap->sc->getResultsReportXml($eventsService->session, 0, 0)['ReportContentXml'];
+        $content = Yii::$app->soap->sc->getResultsReportXml($eventsService->session, 1, 0)['ReportContentXml'];
         // var_dump($content);
         $data = new \SimpleXMLElement($content);
         $helper = new \app\components\ReportHelper($data);
         // echo "<pre>";
         // var_dump($data->TestingReports->TestingReport->ReportBlocks->ReportBlock[3]->Scales->children());
         // // echo $data->children();
+        
+        // $helper->texts;
         // echo "</pre>";
         
         // var_dump($circle1);die;
         // return $data->asXML();
-        return $this->renderPartial('test', [
+        return $this->render('test', [
             'circle1' => $helper->firstCircleParams,
+            'helper' => $helper,
         ]);
     }
 

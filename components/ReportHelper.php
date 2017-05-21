@@ -32,10 +32,20 @@ Class ReportHelper extends Model
 		$params = [];
         foreach ($this->xml->TestingReports->TestingReport->ReportBlocks->ReportBlock[2]->Scales->Group as $i => $group) {
         	foreach ($group->Scale as $j => $value) {
-        		$params[(string)$group['groupTitle']][] = [(string)$value['scaleTitleLeft'] => (string)$value['scaleValue']];
+        		$params[(string)$group['groupTitle']][(string)$value['scaleTitleLeft']] = (string)$value['scaleValue'];
         	}
             
         }
+        return $params;
+	}
+
+	public function getTexts()
+	{
+		$params = [];
+        foreach ($this->xml->TestingReports->TestingReport->ReportBlocks->ReportBlock[5]->Texts->Text as $i => $text) {
+        	$params[(string)$text['scaleTitle']] = (string)$text->asXML();
+        }
+
         return $params;
 	}
 }

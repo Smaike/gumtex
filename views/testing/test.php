@@ -1,8 +1,4 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/ >
-        <title>Smoothed D3.js Radar Chart</title>
+
 
         <!-- Google fonts -->
         <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
@@ -11,33 +7,26 @@
         <!-- D3.js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <style>
-            body {
-                font-family: 'Open Sans', sans-serif;
-                font-size: 11px;
-                font-weight: 300;
-                fill: #242424;
-                text-align: center;
-                text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
-                cursor: default;
-            }
-            
-            .legend {
-                font-family: 'Raleway', sans-serif;
-                fill: #333333;
-            }
-            
-            .tooltip {
-                fill: #333333;
-            }
-        </style>
-    
-    </head>
-    <body>
-        <div id="barchart_values" style="width: 600px; height: 300px;"></div>
-        <div class="circle1"></div>
-        <script src="/js/radar.js"></script>   
-        <script>
+        
+        <div class="row">
+          <div class="col-sm-6 col-sm-offset-3">
+            <div id="barchart_values" style="width: 600px; text-align: center"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-sm-offset-3">
+            <div class="circle1"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-sm-offset-3">
+            <?php foreach($helper->texts as $key => $val){?>
+             <?=$val?>
+            <?php }?>
+          </div>
+        </div>
+<script src="/js/radar.js"></script>   
+<script>
       
       /* Radar chart design created by Nadieh Bremer - VisualCinnamon.com */
       
@@ -45,7 +34,7 @@
             //////////////////////// Set-Up ////////////////////////////// 
             ////////////////////////////////////////////////////////////// 
 
-            var margin = {top: 100, right: 100, bottom: 100, left: 100},
+            var margin = {top: 0, right: 0, bottom: 0, left: 0},
                 width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
                 height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
                     
@@ -94,10 +83,13 @@
     function drawChart() {
       var data = google.visualization.arrayToDataTable([
         ["Element", "Density", { role: "style" } ],
-        ["Copper", 8.94, ""],
-        ["Silver", 10.49, ""],
-        ["Gold", 19.30, ""],
-        ["Platinum", 26.45, ""]
+        <?php foreach($helper->profileResults['ИНТЕРЕСЫ'] as $key => $val){
+          echo "['" . $key . "', " . $val . ", ''],";
+        }?>
+        // ["Copper", 8.94, ""],
+        // ["Silver", 10.49, ""],
+        // ["Gold", 19.30, ""],
+        // ["Platinum", 26.45, ""]
       ]);
 
       var view = new google.visualization.DataView(data);
@@ -109,8 +101,8 @@
                        2]);
 
       var options = {
-        title: "Density of Precious Metals, in g/cm^3",
-        width: 600,
+        title: "Интересы",
+        width: 700,
         height: 400,
         bar: {groupWidth: "95%"},
         legend: { position: "none" },
@@ -119,5 +111,3 @@
       chart.draw(view, options);
   }
   </script>
-    </body>
-</html>
