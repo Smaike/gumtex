@@ -46,4 +46,17 @@ class ConsultantController extends Controller
         }
         return $this->redirect('index');
     }
+
+    public function actionSearch()
+    {   
+        if(Yii::$app->request->isPost && !empty(Yii::$app->request->post('code'))){
+            if($eventsService = EventsService::find()->where(['code' => Yii::$app->request->post('code')])->one()){
+                return $this->redirect(['/client/view', 'id' => $eventsService->idEvent->client->id]);
+            }else{
+                Yii::$app->session->setFlash('searchError');
+            }
+        }
+        return $this->render('search', [
+        ]);
+    }
 }

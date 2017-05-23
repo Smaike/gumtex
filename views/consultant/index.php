@@ -28,8 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Статус'
             ],
             [
-                'attribute' => 'computer.name',
-                'label' => 'Номер компьютера',
+                'attribute' => 'code',
+                'label' => 'Код',
             ],
             [
                 'attribute' => 'code_generated',
@@ -54,6 +54,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         }
                     }else{
                         return null;
+                    }
+                }
+            ],
+            [
+                'format' => 'raw',
+                'value' => function ($model, $key, $index, $column){
+                    if(!empty($model->url_report)){
+                        return Html::a("Отчет", Url::to([
+                            'testing/report', 
+                            'id' => $model->id
+                        ]), ['class' => 'btn btn-primary', 'target' => '_blank']);
                     }
                 }
             ]

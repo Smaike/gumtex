@@ -7,24 +7,51 @@
         <!-- D3.js -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        
+        <style>
+            @media print {
+              #printPageButton {
+                display: none;
+              }
+              body
+                {
+                  margin: 25mm 25mm 25mm 25mm;
+                }
+              .row{
+                width:800px;
+                margin-left: 50px: 
+                text-align:center;
+              }
+              * { -webkit-print-color-adjust: exact; }
+            }
+        </style>
         <div class="row">
           <div class="col-sm-6 col-sm-offset-3">
-            <div id="barchart_values" style="width: 600px; text-align: center"></div>
+            <h1><?=$model->idEvent->client->fullName?></h1>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-6 col-sm-offset-3">
-            <div class="circle1"></div>
+            <h2>График 1</h2>
+            <div id="barchart_values" style="width: 400px; text-align: center; margin:0 auto; "></div>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-6 col-sm-offset-3">
+            <h2>График 2</h2>
+            <div class="circle1" style="margin:0 auto; width:400px"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-sm-offset-3">
+            <h2>Рекомендации</h2>
             <?php foreach($helper->texts as $key => $val){?>
-             <?=$val?>
+            <div class="row" style="text-rendering:auto;">
+             <?=utf8_decode(mb_convert_encoding($val->asXML(), 'UTF-8', 'HTML-ENTITIES'))?>
+            </div>
             <?php }?>
           </div>
         </div>
+        <button id="printPageButton" onClick="window.print();">Печать</button>
 <script src="/js/radar.js"></script>   
 <script>
       
@@ -35,7 +62,7 @@
             ////////////////////////////////////////////////////////////// 
 
             var margin = {top: 0, right: 0, bottom: 0, left: 0},
-                width = Math.min(700, window.innerWidth - 10) - margin.left - margin.right,
+                width = Math.min(400, window.innerWidth - 10) - margin.left - margin.right,
                 height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
                     
             ////////////////////////////////////////////////////////////// 
@@ -102,7 +129,7 @@
 
       var options = {
         title: "Интересы",
-        width: 700,
+        width: 400,
         height: 400,
         bar: {groupWidth: "95%"},
         legend: { position: "none" },

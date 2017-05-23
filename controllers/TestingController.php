@@ -117,6 +117,7 @@ class TestingController extends Controller
         return $this->render('test', [
             'circle1' => $helper->firstCircleParams,
             'helper' => $helper,
+            'model' => $eventsService,
         ]);
     }
 

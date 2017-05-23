@@ -83,6 +83,7 @@ class Client extends \yii\db\ActiveRecord
             'fio_mother' => 'ФИО матери',
             'fio_father' => 'ФИО отца',
             'fio_sup' => 'ФИО сопровождающего',
+            'gender' => 'Пол'
         ];
     }
 
@@ -90,10 +91,17 @@ class Client extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ClientType::className(), ['id' => 'type']);
     }
+
+    public function getEvent()
+    {
+        return $this->hasOne(Event::className(), ['id_client' => 'id']);
+    }
+
     public function getClientCategory()
     {
         return $this->hasOne(ClientCategory::className(), ['id' => 'category']);
     }
+
     public function getConsultant()
     {
         return $this->hasOne(User::className(), ['id' => 'id_consultant']);

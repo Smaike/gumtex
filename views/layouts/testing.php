@@ -25,7 +25,11 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    <?= $content ?>
+	<div class="row">
+		<div class="col-sm-10 col-sm-offset-1">
+    		<?= $content ?>
+    	</div>
+    </div>
 </div>
 
 

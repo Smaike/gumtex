@@ -43,7 +43,7 @@ Class ReportHelper extends Model
 	{
 		$params = [];
         foreach ($this->xml->TestingReports->TestingReport->ReportBlocks->ReportBlock[5]->Texts->Text as $i => $text) {
-        	$params[(string)$text['scaleTitle']] = (string)$text->asXML();
+        	$params[(string)$text['scaleTitle']] = $text;
         }
 
         return $params;
