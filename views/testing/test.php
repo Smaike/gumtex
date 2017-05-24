@@ -18,32 +18,40 @@
                 }
               .row{
                 width:800px;
-                margin-left: 50px: 
-                text-align:center;
               }
               * { -webkit-print-color-adjust: exact; }
+              #results{page-break-before: always; }
             }
         </style>
         <div class="row">
           <div class="col-sm-6 col-sm-offset-3">
             <h1><?=$model->idEvent->client->fullName?></h1>
           </div>
+        </div><div class="row">
+          <div class="col-sm-6 col-sm-offset-3">
+            <h2>Профиль результатов</h2>
+          </div>
         </div>
         <div class="row">
-          <div class="col-sm-6 col-sm-offset-3">
-            <h2>График 1</h2>
-            <div id="barchart_values" style="width: 400px; text-align: center; margin:0 auto; "></div>
+          <div class="col-sm-8 col-sm-offset-1">
+            <div id="barchart_values1" style="width: 400px; text-align: center; margin:0 auto; "></div>
+            <div id="barchart_values2" style="width: 400px; text-align: center; margin:0 auto; "></div>
+            <div id="barchart_values3" style="width: 400px; text-align: center; margin:0 auto; "></div>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-6 col-sm-offset-3">
-            <h2>График 2</h2>
+            <h2>Рекомендации по направлениям обучения</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-sm-offset-2">
             <div class="circle1" style="margin:0 auto; width:400px"></div>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-6 col-sm-offset-3">
-            <h2>Рекомендации</h2>
+            <h2 id="results" style="margin-top:100px;">Рекомендации</h2>
             <?php foreach($helper->texts as $key => $val){?>
             <div class="row" style="text-rendering:auto;">
              <?=utf8_decode(mb_convert_encoding($val->asXML(), 'UTF-8', 'HTML-ENTITIES'))?>
@@ -61,7 +69,7 @@
             //////////////////////// Set-Up ////////////////////////////// 
             ////////////////////////////////////////////////////////////// 
 
-            var margin = {top: 0, right: 0, bottom: 0, left: 0},
+            var margin = {top: 50, right: 80, bottom: 50, left: 80},
                 width = Math.min(400, window.innerWidth - 10) - margin.left - margin.right,
                 height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
                     
@@ -108,9 +116,10 @@
     google.charts.load("current", {packages:["corechart"]});
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
-      var data = google.visualization.arrayToDataTable([
+      <?php $j=0; foreach($helper->profileResults as $i => $res){ $j++;?>
+      var data<?=$j?> = google.visualization.arrayToDataTable([
         ["Element", "Density", { role: "style" } ],
-        <?php foreach($helper->profileResults['ИНТЕРЕСЫ'] as $key => $val){
+        <?php foreach($res as $key => $val){
           echo "['" . $key . "', " . $val . ", ''],";
         }?>
         // ["Copper", 8.94, ""],
@@ -119,22 +128,25 @@
         // ["Platinum", 26.45, ""]
       ]);
 
-      var view = new google.visualization.DataView(data);
-      view.setColumns([0, 1,
+      var view<?=$j?> = new google.visualization.DataView(data<?=$j?>);
+      view<?=$j?>.setColumns([0, 1,
                        { calc: "stringify",
                          sourceColumn: 1,
                          type: "string",
                          role: "annotation" },
                        2]);
 
-      var options = {
-        title: "Интересы",
-        width: 400,
-        height: 400,
-        bar: {groupWidth: "95%"},
+      var options<?=$j?> = {
+        title: "<?=$i?>",
+        width: 800,
+        height: 300,
+        bar: {groupWidth: "100%"},
         legend: { position: "none" },
+        hAxis: {minValue: 0},
+        chartArea: {width: '50%'}
       };
-      var chart = new google.visualization.BarChart(document.getElementById("barchart_values"));
-      chart.draw(view, options);
+      var chart<?=$j?> = new google.visualization.BarChart(document.getElementById("barchart_values<?=$j?>"));
+      chart<?=$j?>.draw(view<?=$j?>, options<?=$j?>);
+      <?php }?>
   }
   </script>

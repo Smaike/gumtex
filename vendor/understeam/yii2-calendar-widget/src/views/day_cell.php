@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Url;
+use yii\web\View;
 /**
  * @var \understeam\calendar\CalendarWidget $context
  * @var \yii\web\View $this
@@ -51,13 +52,13 @@ $linkProfile = Url::to();
             <?php if($count === 1){?>
             <tr>
                 <th >Время</th>
-                <th >ФИО клиента</th>
-                <th >Возр.</th>
-                <th >Услуги</th>
-                <th >Консультант</th>
-                <th >Комментарии</th>
-                <th >Цена</th>
-                <th >#</th>
+                <th style="width:25%">ФИО клиента</th>
+                <th style="width:5%">Возр.</th>
+                <th style="width:15%">Услуги</th>
+                <th style="width:15%">Консультант</th>
+                <th style="width:19%">Комментарии</th>
+                <th style="width:10%">Оплачено/Сумма</th>
+                <th style="width:4%">#</th>
             <tr>
             <?php }?>
             <?php $count=0?>
@@ -70,9 +71,14 @@ $linkProfile = Url::to();
                     <td style="width:15%"><?php foreach ($item->services as $service) {?>
                         <?= $service->name?><br>
                     <?php }?></td>
-                    <td style="width:15%"><?=$item->client->id_consultant?></td>
+                    <td style="width:15%"><?=$item->client->consultantName?></td>
                     <td style="width:19%"><?=$item->client->comment?></td>
-                    <td style="width:10%"><?=$item->price-$item->discount?></td>
+                    <td style="width:10%">
+                        <?=(int)$item->sum_paid?>/<?=$item->price-$item->discount?><br>
+                        <?php if((int)$item->sum_paid != $item->price-$item->discount){?>
+                            <button class="btn btn-info button-paid" data-id="<?=$item->id?>">Оплатить</button>
+                        <?php }?>
+                    </td>
                     <td style="width:4%">
                         <a href = "<?=Url::to(['event/view', 'id' => $item->id])?>" data-pjax = '0'>
                             <ico class="glyphicon glyphicon-search" style="font-size: 12px"></ico>
@@ -108,3 +114,19 @@ $linkProfile = Url::to();
         </table>
     </div>
 </div>
+<?php $this->registerJs("
+    $('.button-paid').click(function(){
+        $.ajax({
+          url: '" . Url::to('event/paid', true) . "',
+          type: 'POST',   
+          data: {'id':this.dataset.id}, 
+          success: function(response){
+            location.reload();
+          }
+        });
+    });
+
+",
+    View::POS_END,
+     'my-options');
+?>

@@ -289,6 +289,14 @@ class EventController extends Controller
         }
     }
 
+    public function actionPaid()
+    {
+        $model = $this->findModel(Yii::$app->request->post('id'));
+        $model->sum_paid = $model->price - $model->discount;
+        $model->save(false);
+        return true;
+    }
+
     /**
      * Finds the Event model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

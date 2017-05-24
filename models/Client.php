@@ -122,4 +122,12 @@ class Client extends \yii\db\ActiveRecord
         $data = $this->fullName . " " . "<a href='#' data-id='" . $this->id . "' class='btn btn-info show_copy'>Просмотреть</a>";
         return $data;
     }
+
+    public function getConsultantName()
+    {
+        if($consultant = $this->consultant){
+            return $consultant->fullName;
+        }
+        return "-";
+    }
 }
