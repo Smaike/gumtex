@@ -20,13 +20,14 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.js"></script>
 </head>
 <body>
 <?php $this->beginBody() ?>
 
 <div class="wrap">
 	<div class="row">
-		<div class="col-sm-10 col-sm-offset-1">
+		<div class="col-xs-10 col-xs-offset-1" style="float:none">
     		<?= $content ?>
     	</div>
     </div>

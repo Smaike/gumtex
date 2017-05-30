@@ -101,7 +101,7 @@ class TestingController extends Controller
         $eventsService = EventsService::findOne($id);
         // Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
         // Yii::$app->response->headers->add('Content-Type', 'text/xml');
-        $content = Yii::$app->soap->sc->getResultsReportXml($eventsService->session, 1, 0)['ReportContentXml'];
+        $content = Yii::$app->soap->sc->getResultsReportXml($eventsService->session, 0, 0)['ReportContentXml'];
         // var_dump($content);
         $data = new \SimpleXMLElement($content);
         $helper = new \app\components\ReportHelper($data);
@@ -111,7 +111,6 @@ class TestingController extends Controller
         
         // $helper->texts;
         // echo "</pre>";
-        
         // var_dump($circle1);die;
         // return $data->asXML();
         return $this->render('test', [
