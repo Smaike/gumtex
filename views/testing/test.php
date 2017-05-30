@@ -7,6 +7,9 @@ $circle2 = $helper->secondCircleParams;
       #printPageButton {
         display: none;
       }
+      html{
+        width: 800px;
+      }
       body
       {
         color:#101088!important;
@@ -121,15 +124,15 @@ $circle2 = $helper->secondCircleParams;
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-6 col-sm-offset-3">
+    <div class="col-sm-12">
       <h1 style="text-align: center; font-size: 42px; margin-top: 50px; border-bottom:3px solid #101088; padding-bottom: 20px"><?=$model->idEvent->client->fio?></h1>
     </div>
   </div>
   <div class="row" style="margin-top: 100px;">
-    <div class="col-sm-3 col-sm-offset-3 col-xs-6" style="text-align: right">
+    <div class="col-xs-6" style="text-align: right">
       <img src="/images/report/chel.png">
     </div>
-    <div class="col-sm-3 col-xs-6">
+    <div class="col-xs-6">
       <h3 style="text-align: right; font-size: 20px; margin-top: 0px">ИНФОРМАЦИЯ О РЕСПОНДЕНТЕ</h3>
       <table border="0" cellspacing="0" align="right" cellpadding="0" style="border-collapse: collapse; width:80%;">
         <tr>
@@ -168,12 +171,12 @@ $circle2 = $helper->secondCircleParams;
     </div>
   </div>
   <div class="row" style="margin-top: 100px;">
-    <div class="col-sm-3 col-sm-offset-3 col-xs-6" style="text-align: right">
+    <div class="col-xs-6" style="text-align: right">
       <div class="code">
         1234
       </div>
     </div>
-    <div class="col-sm-3 col-xs-6">
+    <div class="col-xs-6">
       <h3 style="text-align: right; font-size: 20px; margin-top: 0px">ИНФОРМАЦИЯ О ТЕСТИРОВАНИИ</h3>
       <h3 style="text-align: right; font-size: 14px; margin-top: 0px; color:#ff7200!important">ПРОФОРИЕНТАТОР...</h3>
       <table border="0" cellspacing="0" align="right" cellpadding="0" style="border-collapse: collapse; width:80%;">
@@ -205,7 +208,7 @@ $circle2 = $helper->secondCircleParams;
     </div>
   </div>
   <div class="row" style="margin-top: 300px;">
-    <div class="col-sm-3 col-sm-offset-3">
+    <div class="col-sm-3">
       КОНСУЛЬТИРОВАЛ:___________________________
     </div>
   </div>
@@ -216,12 +219,12 @@ $circle2 = $helper->secondCircleParams;
   <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-12 col-sm-offset-0">
   <div class="row">
-    <div class="col-sm-6 col-sm-offset-3" id="profile-results">
+    <div class="col-sm-12" id="profile-results">
       <h2 style="border-bottom:10px solid #ff7200;">Профиль результатов</h2>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-6 col-sm-offset-3 left-border">
+    <div class="col-sm-12 left-border">
     <?php foreach ($helper->profileResults as $type => $results) {?>
       <h3 align="center">Факторы по блоку <?=$type?></h3>
       <table class="report" width="800" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse; margin:0 auto">
@@ -243,7 +246,7 @@ $circle2 = $helper->secondCircleParams;
   <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-12 col-sm-offset-0">
       <div class="row">
-        <div class="col-sm-6 col-sm-offset-3">
+        <div class="col-sm-12">
           <h2>Направления обучения</h2>
           <canvas id="myChart" width="400" height="300"></canvas>
           <h2>Компетенции</h2>
@@ -256,7 +259,7 @@ $circle2 = $helper->secondCircleParams;
 <div class="row">
     <div class="col-xs-10 col-xs-offset-1 col-sm-12 col-sm-offset-0">
 <div class="row">
-  <div class="col-sm-6 col-sm-offset-3">
+  <div class="col-sm-12">
     <h2 id="results" style="margin-top:100px;">Рекомендации</h2>
     <?php foreach($helper->texts as $key => $val){?>
     <div class="row" style="text-rendering:auto;">
@@ -309,6 +312,7 @@ var myChart = new Chart(ctx, {
     },
     id: 'myChart'
 });
+<?php if(!empty($circle2)){?>
 var ctx2 = document.getElementById("myChart2");
 var myChart2 = new Chart(ctx2, {
     type: 'radar',
@@ -349,4 +353,5 @@ var myChart2 = new Chart(ctx2, {
     },
     id: 'myChart'
 });
+<?php }?>
 </script>

@@ -31,9 +31,11 @@ Class ReportHelper extends Model
 	public function getSecondCircleParams()
 	{
 		$circle1 = [];
-        foreach ($this->xml->TestingReports->TestingReport->ReportBlocks->ReportBlock[4]->Scales->Scale as $key => $value) {
-            $circle1[(string)$value['title']] = $value['value'];
-        }
+		if(!empty($this->xml->TestingReports->TestingReport->ReportBlocks->ReportBlock[4])){
+	        foreach ($this->xml->TestingReports->TestingReport->ReportBlocks->ReportBlock[4]->Scales->Scale as $key => $value) {
+	            $circle1[(string)$value['title']] = $value['value'];
+	        }
+	    }
         return $circle1;
 	}
 
