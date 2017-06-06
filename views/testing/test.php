@@ -7,16 +7,9 @@ $circle2 = $helper->secondCircleParams;
       #printPageButton {
         display: none;
       }
-      html{
-        width: 800px;
-      }
-      body
-      {
-        color:#101088!important;
-        display: table;
-      }
-      .row{
-        width: 800px;
+      html, body {
+        width: 210mm;
+        overflow: visible;
       }
       * { -webkit-print-color-adjust: exact; }
       h2,h1,h3,p,td,span,div{
@@ -24,17 +17,27 @@ $circle2 = $helper->secondCircleParams;
       }
       .split{
         page-break-after: always;
-        width: 21cm;
+        padding-top: 50px;
       }
-
-      
-      
+      .row{
+        width: 210mm;
+      }
+      .charts{
+        padding: 0;
+        margin: auto;
+        display: block;
+        width: 200mm!important;
+        height: 100mm!important;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
     }
     @page {
-        @top-right {
-       content: string(doctitle);
-         }
-      }
+      size: A4;
+      margin: ;
+    }
     #pageFooter {
         display: table-footer-group;
     }
@@ -91,11 +94,11 @@ $circle2 = $helper->secondCircleParams;
       background-image: url('/images/report/result.png')!important;
       background-size: contain!important;
       background-repeat: no-repeat!important;
-      left:-80px;
+      left:-50px;
       top:20px;
       position: absolute;
-      width:60px;
-      height: 57px;
+      width:45px;
+      height: 48px;
       display: inline-block;
     }
     .code{
@@ -117,14 +120,14 @@ $circle2 = $helper->secondCircleParams;
 </style>
 <div class="split">
   <div class="row">
-    <div class="col-xs-10 col-xs-offset-1 col-sm-12 col-sm-offset-0">
+    <div class="col-sm-12 col-sm-offset-0">
   <div class="row">
-    <div class="col-sm-4 col-sm-offset-4" style="text-align: center; margin-top: 200px;">
+    <div class="col-xs-4 col-xs-offset-4" style="text-align: center; margin-top:100px;">
       <img src="/images/report/titul01.png">
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-xs-12">
       <h1 style="text-align: center; font-size: 42px; margin-top: 50px; border-bottom:3px solid #101088; padding-bottom: 20px"><?=$model->idEvent->client->fio?></h1>
     </div>
   </div>
@@ -217,7 +220,7 @@ $circle2 = $helper->secondCircleParams;
 </div>
 <div class="split">
   <div class="row">
-    <div class="col-xs-10 col-xs-offset-1 col-sm-12 col-sm-offset-0">
+    <div class="col-sm-12 col-sm-offset-0">
   <div class="row">
     <div class="col-sm-12" id="profile-results">
       <h2 style="border-bottom:10px solid #ff7200;">Профиль результатов</h2>
@@ -244,31 +247,29 @@ $circle2 = $helper->secondCircleParams;
 </div>
 <div class="split">
   <div class="row">
-    <div class="col-xs-10 col-xs-offset-1 col-sm-12 col-sm-offset-0">
+    <div class="col-xs-10 col-xs-offset-1">
+          <h2>Направления обучения</h2>
+          <canvas id="myChart" class="charts" width="400" height="200"></canvas>
+          <h2>Компетенции</h2>
+          <canvas id="myChart2" class="charts" width="400" height="200"></canvas>
+    </div>
+  </div>
+</div>
+<div class="split">
+<div class="row">
+    <div class="col-sm-12 col-sm-offset-0">
       <div class="row">
         <div class="col-sm-12">
-          <h2>Направления обучения</h2>
-          <canvas id="myChart" width="400" height="300"></canvas>
-          <h2>Компетенции</h2>
-          <canvas id="myChart2" width="400" height="300"></canvas>
+          <h2 id="results" style="margin-top:100px;">Рекомендации</h2>
+          <?php foreach($helper->texts as $key => $val){?>
+          <div class="row" style="text-rendering:auto;">
+           <?=utf8_decode(mb_convert_encoding($val->asXML(), 'UTF-8', 'HTML-ENTITIES'))?>
+          </div>
+          <?php }?>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-<div class="row">
-    <div class="col-xs-10 col-xs-offset-1 col-sm-12 col-sm-offset-0">
-<div class="row">
-  <div class="col-sm-12">
-    <h2 id="results" style="margin-top:100px;">Рекомендации</h2>
-    <?php foreach($helper->texts as $key => $val){?>
-    <div class="row" style="text-rendering:auto;">
-     <?=utf8_decode(mb_convert_encoding($val->asXML(), 'UTF-8', 'HTML-ENTITIES'))?>
-    </div>
-    <?php }?>
-  </div>
-</div>
 </div></div>
+</div>
 <button id="printPageButton" onClick="window.print();">Печать</button>
 <script>
 var ctx = document.getElementById("myChart");
@@ -351,7 +352,7 @@ var myChart2 = new Chart(ctx2, {
           }
       }
     },
-    id: 'myChart'
+    id: 'myChart2'
 });
 <?php }?>
 </script>
