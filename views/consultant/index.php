@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'id' => $model->id
                             ]), ['class' => 'btn btn-primary']);
                         }else{
-                            return "Консультирует " . $model->idEvent->client->consultant->fullName;
+                            return (!empty($model->idEvent->client->consultant))?"Консультирует " . $model->idEvent->client->consultant->fullName:null;
                         }
                     }else{
                         return null;
