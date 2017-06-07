@@ -143,7 +143,7 @@ $circle2 = $helper->secondCircleParams;
             ВОЗРАСТ
           </td>
           <td align="right">
-            17 ЛЕТ
+            <?=$model->idEvent->client->age?>
           </td>
         </tr>
         <tr>
@@ -151,7 +151,7 @@ $circle2 = $helper->secondCircleParams;
             ПОЛ
           </td>
           <td align="right">
-            МУЖСКОЙ
+            <?=($model->idEvent->client->gender == 'М')?'МУЖСКОЙ':'ЖЕНСКИЙ'?>
           </td>
         </tr>
         <tr>
@@ -159,7 +159,7 @@ $circle2 = $helper->secondCircleParams;
             КЛАСС
           </td>
           <td align="right">
-            10
+            ..
           </td>
         </tr>
         <tr>
@@ -167,7 +167,7 @@ $circle2 = $helper->secondCircleParams;
             ХОББИ
           </td>
           <td align="right">
-            спорт, шахматы
+            ..
           </td>
         </tr>
       </table>
@@ -176,19 +176,19 @@ $circle2 = $helper->secondCircleParams;
   <div class="row" style="margin-top: 100px;">
     <div class="col-xs-6" style="text-align: right">
       <div class="code">
-        1234
+        <?=$model->code?>
       </div>
     </div>
     <div class="col-xs-6">
       <h3 style="text-align: right; font-size: 20px; margin-top: 0px">ИНФОРМАЦИЯ О ТЕСТИРОВАНИИ</h3>
-      <h3 style="text-align: right; font-size: 14px; margin-top: 0px; color:#ff7200!important">ПРОФОРИЕНТАТОР...</h3>
+      <h3 style="text-align: right; font-size: 14px; margin-top: 0px; color:#ff7200!important"><?=$model->idService->name?></h3>
       <table border="0" cellspacing="0" align="right" cellpadding="0" style="border-collapse: collapse; width:80%;">
         <tr>
           <td>
             ДАТА ТЕСТИРОВАНИЯ
           </td>
           <td align="right">
-            29.05.17 14:00:00
+            <?=$helper->timeStart?>
           </td>
         </tr>
         <tr>
@@ -196,7 +196,7 @@ $circle2 = $helper->secondCircleParams;
             ВРЕМЯ ЗАВЕРШЕНИЯ
           </td>
           <td align="right">
-            29.05.17 16:00:00
+            <?=$helper->timeEnd?>
           </td>
         </tr>
         <tr>
@@ -204,7 +204,7 @@ $circle2 = $helper->secondCircleParams;
             ПРОДОЛЖИТЕЛЬНОСТЬ
           </td>
           <td align="right">
-            2:00:00
+            <?=$helper->timeProcessing?>
           </td>
         </tr>
       </table>

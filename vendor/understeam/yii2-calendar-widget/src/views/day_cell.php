@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Url;
 use yii\web\View;
+use yii\bootstrap\Modal;
 /**
  * @var \understeam\calendar\CalendarWidget $context
  * @var \yii\web\View $this
@@ -68,15 +69,34 @@ $linkProfile = Url::to();
                     <?php if($count==1){?><td rowspan="7" style="cursor:pointer; width:7%"><?= $cell->date->format('H:i') ?></td><?php }?>
                     <td style="width:25%"><?=$item->client->last_name?> <?=$item->client->first_name?> <?=$item->client->middle_name?></td>
                     <td style="width:5%"><?=$item->client->age?></td>
-                    <td style="width:15%"><?php foreach ($item->services as $service) {?>
-                        <?= $service->name?><br>
-                    <?php }?></td>
+                    <td style="width:15%">
+                        <table class="table table-bordered table-striped">
+                            <?php foreach ($item->services as $service) {?>
+                            <tr>
+                                <td><?=$service->name?></td>
+                                <td><?php Modal::begin([
+                                    'header' => '<h2>Код для начала тестирования</h2>',
+                                    'toggleButton' => [
+                                        'label' => 'Начать',
+                                        'class' => "btn btn-success start-serv",
+                                        'data-service' => $service->id,
+                                        'data-event' => $item->id,
+                                    ],
+                                ]);?>
+                                <?php Modal::end();?>
+                                    
+                                </td>
+                            </tr>
+                            <?php }?>
+                        </table>
+                    </td>
                     <td style="width:15%"><?=$item->client->consultantName?></td>
                     <td style="width:19%"><?=$item->client->comment?></td>
                     <td style="width:10%">
                         <?=(int)$item->sum_paid?>/<?=$item->price-$item->discount?><br>
                         <?php if((int)$item->sum_paid != $item->price-$item->discount){?>
-                            <button class="btn btn-info button-paid" data-id="<?=$item->id?>">Оплатить</button>
+                            <input type="text" class="form-control" id="paid-<?=$item->id?>">
+                            <button class="btn btn-info button-paid" data-id="<?=$item->id?>" style="margin-top: 10px;">Оплатить</button>
                         <?php }?>
                     </td>
                     <td style="width:4%">
@@ -117,11 +137,25 @@ $linkProfile = Url::to();
 <?php $this->registerJs("
     $('.button-paid').click(function(){
         $.ajax({
-          url: '" . Url::to('event/paid', true) . "',
+            url: '" . Url::to('event/paid', true) . "',
+            type: 'POST',   
+            data: {
+                'id':this.dataset.id,
+                'sum':$('#paid-'+this.dataset.id).val(),
+            }, 
+            success: function(response){
+                location.reload();
+            }
+        });
+    });
+    $(document).on('click', '.start-serv', function(){
+        var div = $(this);
+        $.ajax({
+          url: '" . Url::to('event/create-code', true) . "',
           type: 'POST',   
-          data: {'id':this.dataset.id}, 
+          data: {'service':div.data('service'), 'event':div.data('event')}, 
           success: function(response){
-            location.reload();
+            $('.modal-body').html(response);
           }
         });
     });

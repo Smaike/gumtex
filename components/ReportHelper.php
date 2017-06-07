@@ -143,4 +143,24 @@ Class ReportHelper extends Model
 		}
 		return $text;
 	}
+
+	public function getTimeStart()
+	{
+		return $this->xml->TestingAttributes->ProtocolDateString . " " . $this->xml->TestingAttributes->ProtocolTimeString;
+	}
+
+	public function getTimeProcessing()
+	{
+		return $this->xml->TestingReports->TestingReport->ReportBlocks->ReportBlock[0]->Fields->Field[2];
+	}
+
+	public function getTimeEnd()
+	{
+		$time = strtotime($this->timeStart);
+		$str_time = $this->timeProcessing;
+		$str_time = preg_replace("/^([\d]{1,2})\:([\d]{2})$/", "00:$1:$2", $str_time);
+		sscanf($str_time, "%d:%d:%d", $hours, $minutes, $seconds);
+		$time_seconds = $hours * 3600 + $minutes * 60 + $seconds;
+		return date('d.m.Y H:i:s', $time + $time_seconds);
+	}
 }

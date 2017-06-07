@@ -32,7 +32,7 @@ class Event extends \yii\db\ActiveRecord implements ItemInterface
         return [
             [['date'], 'safe'],
             [['price'], 'string', 'max' => 11],
-            [['discount'], 'integer'],
+            [['discount', 'sum_paid'], 'integer'],
             [['why'], 'string']
         ];
     }

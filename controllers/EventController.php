@@ -259,7 +259,7 @@ class EventController extends Controller
             'id_event' => Yii::$app->request->post('event'),
             'id_service' => Yii::$app->request->post('service'),
         ])->one();
-        $eventService->code = mt_rand(10000000, 99999999);
+        $eventService->code = mt_rand(1000, 9999);
         $eventService->code_generated = date("Y-m-d H:i:s");
         $eventService->save(false);
         return "<h3 style='text-align:center'>".$eventService->code."</h3>";
@@ -292,8 +292,8 @@ class EventController extends Controller
     public function actionPaid()
     {
         $model = $this->findModel(Yii::$app->request->post('id'));
-        $model->sum_paid = $model->price - $model->discount;
-        $model->save(false);
+        $model->sum_paid += Yii::$app->request->post('sum');
+        $model->save();
         return true;
     }
 
