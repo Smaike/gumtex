@@ -14,7 +14,7 @@ $isClosed = ($context->isClosed($cell->date) || (empty($context->getDateRange($c
 
 
 $time = $cell->date->format('Y-m-d');
-$link = ($isActive && !($isClosed))? Url::to(['calendar/index', 'date' => $time, 'viewMode' => 'day']) : "";
+$link = (!($isClosed))? Url::to(['calendar/index', 'date' => $time, 'viewMode' => 'day']) : "";
 ?>
 <div class="calendar-month-cell">
     <div class="panel panel-default">

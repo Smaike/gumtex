@@ -234,8 +234,8 @@ $circle2 = $helper->secondCircleParams;
         <?php foreach($results as $k => $row){?>
         <tr height="35">
           <td style="width:25%"><?=$k?></td>
-          <?=$helper->renderCentralTds($row)?>
-          <td style="width:25%"><?=$k?></td>
+          <?=$helper->renderCentralTds($row['value'])?>
+          <td style="width:25%"><?=$k?><?php if(!empty($row['percent']) && $row['percent']!='100'){?> <span style="color:red!important; font-weight: bold;">(<?=$row['percent']?>%)<?php }?></span></td>
         </tr>
         <?php } ?>
       </table>
@@ -247,7 +247,7 @@ $circle2 = $helper->secondCircleParams;
 </div>
 <div class="split">
   <div class="row">
-    <div class="col-xs-10 col-xs-offset-1">
+    <div class="col-xs-12">
           <h2>Направления обучения</h2>
           <canvas id="myChart" class="charts" width="400" height="200"></canvas>
           <h2>Компетенции</h2>

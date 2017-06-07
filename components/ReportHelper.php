@@ -62,7 +62,10 @@ Class ReportHelper extends Model
 		$params = [];
         foreach ($this->xml->TestingReports->TestingReport->ReportBlocks->ReportBlock[2]->Scales->Group as $i => $group) {
         	foreach ($group->Scale as $j => $value) {
-        		$params[(string)$group['groupTitle']][(string)$value['scaleTitleLeft']] = (string)$value['scaleValue'];
+        		$params[(string)$group['groupTitle']][(string)$value['scaleTitleLeft']] = [
+					'value'   => (string)$value['scaleValue'],
+					'percent' => (string)$value['takenQuestionsPercent']
+        		];
         	}
             
         }
