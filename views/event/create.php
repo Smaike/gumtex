@@ -137,7 +137,7 @@ $types = ArrayHelper::map($models, 'id', 'name');
         </div>
     <?php ActiveForm::end(); ?>
     <?php Modal::begin([
-        'header' => '<h2>Информация</h2>',
+        'header' => '<h2>Карточка клиента</h2>',
         'options' => ['id' => 'modal-info']
     ]);?> 
 </div><!-- event-create -->

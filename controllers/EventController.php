@@ -60,7 +60,7 @@ class EventController extends Controller
         }
         // $aServices = ArrayHelper::map($services, 'id', 'name');
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['update', 'id' => $model->event->id]);
+            return $this->redirect(['calendar/index', 'date' => date("Y-m-d",strtotime($model->date)), 'viewMode' => 'day']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -94,7 +94,7 @@ class EventController extends Controller
             $aServices[$service->serviceType->name][$service->id] = $service->name;
         }
         if ($form->load(Yii::$app->request->post()) && $form->update()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['calendar/index', 'date' => date("Y-m-d",strtotime($model->date)), 'viewMode' => 'day']);
         } else {
             return $this->render('create', [
                 'model' => $form,

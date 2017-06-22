@@ -21,7 +21,7 @@ $link = (!($isClosed))? Url::to(['calendar/index', 'date' => $time, 'viewMode' =
         <div class="panel-heading">
             <?= $cell->date->format('d') ?>
         </div>
-        <a href = "<?=$link?>" style="text-decoration: none; color: inherit;">
+        <a href = "<?=$link?>" style="text-decoration: none; color: inherit;" data-pjax = '0'>
         <div class="panel-body <?=($isClosed) ? 'closed' : ''?><?=($isActive) ? ' active' : '' ?>">
             <span style="font-size: 12px;">К|У</span><br>
             <?= count($cell->items) ?>|<?= $cell->countServices() ?>
