@@ -2,6 +2,8 @@
 use yii\helpers\Url;
 use yii\web\View;
 use yii\bootstrap\Modal;
+use yii\helpers\Html;
+use app\models\Paid;
 /**
  * @var \understeam\calendar\CalendarWidget $context
  * @var \yii\web\View $this
@@ -93,10 +95,39 @@ $linkProfile = Url::to();
                     <td style="width:15%"><?=$item->client->consultantName?></td>
                     <td style="width:19%"><?=$item->client->comment?></td>
                     <td style="width:10%">
-                        <?=(int)$item->sum_paid?>/<?=$item->price-$item->discount?><br>
-                        <?php if((int)$item->sum_paid != $item->price-$item->discount){?>
-                            <input type="text" class="form-control" id="paid-<?=$item->id?>">
-                            <button class="btn btn-info button-paid" data-id="<?=$item->id?>" style="margin-top: 10px;">Оплатить</button>
+                        <?=$item->howmanyPaid()?>/<?=$item->howmanyCost()?><br>
+                        <?php if($item->howmanyPaid() < $item->howmanyCost()){?>
+                            <?php Modal::begin([
+                                'header' => '<h2>Оплата события от ' . $item->date . '</h2>',
+                                'toggleButton' => [
+                                    'label' => 'Оплатить',
+                                    'class' => "btn btn-success",
+                                ],
+                            ]);?>
+                            <form id="form_paid_<?=$item->id?>">
+                            <div class="row" style="text-align: left">
+                                <div class="col-sm-12">
+                                    <label class="control-label">Тип:</label>
+                                    <?=Html::radioList('type_paid_' . $item->id, 1, Paid::getTypes(), ['separator' => '<br>'])?>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label class="control-label">Сумма:</label>
+                                    <?=Html::input('text', 'sum_paid' . $item->id, null, ['class' => 'form-control', 'id' => 'sum_' . $item->id])?>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <?=Html::button('Готово!', [
+                                        'class' => 'btn paid',
+                                        'data-id' => $item->id,
+                                        'style' => 'margin-top:10px;'
+                                    ])?>
+                                </div>
+                            </div>
+                            </form>
+                            <?php Modal::end();?>
+                            <?php }else{?>
+                            Оплачено
                         <?php }?>
                     </td>
                     <td style="width:4%">
@@ -135,15 +166,17 @@ $linkProfile = Url::to();
     </div>
 </div>
 <?php $this->registerJs("
-    $('.button-paid').click(function(){
+    $('.paid').click(function(){
         $.ajax({
-            url: '" . Url::to('event/paid', true) . "',
+            url: '" . Url::to('client/paid', true) . "',
             type: 'POST',   
             data: {
                 'id':this.dataset.id,
-                'sum':$('#paid-'+this.dataset.id).val(),
+                'sum':$('#sum_'+this.dataset.id).val(),
+                'type': $('input[name=type_paid_'+this.dataset.id+']:checked', '#form_paid_'+this.dataset.id).val(),
             }, 
             success: function(response){
+                alert('Успешно');
                 location.reload();
             }
         });

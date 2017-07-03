@@ -60,4 +60,23 @@ class Event extends \yii\db\ActiveRecord implements ItemInterface
     {
         return $this->hasMany(Service::className(), ['id' => 'id_service'])->viaTable('events_services', ['id_event' => 'id']);
     }
+
+    public function getPaids()
+    {
+        return $this->hasMany(Paid::className(), ['id_event' => 'id']);
+    }
+
+    public function howmanyPaid()
+    {
+        $sum = 0;
+        foreach ($this->paids as $key => $paid) {
+            $sum+=$paid->sum;
+        }
+        return $sum;
+    }
+
+    public function howmanyCost()
+    {
+        return ($this->price - $this->discount);
+    }
 }

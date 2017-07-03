@@ -97,6 +97,11 @@ class Client extends \yii\db\ActiveRecord
         return $this->hasOne(Event::className(), ['id_client' => 'id']);
     }
 
+    public function getEvents()
+    {
+        return $this->hasMany(Event::className(), ['id_client' => 'id']);
+    }
+
     public function getLastEvent()
     {
         return Event::find()->where(['id_client' => $this->id])->orderBy('id desc')->one();

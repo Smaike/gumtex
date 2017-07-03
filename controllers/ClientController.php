@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Client;
+use app\models\Paid;
 use app\models\search\ClientSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -104,6 +105,21 @@ class ClientController extends Controller
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionPaid()
+    {
+        if(Yii::$app->request->isPost){
+            $paid = new Paid();
+            $paid->sum = Yii::$app->request->post('sum');
+            $paid->id_event = Yii::$app->request->post('id');
+            $paid->type = Yii::$app->request->post('type');
+            $paid->date = date("Y-m-d H:i:s");
+            if($paid->save()){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
