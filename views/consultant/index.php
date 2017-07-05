@@ -61,10 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => function ($model, $key, $index, $column){
                     if(!empty($model->url_report)){
-                        return Html::a("Отчет", Url::to([
-                            'testing/report', 
-                            'id' => $model->id
-                        ]), ['class' => 'btn btn-primary', 'target' => '_blank']);
+                        return Html::a("Отчет", $model->url_report, ['class' => 'btn btn-primary', 'target' => '_blank']);
                     }
                 }
             ]
