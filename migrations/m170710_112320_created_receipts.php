@@ -2,23 +2,25 @@
 
 use yii\db\Migration;
 
-class m170703_180516_create_paid extends Migration
+class m170710_112320_created_receipts extends Migration
 {
     public function up()
     {
-        $this->createTable('paids', [
+        $this->createTable('receipts', [
             'id'       => $this->primaryKey(),
-            'id_event' => $this->integer(11),
+            'id_client' => $this->integer(11),
             'sum'      => $this->integer(12),
             'type'     => $this->integer(1),
             'date'     => $this->datetime(),
         ]);
 
+        
+        $this->addColumn('clients', 'balance', $this->string(15));
     }
-    
+
     public function down()
     {
-        echo "m170703_180516_create_paid cannot be reverted.\n";
+        echo "m170710_112320_created_receipts cannot be reverted.\n";
 
         return false;
     }

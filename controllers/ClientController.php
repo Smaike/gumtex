@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Client;
 use app\models\Paid;
+use app\models\Receipt;
 use app\models\search\ClientSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -115,11 +116,33 @@ class ClientController extends Controller
             $paid->id_event = Yii::$app->request->post('id');
             $paid->type = Yii::$app->request->post('type');
             $paid->date = date("Y-m-d H:i:s");
-            if($paid->save()){
+            $client = $paid->event->client;
+            if(($client->balance > $paid->sum) && $paid->save()){
+                $client = $paid->event->client;
+                $client->balance -= $paid->sum;
+                $client->save();
                 return true;
             }
         }
-        return false;
+        return 0;
+    }
+
+    public function actionReceipt()
+    {
+        if(Yii::$app->request->isPost){
+            $receipt = new Receipt();
+            $receipt->sum = Yii::$app->request->post('sum');
+            $receipt->id_client = Yii::$app->request->post('id');
+            $receipt->type = Yii::$app->request->post('type');
+            $receipt->date = date("Y-m-d H:i:s");
+            if($receipt->save()){
+                $client = $receipt->client;
+                $client->balance += $receipt->sum;
+                $client->save();
+                return true;
+            }
+        }
+        return 0;
     }
 
     /**

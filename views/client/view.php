@@ -7,6 +7,7 @@ use yii\bootstrap\Modal;
 use yii\web\View;
 
 use app\models\Paid;
+use app\models\Receipt;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Client */
@@ -45,6 +46,40 @@ $this->params['breadcrumbs'][] = $this->title;
             'gender',
         ],
     ]) ?>
+    <div class="row">   
+        <div class="col-sm-6">
+            <h2>Баланс: <?=$model->balance?></h2>
+            <?php Modal::begin([
+                'header' => '<h2>Пополнение баланса</h2>',
+                'toggleButton' => [
+                    'label' => 'Пополнить баланс',
+                    'class' => "btn btn-success",
+                ],
+            ]);?>
+                <form id="form_receipt_<?=$model->id?>">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label class="control-label">Тип:</label>
+                        <?=Html::radioList('type_receipt_' . $model->id, 1, Receipt::getTypes(), ['separator' => '<br>'])?>
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="control-label">Сумма:</label>
+                        <?=Html::input('text', 'sum_receipt' . $model->id, null, ['class' => 'form-control', 'id' => 'sum_receipt_' . $model->id])?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <?=Html::button('Готово!', [
+                            'class' => 'btn receipt',
+                            'data-id' => $model->id,
+                            'style' => 'margin-top:10px;'
+                        ])?>
+                    </div>
+                </div>
+                </form>
+            <?php Modal::end();?>
+        </div>
+    </div>
     <div class="row">
         <div class="col-sm-6">
             <h2>События</h2>
@@ -75,27 +110,27 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'class' => "btn btn-success",
                                 ],
                             ]);?>
-                            <form id="form_paid_<?=$event->id?>">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <label class="control-label">Тип:</label>
-                                    <?=Html::radioList('type_paid_' . $event->id, 1, Paid::getTypes(), ['separator' => '<br>'])?>
+                                <form id="form_paid_<?=$event->id?>">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="control-label">Тип:</label>
+                                        <?=Html::radioList('type_paid_' . $event->id, 1, Paid::getTypes(), ['separator' => '<br>'])?>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label class="control-label">Сумма:</label>
+                                        <?=Html::input('text', 'sum_paid' . $event->id, null, ['class' => 'form-control', 'id' => 'sum_paid_' . $event->id])?>
+                                    </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <label class="control-label">Сумма:</label>
-                                    <?=Html::input('text', 'sum_paid' . $event->id, null, ['class' => 'form-control', 'id' => 'sum_' . $event->id])?>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <?=Html::button('Готово!', [
+                                            'class' => 'btn paid',
+                                            'data-id' => $event->id,
+                                            'style' => 'margin-top:10px;'
+                                        ])?>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <?=Html::button('Готово!', [
-                                        'class' => 'btn paid',
-                                        'data-id' => $event->id,
-                                        'style' => 'margin-top:10px;'
-                                    ])?>
-                                </div>
-                            </div>
-                            </form>
+                                </form>
                             <?php Modal::end();?>
                             <?php }else{?>
                             Оплачено
@@ -115,8 +150,28 @@ $this->params['breadcrumbs'][] = $this->title;
             type: 'POST',   
             data: {
                 'id':this.dataset.id,
-                'sum':$('#sum_'+this.dataset.id).val(),
+                'sum':$('#sum_paid_'+this.dataset.id).val(),
                 'type': $('input[name=type_paid_'+this.dataset.id+']:checked', '#form_paid_'+this.dataset.id).val(),
+            }, 
+            success: function(response){
+                if(response == '0'){
+                    alert('Ошибка!');
+                }else{
+                    alert('Успешно');
+                }
+                location.reload();
+            }
+        });
+    });
+
+    $('.receipt').click(function(){
+        $.ajax({
+            url: '" . Url::to('client/receipt', true) . "',
+            type: 'POST',   
+            data: {
+                'id':this.dataset.id,
+                'sum':$('#sum_receipt_'+this.dataset.id).val(),
+                'type': $('input[name=type_receipt_'+this.dataset.id+']:checked', '#form_receipt_'+this.dataset.id).val(),
             }, 
             success: function(response){
                 alert('Успешно');

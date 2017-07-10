@@ -5,22 +5,22 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "paids".
+ * This is the model class for table "receipts".
  *
  * @property integer $id
- * @property integer $id_event
+ * @property integer $id_client
  * @property integer $sum
  * @property integer $type
  * @property string $date
  */
-class Paid extends \yii\db\ActiveRecord
+class Receipt extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'paids';
+        return 'receipts';
     }
 
     /**
@@ -29,7 +29,7 @@ class Paid extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_event', 'sum', 'type'], 'integer'],
+            [['id_client', 'sum', 'type'], 'integer'],
             [['date'], 'safe'],
         ];
     }
@@ -41,12 +41,13 @@ class Paid extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_event' => 'Id Event',
+            'id_client' => 'Id Client',
             'sum' => 'Sum',
             'type' => 'Type',
             'date' => 'Date',
         ];
     }
+
 
     public static function getTypes()
     {
@@ -57,9 +58,9 @@ class Paid extends \yii\db\ActiveRecord
             4 => 'Аванас безнал',
         ];
     }
-
-    public function getEvent()
+    
+    public function getClient()
     {
-        return $this->hasOne(Event::className(), ['id' => 'id_event']);
+        return $this->hasOne(Client::className(), ['id' => 'id_client']);
     }
 }

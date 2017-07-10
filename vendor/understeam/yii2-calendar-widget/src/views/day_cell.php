@@ -69,14 +69,15 @@ $linkProfile = Url::to();
                 $count++;?>
                 <tr>
                     <?php if($count==1){?><td rowspan="7" style="cursor:pointer; width:7%"><?= $cell->date->format('H:i') ?></td><?php }?>
-                    <td style="width:25%"><?=$item->client->last_name?> <?=$item->client->first_name?> <?=$item->client->middle_name?></td>
+                    <td style="width:25%"><a href="<?=Url::to(['/client/view', 'id' => $item->client->id])?>"><?=$item->client->last_name?> <?=$item->client->first_name?> <?=$item->client->middle_name?></a></td>
                     <td style="width:5%"><?=$item->client->age?></td>
                     <td style="width:15%">
                         <table class="table table-bordered table-striped">
                             <?php foreach ($item->services as $service) {?>
                             <tr>
                                 <td><?=$service->name?></td>
-                                <td><?php Modal::begin([
+                                <td><?php if($item->howmanyPaid() >= $item->howmanyCost()){
+                                    Modal::begin([
                                     'header' => '<h2>Код для начала тестирования</h2>',
                                     'toggleButton' => [
                                         'label' => 'Начать',
@@ -85,7 +86,8 @@ $linkProfile = Url::to();
                                         'data-event' => $item->id,
                                     ],
                                 ]);?>
-                                <?php Modal::end();?>
+                                <?php Modal::end();}?>
+
                                     
                                 </td>
                             </tr>
@@ -176,7 +178,11 @@ $linkProfile = Url::to();
                 'type': $('input[name=type_paid_'+this.dataset.id+']:checked', '#form_paid_'+this.dataset.id).val(),
             }, 
             success: function(response){
-                alert('Успешно');
+                if(response == '0'){
+                    alert('Ошибка!');
+                }else{
+                    alert('Успешно');
+                }
                 location.reload();
             }
         });
