@@ -42,7 +42,10 @@ class TestingController extends Controller
     {   
         $this->layout = 'testing';
         if(!empty(Yii::$app->request->post('code'))){
-            if($eventsService = EventsService::find()->where(['code' => Yii::$app->request->post('code')])->one()){
+            if($eventsService = EventsService::find()->where([
+                'code' => Yii::$app->request->post('code'),
+                'status' => ['new', 'processed']
+            ])->one()){
                 return $this->redirect(['check', 'code' => Yii::$app->request->post('code')]);
             }else{
                 Yii::$app->getSession()->setFlash('warning', 'Указанный код не найден');
@@ -55,12 +58,19 @@ class TestingController extends Controller
     public function actionCheck($code)
     {   
         $this->layout = 'testing';
-        if($eventsService = EventsService::find()->where(['code' => Yii::$app->request->get('code')])->one()){
+        
+        //Ищем только со статусом новый и в процессе. 
+        if($eventsService = EventsService::find()->where([
+            'code' => Yii::$app->request->get('code'),
+            'status' => ['new', 'processed']
+        ])->one()){
             $model = $eventsService->idEvent->client;
+
             if(!empty($model->birthday)){
                 $date = strtotime($model->birthday);
                 $model->birthday = date('d-m-Y', $date);
             }
+
             if($model->load(Yii::$app->request->post())){
                 if(!empty($model->birthday)){
                     $date = strtotime($model->birthday);
@@ -71,6 +81,7 @@ class TestingController extends Controller
                 $eventsService->save(false);
                 Yii::$app->soap->sc->createTestingSession($eventsService->idService->ht_name, $eventsService->session, 1);
                 $cl = $eventsService->idEvent->client;
+                //Отправляем данные ht чтобы они смогли составить отчет.
                 $callb = Yii::$app->soap->sc->setSessionRespondent($eventsService->session, "
                     ResponderFirstName=" . $cl->first_name . ";
                     ResponderMiddleName=" . $cl->middle_name . ";
@@ -85,6 +96,7 @@ class TestingController extends Controller
                 $url = Yii::$app->soap->sc->getTestingSessionUrlEx($eventsService->session);
                 return $this->redirect($url['TestingSessionUrl']);
             }
+
             return $this->render('check', [
                 'model' => $model,
             ]);

@@ -119,7 +119,7 @@ $types = ArrayHelper::map($models, 'id', 'name');
                         <?= $form->field($model, 'price')->label(false) ?>
                         <label class="control-label">Скидка:</label>
                         <?= $form->field($model, 'discount')->label(false) ?>
-                        <?= $form->field($model, 'why', ['options' => ['style' => 'display:none']])->textarea(['rows' => 4])->label("Почему:") ?>
+                        <?= $form->field($model, 'why', ['options' => ['style' => (!empty($model->why))?'':'display:none']])->textarea(['rows' => 4])->label("Почему:") ?>
                     </div>
                 </div>
                 <hr>

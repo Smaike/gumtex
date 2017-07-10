@@ -259,9 +259,12 @@ class EventController extends Controller
             'id_event' => Yii::$app->request->post('event'),
             'id_service' => Yii::$app->request->post('service'),
         ])->one();
-        $eventService->code = mt_rand(1000, 9999);
-        $eventService->code_generated = date("Y-m-d H:i:s");
-        $eventService->save(false);
+        if(empty($eventService->code)){
+            $eventService->code = mt_rand(1000, 9999);
+            $eventService->code_generated = date("Y-m-d H:i:s");
+            $eventService->status = 'new';
+            $eventService->save(false);
+        }
         return "<h3 style='text-align:center'>".$eventService->code."</h3>";
     }
 

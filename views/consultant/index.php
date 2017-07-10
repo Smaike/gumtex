@@ -38,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'format' => 'raw',
                 'value' => function ($model, $key, $index, $column){
-                    if(empty($model->idEvent->client->consultant) && in_array($model->status, ["consultant", "new", "processed"])){
+                    if(in_array($model->status, ["consultant", "new", "processed"])){
                         return Html::a("Консультировать", Url::to([
                             'consultant/take', 
                             'id' => $model->id
