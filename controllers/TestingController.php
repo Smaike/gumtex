@@ -77,23 +77,25 @@ class TestingController extends Controller
                     $model->birthday = date('Y-m-d', $date);
                 }
                 $model->save();
+                if($eventService->status == 'new'){
+                    Yii::$app->soap->sc->createTestingSession($eventsService->idService->ht_name, $eventsService->session, 1);
+                    $cl = $eventsService->idEvent->client;
+                    //Отправляем данные ht чтобы они смогли составить отчет.
+                    $callb = Yii::$app->soap->sc->setSessionRespondent($eventsService->session, 
+                        $cl->last_name,
+                        $cl->first_name,
+                        $cl->middle_name,
+                        $cl->first_name,
+                        $cl->birthday,
+                        $cl->age,
+                        ($cl->gender == 'М')?'m':'f',
+                        '',
+                        $cl->mobile,
+                        $eventsService->code
+                    );
+                }
                 $eventsService->status = 'processed';
                 $eventsService->save(false);
-                Yii::$app->soap->sc->createTestingSession($eventsService->idService->ht_name, $eventsService->session, 1);
-                $cl = $eventsService->idEvent->client;
-                //Отправляем данные ht чтобы они смогли составить отчет.
-                $callb = Yii::$app->soap->sc->setSessionRespondent($eventsService->session, 
-                    $cl->last_name,
-                    $cl->first_name,
-                    $cl->middle_name,
-                    $cl->first_name,
-                    $cl->birthday,
-                    $cl->age,
-                    ($cl->gender == 'М')?'m':'f',
-                    '',
-                    $cl->mobile,
-                    $eventsService->code
-                );
                 $url = Yii::$app->soap->sc->getTestingSessionUrlEx($eventsService->session);
                 return $this->redirect($url['TestingSessionUrl']);
             }
