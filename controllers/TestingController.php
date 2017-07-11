@@ -77,7 +77,7 @@ class TestingController extends Controller
                     $model->birthday = date('Y-m-d', $date);
                 }
                 $model->save();
-                if($eventService->status == 'new'){
+                if($eventsService->status == 'new'){
                     Yii::$app->soap->sc->createTestingSession($eventsService->idService->ht_name, $eventsService->session, 1);
                     $cl = $eventsService->idEvent->client;
                     //Отправляем данные ht чтобы они смогли составить отчет.
