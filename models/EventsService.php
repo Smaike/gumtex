@@ -45,7 +45,7 @@ class EventsService extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_event', 'id_service'], 'integer'],
+            [['id_event', 'id_service', 'id_consultant'], 'integer'],
             [['id_event'], 'exist', 'skipOnError' => true, 'targetClass' => Event::className(), 'targetAttribute' => ['id_event' => 'id']],
             [['id_service'], 'exist', 'skipOnError' => true, 'targetClass' => Service::className(), 'targetAttribute' => ['id_service' => 'id']],
         ];
@@ -79,6 +79,11 @@ class EventsService extends \yii\db\ActiveRecord
         return $this->hasOne(Service::className(), ['id' => 'id_service']);
     }
 
+    public function getConsultant()
+    {
+        return $this->hasOne(User::className(), ['id' => 'id_consultant']);
+    }
+
     public function getComputer()
     {
         return $this->hasOne(Computer::className(), ['is_processed_by' => 'id']);
@@ -92,5 +97,13 @@ class EventsService extends \yii\db\ActiveRecord
     public function getInWorkColor()
     {
         return "background-color:" . $this->colors[$this->status];
+    }
+    
+    public function getConsultantName()
+    {
+        if($consultant = $this->consultant){
+            return $consultant->fullName;
+        }
+        return "-";
     }
 }

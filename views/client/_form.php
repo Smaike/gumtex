@@ -28,8 +28,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'category')->textInput() ?>
 
-    <?= $form->field($model, 'id_consultant')->textInput() ?>
-
     <?= $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'where_know')->textarea(['rows' => 6]) ?>

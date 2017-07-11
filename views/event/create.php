@@ -13,7 +13,7 @@ use app\models\ClientCategory;
 use app\models\ClientType;
 use app\models\User;
 
-$models = User::find()->where(['type' => 1])->select(['id', 'first_name', 'last_name'])->all();
+$models = User::find()->where(['type' => User::TYPE_CONSULTANT])->select(['id', 'first_name', 'last_name'])->all();
 $consultants = ArrayHelper::map($models, 'id', 'fullName');
 
 $models = ClientCategory::find()->all();

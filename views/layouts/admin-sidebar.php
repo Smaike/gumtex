@@ -1,9 +1,4 @@
 <?php
-/**
- * Created by:  Pavel Kondratenko
- * Created at:  22:14 09.04.14
- * Contact:     gustarus@gmail.com
- */
 
 use yii\helpers\Html;
 

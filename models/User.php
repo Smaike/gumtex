@@ -25,6 +25,8 @@ use Yii;
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     protected $__salt = '7z0ZzugKmnQW';
+
+    const TYPE_CONSULTANT = 1;
     /**
      * @inheritdoc
      */
@@ -67,6 +69,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'updated_at' => 'Дата изменения',
         ];
     }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -74,28 +77,34 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->hasOne(UserType::className(), ['id' => 'type']);
     }
+
     public static function findIdentity($id)
     {
         return self::findOne($id);
     }
+
     public static function findIdentityByAccessToken($token, $type = null)
     {
         return null;
     }
+
     public static function findByUsername($username)
     {
         if($user = self::findOne(['login' => $username]))
             return $user;
         return null;
     }
+
     public function getAuthKey()
     {
         return $this->authkey;
     }
+
     public function getId()
     {
         return $this->id;
     }
+
     /**
      * @param string $authKey
      * @return boolean if auth key is valid for current user
@@ -104,14 +113,17 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->getAuthKey() === $authKey;
     }
+
     public function validatePassword($password)
     {
         return $this->hashPassword($password) === $this->password;
     }
+
     public function hashPassword($password)
     {
         return md5($password . $this->__salt);
     }
+
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
@@ -126,8 +138,46 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         }
         return false;
     }
+
     public function getFullName()
     {
         return $this->last_name . " " . $this->first_name;
+    }
+
+    public function isConsultant()
+    {
+        return $this->type == self::TYPE_CONSULTANT;
+    }
+
+    public function consultantStatistic()
+    {
+        $statistic = [];
+        if($this->isConsultant()){
+            $statistic['count'] = Yii::$app->db->createCommand("
+                SELECT count(id) 
+                FROM events_services 
+                WHERE id_consultant = :id_consultant AND created_at > :d_past AND created_at < :d_future
+            ")->bindValues([
+                ':id_consultant' => $this->id,
+                ':d_past' => date('Y-m-d'),
+                ':d_future' => (new \DateTime('tomorrow'))->format('Y-m-d'),
+            ])->queryScalar();
+
+            $statistic['sum'] = Yii::$app->db->createCommand("
+                SELECT sum(s1.value) 
+                FROM (
+                    SELECT es.id_service, cc.value, es.id_consultant, es.created_at
+                    FROM events_services es
+                    LEFT JOIN consultants_cost cc ON cc.id_service = es.id_service AND cc.id_consultant_type = (
+                        SELECT id_type FROM consultants WHERE id_user = :id_user)  
+                ) s1
+                WHERE s1.id_consultant = :id_user AND s1.created_at > :d_past AND s1.created_at < :d_future
+            ")->bindValues([
+                ':id_user' => $this->id,
+                ':d_past' => date('Y-m-d'),
+                ':d_future' => (new \DateTime('tomorrow'))->format('Y-m-d'),
+            ])->queryScalar();
+        }
+        return $statistic;
     }
 }

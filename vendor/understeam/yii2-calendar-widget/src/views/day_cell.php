@@ -94,7 +94,7 @@ $linkProfile = Url::to();
                             <?php }?>
                         </table>
                     </td>
-                    <td style="width:15%"><?=$item->client->consultantName?></td>
+                    <td style="width:15%"><?=$item->getES()->one()->consultantName?></td>
                     <td style="width:19%"><?=$item->client->comment?></td>
                     <td style="width:10%">
                         <?=$item->howmanyPaid()?>/<?=$item->howmanyCost()?><br>

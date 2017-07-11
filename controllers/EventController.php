@@ -183,6 +183,7 @@ class EventController extends Controller
             $model->date = $date;
             $model->status = 1;
             $model->save();
+            //Добавить передобавление связанных записей
             return $this->redirect(['calendar/index']);
         }
 

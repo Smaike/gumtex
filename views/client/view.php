@@ -35,7 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'p_mobile',
             'type',
             'category',
-            'id_consultant',
             'comment:ntext',
             'where_know:ntext',
             'age',

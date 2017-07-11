@@ -50,7 +50,7 @@ class Client extends \yii\db\ActiveRecord
         return [
             [['first_name', 'last_name'], 'required'],
             [['birthday'], 'safe'],
-            [['type', 'category', 'id_consultant', 'age'], 'integer'],
+            [['type', 'category', 'age'], 'integer'],
             [['comment', 'where_know'], 'string'],
             [['first_name', 'last_name', 'middle_name', 'fio_mother', 'fio_father', 'fio_sup'], 'string', 'max' => 60],
             [['mobile', 'p_mobile', 'gender'], 'string', 'max' => 20],
@@ -112,11 +112,6 @@ class Client extends \yii\db\ActiveRecord
         return $this->hasOne(ClientCategory::className(), ['id' => 'category']);
     }
 
-    public function getConsultant()
-    {
-        return $this->hasOne(User::className(), ['id' => 'id_consultant']);
-    }
-
     public function getFullName()
     {
         return $this->last_name . " " . $this->first_name;
@@ -133,11 +128,4 @@ class Client extends \yii\db\ActiveRecord
         return $data;
     }
 
-    public function getConsultantName()
-    {
-        if($consultant = $this->consultant){
-            return $consultant->fullName;
-        }
-        return "-";
-    }
 }

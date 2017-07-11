@@ -14,6 +14,8 @@ use app\models\Client;
  */
 class ConsultantController extends Controller
 {
+    public $layout = '@app/views/layouts/consultant-sidebar.php';
+
     public function actionIndex()
     {   
         $eventsServices = EventsService::find()->where(['not', ['code' => null]])->with('idEvent.client', 'computer');
@@ -29,11 +31,8 @@ class ConsultantController extends Controller
     {   
         if($eventsService = EventsService::findOne($id)){
             $eventsService->status = 'consultant_progress';
+            $eventsService->id_consultant = Yii::$app->user->id;
             $eventsService->save();
-            if($client = Client::findOne($eventsService->idEvent->client->id)){
-                $client->id_consultant = Yii::$app->user->id; 
-                $client->save();
-            }
         }
         return $this->redirect('index');
     }

@@ -121,8 +121,10 @@ class EventCreateForm extends Model
                     $eventService = new EventsService();
                     $eventService->id_event = $event->id;
                     $eventService->id_service = $service;
+                    $eventService->id_consultant = $this->id_consultant;
                     $eventService->status = 'new';
                     $eventService->session = \Yii::$app->security->generateRandomString();
+                    $eventService->created_at = $this->date;
                     $eventService->save();
                 }
             }
@@ -148,6 +150,7 @@ class EventCreateForm extends Model
                     $eventService = new EventsService();
                     $eventService->id_event = $event->id;
                     $eventService->id_service = $service;
+                    $eventService->id_consultant = $this->id_consultant;
                     $eventService->status = 'new';
                     $eventService->save();
                 }
