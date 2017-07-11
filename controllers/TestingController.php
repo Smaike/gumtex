@@ -82,16 +82,17 @@ class TestingController extends Controller
                 Yii::$app->soap->sc->createTestingSession($eventsService->idService->ht_name, $eventsService->session, 1);
                 $cl = $eventsService->idEvent->client;
                 //Отправляем данные ht чтобы они смогли составить отчет.
-                $callb = Yii::$app->soap->sc->setSessionRespondent($eventsService->session, "
-                    ResponderFirstName=" . $cl->first_name . ";
-                    ResponderMiddleName=" . $cl->middle_name . ";
-                    ResponderLastName=" . $cl->last_name . ";
-                    ResponderName=" . $cl->first_name . ";
-                    ResponderAge=" . $cl->age . ";
-                    ResponderBirthDate=" . $cl->birthday . ";
-                    ResponderGender=" . $cl->first_name . ";
-                    ResponderPhone=" . $cl->mobile . ";
-                    ResponderField1=" . $eventsService->code
+                $callb = Yii::$app->soap->sc->setSessionRespondent($eventsService->session, 
+                    $cl->last_name,
+                    $cl->first_name,
+                    $cl->middle_name,
+                    $cl->first_name,
+                    $cl->birthday,
+                    $cl->age,
+                    ($cl->gender == 'М')?'m':'f',
+                    '',
+                    $cl->mobile,
+                    $eventsService->code
                 );
                 $url = Yii::$app->soap->sc->getTestingSessionUrlEx($eventsService->session);
                 return $this->redirect($url['TestingSessionUrl']);
