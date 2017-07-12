@@ -5,9 +5,11 @@ namespace app\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\data\ActiveDataProvider;
+use yii\web\NotFoundHttpException;
 
 use app\models\EventsService;
 use app\models\Client;
+use app\forms\ConsultantEventForm;
 
 /**
  * EventController implements the CRUD actions for Event model.
@@ -50,12 +52,23 @@ class ConsultantController extends Controller
     {   
         if(Yii::$app->request->isPost && !empty(Yii::$app->request->post('code'))){
             if($eventsService = EventsService::find()->where(['code' => Yii::$app->request->post('code')])->one()){
-                return $this->redirect(['/client/view', 'id' => $eventsService->idEvent->client->id]);
+                return $this->redirect(['view', 'id' => $eventsService->id]);
             }else{
                 Yii::$app->session->setFlash('searchError');
             }
         }
         return $this->render('search', [
+        ]);
+    }
+
+    public function actionView($id)
+    {   
+        if(!$form = ConsultantEventForm::findOne($id)){
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+
+        return $this->render('view', [
+            'model' => $form,
         ]);
     }
 }

@@ -60,6 +60,7 @@ class EventsService extends \yii\db\ActiveRecord
             'id' => 'ID',
             'id_event' => 'Id Event',
             'id_service' => 'Id Service',
+            'code_generated' => 'Время генерации кода'
         ];
     }
 

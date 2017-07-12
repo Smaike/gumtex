@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /**
  * @var \app\components\web\View $this
@@ -15,8 +16,16 @@ use yii\helpers\Html;
 	<div class="col-sm-2">
 		<?php $stat = Yii::$app->user->identity->consultantStatistic()  ?>
 			<div class="panel panel-default">
-				<div class="panel-heading">Услуг оказано: <?=$stat['count']?></div>
-				<div class="panel-heading">На сумму: <?=$stat['sum']?></div>
+				<div class="panel-heading">Панель консультанта</div>
+				<div class="panel-body">
+					<a href="<?=Url::to(['/consultant/search'])?>">Поиск</a>
+				</div>
+				<div class="panel-body">
+					Услуг оказано: <?=$stat['count']?>
+				</div>
+				<div class="panel-body">
+					На сумму: <?=$stat['sum']?>
+				</div>
 				
 			</div>
 	</div>
