@@ -73,17 +73,16 @@ $linkProfile = Url::to();
                     <td style="width:5%"><?=$item->client->age?></td>
                     <td style="width:15%">
                         <table class="table table-bordered table-striped">
-                            <?php foreach ($item->services as $service) {?>
+                            <?php foreach ($item->eS as $service) {?>
                             <tr>
-                                <td><?=$service->name?></td>
-                                <td><?php if($item->howmanyPaid() >= $item->howmanyCost()){
+                                <td><?=$service->idService->name?></td>
+                                <td><?php if(($item->howmanyPaid() >= $item->howmanyCost()) && empty($service->code)){
                                     Modal::begin([
                                     'header' => '<h2>Код для начала тестирования</h2>',
                                     'toggleButton' => [
                                         'label' => 'Начать',
                                         'class' => "btn btn-success start-serv",
-                                        'data-service' => $service->id,
-                                        'data-event' => $item->id,
+                                        'data-id' => $service->id,
                                     ],
                                 ]);?>
                                 <?php Modal::end();}?>
@@ -192,9 +191,10 @@ $linkProfile = Url::to();
         $.ajax({
           url: '" . Url::to('event/create-code', true) . "',
           type: 'POST',   
-          data: {'service':div.data('service'), 'event':div.data('event')}, 
+          data: {'event':div.data('id')}, 
           success: function(response){
             $('.modal-body').html(response);
+            location.reload();
           }
         });
     });

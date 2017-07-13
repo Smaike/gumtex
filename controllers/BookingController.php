@@ -7,6 +7,7 @@ use yii\web\Controller;
 use app\components\booking\CalendarActionForm;
 use yii\web\JsExpression;
 use yii\helpers\ArrayHelper;
+use yii\filters\AccessControl;
 
 use app\forms\BookingCreateForm;
 use app\models\Booking;

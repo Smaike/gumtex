@@ -26,7 +26,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     protected $__salt = '7z0ZzugKmnQW';
 
-    const TYPE_CONSULTANT = 1;
+    const TYPE_CONSULTANT = 3;
     /**
      * @inheritdoc
      */
@@ -151,7 +151,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
     public function consultantStatistic()
     {
-        $statistic = [];
+        $statistic = ['count' => 0, 'sum' =>0];
         if($this->isConsultant()){
             $statistic['count'] = Yii::$app->db->createCommand("
                 SELECT count(id) 

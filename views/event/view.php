@@ -49,29 +49,25 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-sm-6">
         <h2>Услуги</h2>
         <table class="table table-bordered table-striped">
-        <?php foreach($model->services as $service){
-            if($es = EventsService::find()->where([
-                'id_service' => $service->id,
-                'id_event' => $model->id,
-                'status' => 'new',
-            ])->one()){?>
-                <tr>
-                    <td><?=$service->name?></td>
-                    <td><?php Modal::begin([
+        <?php foreach($model->eS as $service){?>
+            
+            <tr>
+                <td><?=$service->idService->name?></td>
+                <td><?php if(($model->howmanyPaid() >= $model->howmanyCost()) && empty($service->code)){
+                     Modal::begin([
                         'header' => '<h2>Код для начала тестирования</h2>',
                         'toggleButton' => [
                             'label' => 'Начать',
                             'class' => "btn btn-success start-serv",
-                            'data-service' => $service->id,
-                            'data-event' => $model->id,
+                            'data-id' => $service->id,
                         ],
-                    ]);?>
-                    <?php Modal::end();?>
-                        
-                    </td>
-                </tr>
-            <?php }
-        }?>
+                    ]);
+                     Modal::end();
+                }{ echo "Не оплачено";}?>
+                    
+                </td>
+            </tr>
+        <?php }?>
         </table>
     </div>
     
@@ -83,9 +79,10 @@ $this->params['breadcrumbs'][] = $this->title;
         $.ajax({
           url: '" . Url::to('event/create-code', true) . "',
           type: 'POST',   
-          data: {'service':div.data('service'), 'event':div.data('event')}, 
+          data: {event':div.data('id')}, 
           success: function(response){
             $('.modal-body').html(response);
+            location.reload();
           }
         });
     });",

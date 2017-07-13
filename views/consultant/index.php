@@ -44,16 +44,16 @@ $this->params['breadcrumbs'][] = $this->title;
                             'id' => $model->id
                         ]), ['class' => 'btn btn-primary']);
                     }elseif($model->status == 'consultant_progress'){
-                        if(!empty($model->idEvent->client->consultant) && $model->idEvent->client->consultant->id == Yii::$app->user->id){
+                        if(!empty($model->consultant) && $model->consultant->id == Yii::$app->user->id){
                             return Html::a("Завершить", Url::to([
                                 'consultant/finish', 
                                 'id' => $model->id
                             ]), ['class' => 'btn btn-primary']);
                         }else{
-                            return (!empty($model->idEvent->client->consultant))?"Консультирует " . $model->idEvent->client->consultant->fullName:null;
+                            return (!empty($model->consultant))?"Консультирует " . $model->consultant->fullName:null;
                         }
                     }else{
-                        return null;
+                        return (!empty($model->consultant))?"Консультировался у " . $model->consultant->fullName:null;
                     }
                 }
             ],

@@ -10,6 +10,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\UploadedFile;   
+use yii\filters\AccessControl;
 
 /**
  * MissionController implements the CRUD actions for Mission model.

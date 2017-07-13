@@ -25,6 +25,20 @@ use app\forms\EventCreateForm;
  */
 class EventController extends Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
 
     /**
      * Displays a single Event model.
@@ -257,8 +271,7 @@ class EventController extends Controller
     public function actionCreateCode()
     {
         $eventService = EventsService::find()->where([
-            'id_event' => Yii::$app->request->post('event'),
-            'id_service' => Yii::$app->request->post('service'),
+            'id' => Yii::$app->request->post('event'),
         ])->one();
         if(empty($eventService->code)){
             $eventService->code = mt_rand(1000, 9999);

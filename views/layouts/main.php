@@ -10,6 +10,35 @@ use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
 AppAsset::register($this);
+
+$items = [];
+if(!Yii::$app->user->isGuest){
+    if(Yii::$app->user->identity->isConsultant()){
+        $items[] = ['label' => 'Консультант', 'url' => ['/consultant/search']];
+    }else{
+        $items = array_merge($items, [
+            ['label' => 'Начало', 'url' => ['/site/index']],
+            ['label' => 'Справочники', 'url' => ['/directory/default/index']],
+            // ['label' => 'Отчеты', 'url' => ['/report/index']],
+            ['label' => 'Список клиентов', 'url' => ['/client/index']],
+            // ['label' => 'Генератор писем', 'url' => ['/emails/']],
+            ['label' => 'Календарь услуг', 'url' => ['/calendar/index']],
+            // ['label' => 'Бронирование', 'url' => ['/booking/list']],
+        ]);
+    }
+    $items[] = ['label' => 'В работе', 'url' => ['/consultant/index']];
+    $items[] = 
+        '<li>'
+        . Html::beginForm(['/site/logout'], 'post')
+        . Html::submitButton(
+            'Выход (' . Yii::$app->user->identity->login . ')',
+            ['class' => 'btn btn-link logout']
+        )
+        . Html::endForm()
+        . '</li>';
+}else{
+    $items[] = ['label' => 'Вход', 'url' => ['/site/login']];
+}
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -35,28 +64,7 @@ AppAsset::register($this);
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            ['label' => 'Начало', 'url' => ['/site/index']],
-            ['label' => 'Справочники', 'url' => ['/directory/default/index']],
-            // ['label' => 'Отчеты', 'url' => ['/report/index']],
-            ['label' => 'В работе', 'url' => ['/consultant/index']],
-            ['label' => 'Список клиентов', 'url' => ['/client/index']],
-            // ['label' => 'Генератор писем', 'url' => ['/emails/']],
-            ['label' => 'Календарь услуг', 'url' => ['/calendar/index']],
-            // ['label' => 'Бронирование', 'url' => ['/booking/list']],
-            Yii::$app->user->isGuest ? (
-                ['label' => 'Вход', 'url' => ['/site/login']]
-            ) : (
-                '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
-                . Html::submitButton(
-                    'Выход (' . Yii::$app->user->identity->login . ')',
-                    ['class' => 'btn btn-link logout']
-                )
-                . Html::endForm()
-                . '</li>'
-            )
-        ],
+        'items' => $items,
     ]);
     NavBar::end();
     ?>

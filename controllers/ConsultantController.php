@@ -6,6 +6,7 @@ use Yii;
 use yii\web\Controller;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
+use yii\filters\AccessControl;
 
 use app\models\EventsService;
 use app\models\Client;
@@ -16,11 +17,29 @@ use app\forms\ConsultantEventForm;
  */
 class ConsultantController extends Controller
 {
-    public $layout = '@app/views/layouts/consultant-sidebar.php';
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
 
     public function actionIndex()
     {   
-        $eventsServices = EventsService::find()->where(['not', ['code' => null]])->with('idEvent.client', 'computer');
+        $eventsServices = EventsService::find()->joinWith(['idEvent'])
+        ->where(
+            ['not', ['code' => null]]
+        )->andWhere([
+            'or', ['not', ['events_services.status' => 'consultant_finish']], ['>=', 'events.date', (new \DateTime('tomorrow'))->format('Y-m-d')]
+        ]);
         $dp = new ActiveDataProvider([
             'query' => $eventsServices,
         ]);
@@ -50,6 +69,7 @@ class ConsultantController extends Controller
 
     public function actionSearch()
     {   
+        $this->layout = '@app/views/layouts/consultant-sidebar.php';
         if(Yii::$app->request->isPost && !empty(Yii::$app->request->post('code'))){
             if($eventsService = EventsService::find()->where(['code' => Yii::$app->request->post('code')])->one()){
                 return $this->redirect(['view', 'id' => $eventsService->id]);
@@ -63,6 +83,7 @@ class ConsultantController extends Controller
 
     public function actionView($id)
     {   
+        $this->layout = '@app/views/layouts/consultant-sidebar.php';
         if(!$form = ConsultantEventForm::findOne($id)){
             throw new NotFoundHttpException('The requested page does not exist.');
         }

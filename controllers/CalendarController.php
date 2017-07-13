@@ -6,13 +6,27 @@ use Yii;
 use yii\web\Controller;
 use understeam\calendar\CalendarActionForm;
 use yii\web\JsExpression;
+use yii\filters\AccessControl;
 
 use app\models\ActiveDay;
 use app\models\ServiceType;
 
 class CalendarController extends Controller
 {
-
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
     /**
      * Displays homepage.
      *
