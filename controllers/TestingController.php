@@ -30,26 +30,7 @@ class TestingController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                 ],
-            ],
-            public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['index', 'check', 'test-finish'],
-                        'allow' => true,
-                        'roles' => ['?'],
-                    ],
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-        ];
-    }
+            ]
         ];
     }
 
