@@ -25,11 +25,11 @@ class EventsService extends \yii\db\ActiveRecord
     ];
 
     private $colors = [
-        'new'                 => "#93bbef",
-        'processed'           => "#cef790",
-        'consultant'          => "#f5e87a",
-        'consultant_progress' => "#e6a9f1",
-        'consultant_finish'   => "#f7a7a1",
+        'new'                 => "#c3f1b0",
+        'processed'           => "#f9ed9d",
+        'consultant'          => "#f3bae9",
+        'consultant_progress' => "#93bbef",
+        'consultant_finish'   => "#f3eded",
     ];
     /**
      * @inheritdoc

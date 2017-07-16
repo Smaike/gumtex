@@ -52,8 +52,10 @@ class Client extends \yii\db\ActiveRecord
             [['birthday'], 'safe'],
             [['type', 'category', 'age'], 'integer'],
             [['comment', 'where_know'], 'string'],
+            [['email'], 'email'],
             [['first_name', 'last_name', 'middle_name', 'fio_mother', 'fio_father', 'fio_sup'], 'string', 'max' => 60],
             [['mobile', 'p_mobile', 'gender'], 'string', 'max' => 20],
+            [['email'], 'string', 'max' => 100],
         ];
     }
 
@@ -83,7 +85,8 @@ class Client extends \yii\db\ActiveRecord
             'fio_mother' => 'ФИО матери',
             'fio_father' => 'ФИО отца',
             'fio_sup' => 'ФИО сопровождающего',
-            'gender' => 'Пол'
+            'gender' => 'Пол',
+            'email' => 'E-mail'
         ];
     }
 

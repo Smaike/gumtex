@@ -38,6 +38,7 @@ class EventCreateForm extends Model
     public $why;
     public $copy_id;
     public $gender;
+    public $email;
 
     public $event;
 
@@ -54,6 +55,8 @@ class EventCreateForm extends Model
             [['first_name', 'last_name', 'middle_name', 'fio_mother', 'fio_father', 'fio_sup'], 'string', 'max' => 60],
             [['mobile', 'p_mobile', 's_mobile', 'gender'], 'string', 'max' => 20],
             [['name'], 'string', 'max' => 255],
+            [['email'], 'string', 'max' => 100],
+            [['email'], 'email'],
             [['price'], 'string', 'max' => 11],
             ['date', 'date', 'format' => 'yyyy-mm-dd H:i'],
             ['services', 'each', 'rule' => 'integer'],
@@ -84,7 +87,8 @@ class EventCreateForm extends Model
             'name' => "Название события",
             'services' => "Услуги",
             'age' => "Возраст",
-            'gender' => "Пол"
+            'gender' => "Пол",
+            'email' => "E-mail"
         ];
     }
 

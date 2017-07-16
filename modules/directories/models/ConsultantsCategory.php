@@ -73,7 +73,7 @@ class ConsultantsCategory extends \yii\db\ActiveRecord
 
     public static function getListOfServices()
     {
-        $services = Service::find()->select(['id', 'name'])->all();
+        $services = Service::find()->select(['id', 'name'])->where(['status' => 1])->all();
         return ArrayHelper::map($services, 'id', 'name');
     }
 

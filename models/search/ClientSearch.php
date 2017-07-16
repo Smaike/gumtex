@@ -23,7 +23,7 @@ class ClientSearch extends Client
     {
         return [
             [['id', 'type', 'category', 'age', 'service'], 'integer'],
-            [['first_name', 'last_name', 'middle_name', 'birthday', 'mobile', 'p_mobile', 'comment', 'where_know', 'fio_mother', 'fio_father', 'fio_sup', 's_mobile', 'gender', 'time_end', 'time_start'], 'safe'],
+            [['first_name', 'last_name', 'middle_name', 'birthday', 'mobile', 'p_mobile', 'comment', 'where_know', 'fio_mother', 'fio_father', 'fio_sup', 's_mobile', 'gender', 'time_end', 'time_start', 'email'], 'safe'],
         ];
     }
 
@@ -92,6 +92,7 @@ class ClientSearch extends Client
             ->andFilterWhere(['like', 'fio_father', $this->fio_father])
             ->andFilterWhere(['like', 'fio_sup', $this->fio_sup])
             ->andFilterWhere(['like', 's_mobile', $this->s_mobile])
+            ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'gender', $this->gender])
             ->andFilterWhere(['>=', 'events.date', $this->time_start])
             ->andFilterWhere(['<=', 'events.date', $this->time_end]);

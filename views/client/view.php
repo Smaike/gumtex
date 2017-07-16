@@ -102,36 +102,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     </td>
                     <td>
                         <?php if($event->howmanyPaid() < $event->howmanyCost()){?>
-                            <?php Modal::begin([
-                                'header' => '<h2>Оплата события от ' . $event->date . '</h2>',
-                                'toggleButton' => [
-                                    'label' => 'Оплатить',
-                                    'class' => "btn btn-success",
-                                ],
-                            ]);?>
-                                <form id="form_paid_<?=$event->id?>">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <label class="control-label">Тип:</label>
-                                        <?=Html::radioList('type_paid_' . $event->id, 1, Paid::getTypes(), ['separator' => '<br>'])?>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <label class="control-label">Сумма:</label>
-                                        <?=Html::input('text', 'sum_paid' . $event->id, null, ['class' => 'form-control', 'id' => 'sum_paid_' . $event->id])?>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <?=Html::button('Готово!', [
-                                            'class' => 'btn paid',
-                                            'data-id' => $event->id,
-                                            'style' => 'margin-top:10px;'
-                                        ])?>
-                                    </div>
-                                </div>
-                                </form>
-                            <?php Modal::end();?>
-                            <?php }else{?>
+                            <?=Html::button('Списать', [
+                                'class' => 'btn paid',
+                                'data-id' => $event->id,
+                                'style' => 'margin-top:10px;'
+                            ])?>
+                        <?php }else{?>
                             Оплачено
                         <?php }?>
                     </td>
@@ -149,8 +125,6 @@ $this->params['breadcrumbs'][] = $this->title;
             type: 'POST',   
             data: {
                 'id':this.dataset.id,
-                'sum':$('#sum_paid_'+this.dataset.id).val(),
-                'type': $('input[name=type_paid_'+this.dataset.id+']:checked', '#form_paid_'+this.dataset.id).val(),
             }, 
             success: function(response){
                 if(response == '0'){

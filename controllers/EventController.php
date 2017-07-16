@@ -279,7 +279,7 @@ class EventController extends Controller
             $eventService->status = 'new';
             $eventService->save(false);
         }
-        return "<h3 style='text-align:center'>".$eventService->code."</h3>";
+        return $eventService->code;
     }
 
     public function actionViewCopy($id)

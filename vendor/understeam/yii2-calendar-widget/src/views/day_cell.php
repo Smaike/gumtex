@@ -4,6 +4,7 @@ use yii\web\View;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use app\models\Paid;
+use app\models\Receipt;
 /**
  * @var \understeam\calendar\CalendarWidget $context
  * @var \yii\web\View $this
@@ -76,17 +77,21 @@ $linkProfile = Url::to();
                             <?php foreach ($item->eS as $service) {?>
                             <tr>
                                 <td><?=$service->idService->name?></td>
-                                <td><?php if(($item->howmanyPaid() >= $item->howmanyCost()) && empty($service->code)){
-                                    Modal::begin([
-                                    'header' => '<h2>Код для начала тестирования</h2>',
-                                    'toggleButton' => [
-                                        'label' => 'Начать',
-                                        'class' => "btn btn-success start-serv",
-                                        'data-id' => $service->id,
-                                    ],
-                                ]);?>
-                                <?php Modal::end();}?>
-
+                                <td><?php if($item->howmanyPaid() >= $item->howmanyCost()){
+                                    if(empty($service->code)){
+                                        Modal::begin([
+                                            'header' => '<h2>Код для начала тестирования</h2>',
+                                            'toggleButton' => [
+                                                'label' => 'Начать',
+                                                'class' => "btn btn-success start-serv",
+                                                'data-id' => $service->id,
+                                            ],
+                                        ]);?>
+                                        <?php Modal::end();
+                                    }else{
+                                        echo "Код: ".$service->code;
+                                    }
+                                }?>
                                     
                                 </td>
                             </tr>
@@ -96,40 +101,50 @@ $linkProfile = Url::to();
                     <td style="width:15%"><?=$item->getES()->one()->consultantName?></td>
                     <td style="width:19%"><?=$item->client->comment?></td>
                     <td style="width:10%">
+                        Баланс: <?=$item->client->balance?><br>
                         <?=$item->howmanyPaid()?>/<?=$item->howmanyCost()?><br>
                         <?php if($item->howmanyPaid() < $item->howmanyCost()){?>
-                            <?php Modal::begin([
-                                'header' => '<h2>Оплата события от ' . $item->date . '</h2>',
-                                'toggleButton' => [
-                                    'label' => 'Оплатить',
-                                    'class' => "btn btn-success",
-                                ],
-                            ]);?>
-                            <form id="form_paid_<?=$item->id?>">
-                            <div class="row" style="text-align: left">
+                                <?=Html::button('Списать', [
+                                    'class' => 'btn paid',
+                                    'data-id' => $item->id,
+                                    'style' => 'margin-top:10px;'
+                                ])?>
+                            <?php }else{?>
+                            Оплачено
+                        <?php }?>
+                        <br>
+                        <br>
+                        <?php Modal::begin([
+                            'header' => '<h2>Пополнение баланса</h2>',
+                            'toggleButton' => [
+                                'label' => 'Пополнить',
+                                'class' => "btn btn-success",
+                            ],
+                            'options' => ['style' => 'text-align:left']
+                        ]);?>
+                            <form id="form_receipt_<?=$item->id?>">
+                            <div class="row">
                                 <div class="col-sm-12">
                                     <label class="control-label">Тип:</label>
-                                    <?=Html::radioList('type_paid_' . $item->id, 1, Paid::getTypes(), ['separator' => '<br>'])?>
+                                    <?=Html::radioList('type_receipt_' . $item->id, 1, Receipt::getTypes(), ['separator' => '<br>'])?>
                                 </div>
                                 <div class="col-sm-4">
                                     <label class="control-label">Сумма:</label>
-                                    <?=Html::input('text', 'sum_paid' . $item->id, null, ['class' => 'form-control', 'id' => 'sum_' . $item->id])?>
+                                    <?=Html::input('text', 'sum_receipt' . $item->id, null, ['class' => 'form-control', 'id' => 'sum_receipt_' . $item->id])?>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4">
                                     <?=Html::button('Готово!', [
-                                        'class' => 'btn paid',
+                                        'class' => 'btn receipt',
                                         'data-id' => $item->id,
+                                        'data-client' => $item->client->id,
                                         'style' => 'margin-top:10px;'
                                     ])?>
                                 </div>
                             </div>
                             </form>
-                            <?php Modal::end();?>
-                            <?php }else{?>
-                            Оплачено
-                        <?php }?>
+                        <?php Modal::end();?>
                     </td>
                     <td style="width:4%">
                         <a href = "<?=Url::to(['event/view', 'id' => $item->id])?>" data-pjax = '0'>
@@ -173,8 +188,6 @@ $linkProfile = Url::to();
             type: 'POST',   
             data: {
                 'id':this.dataset.id,
-                'sum':$('#sum_'+this.dataset.id).val(),
-                'type': $('input[name=type_paid_'+this.dataset.id+']:checked', '#form_paid_'+this.dataset.id).val(),
             }, 
             success: function(response){
                 if(response == '0'){
@@ -193,9 +206,25 @@ $linkProfile = Url::to();
           type: 'POST',   
           data: {'event':div.data('id')}, 
           success: function(response){
-            $('.modal-body').html(response);
-            location.reload();
+            $('.modal-body').html(\"<h3 style='text-align:center'>\"+response+\"</h3>\");
+            div.after('Код: '+response);
+            div.remove();
           }
+        });
+    });
+    $('.receipt').click(function(){
+        $.ajax({
+            url: '" . Url::to('client/receipt', true) . "',
+            type: 'POST',   
+            data: {
+                'id':this.dataset.client,
+                'sum':$('#sum_receipt_'+this.dataset.id).val(),
+                'type': $('input[name=type_receipt_'+this.dataset.id+']:checked', '#form_receipt_'+this.dataset.id).val(),
+            }, 
+            success: function(response){
+                alert('Успешно');
+                location.reload();
+            }
         });
     });
 

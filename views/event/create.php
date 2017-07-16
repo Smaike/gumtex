@@ -44,14 +44,37 @@ $types = ArrayHelper::map($models, 'id', 'name');
                 'class' =>'form-control find-copies'
                 ]
             ]) ?>
+            <?= $form->field($model, 'email') ?>
             <?= $form->field($model, 'gender')->radioList(['М' => 'М', 'Ж' => 'Ж']) ?>
             <?= $form->field($model, 'age', ['inputOptions' => [
                 'class' =>'form-control find-copies'
                 ]
             ]) ?>
-            <?= $form->field($model, 'fio_sup') ?>
+            <?= $form->field($model, 'birthday', ['template' => "{label}<br />{input}\n{hint}\n{error}"])->widget(DatePicker::className(),[
+                'dateFormat' => 'dd-MM-yyyy',
+                'clientOptions' => [
+                    'changeMonth' => true,
+                    'yearRange' => '1930:2016',
+                    'changeYear' => true,
+                    'showOn' => 'button',
+                    'buttonImage' => Url::base().'/images/calendar.png',
+                    'buttonImageOnly' => true,
+                    'defaultDate' => '01-01-2000'
+                ]])->widget(\yii\widgets\MaskedInput::className(), [
+                        'mask' => '99-99-9999',
+                        'options'=>[
+                            'class' => 'form-control form_contact',
+                            'style' => "width:80%; display:inline-block; margin-right:10px;",
+                            'placeholder' => '31-12-1999'
+            ]]) ?>
             <?= $form->field($model, 'mobile') ?>
+            <div class="sup" style="display:none">
+            <?= $form->field($model, 'fio_sup') ?>
             <?= $form->field($model, 's_mobile') ?>
+            <?= $form->field($model, 'fio_mother') ?>
+            <?= $form->field($model, 'fio_father') ?>
+            <?= $form->field($model, 'p_mobile') ?>
+            </div>
             <?= $form->field($model, 'category', ['inputOptions' => [
                 'class' =>'form-control'
                 ]
@@ -72,26 +95,6 @@ $types = ArrayHelper::map($models, 'id', 'name');
                 3 => "От друзей",
                 4 => "Нашел сам"
             ], ['prompt' => 'Откуда узнал']) ?>
-            <?= $form->field($model, 'birthday', ['template' => "{label}<br />{input}\n{hint}\n{error}"])->widget(DatePicker::className(),[
-                'dateFormat' => 'dd-MM-yyyy',
-                'clientOptions' => [
-                    'changeMonth' => true,
-                    'yearRange' => '1930:2016',
-                    'changeYear' => true,
-                    'showOn' => 'button',
-                    'buttonImage' => Url::base().'/images/calendar.png',
-                    'buttonImageOnly' => true,
-                    'defaultDate' => '01-01-2000'
-                ]])->widget(\yii\widgets\MaskedInput::className(), [
-                        'mask' => '99-99-9999',
-                        'options'=>[
-                            'class' => 'form-control form_contact',
-                            'style' => "width:80%; display:inline-block; margin-right:10px;",
-                            'placeholder' => '31-12-1999'
-            ]]) ?>
-            <?= $form->field($model, 'fio_mother') ?>
-            <?= $form->field($model, 'fio_father') ?>
-            <?= $form->field($model, 'p_mobile') ?>
             <?= $form->field($model, 'date', ['template' => '{input}'])->hiddenInput() ?>
         
             </div>
@@ -165,7 +168,7 @@ $types = ArrayHelper::map($models, 'id', 'name');
     $('#eventcreateform-birthday').on('change', function(){
         birthDate = $(this).val();
         if(birthDate!='')
-            $('#eventcreateform-age').val(getAge(birthDate));
+            $('#eventcreateform-age').val(getAge(birthDate)).change();
     });
     $('#eventcreateform-first_name').on('change', function(){
         var val = $(this).val();
@@ -256,6 +259,13 @@ $types = ArrayHelper::map($models, 'id', 'name');
           }
         });
     });
+    $(document).on('change', '#eventcreateform-age', function(){
+        if($(this).val()<18){
+            $('.sup').css('display', 'block');
+        }else{
+            $('.sup').css('display', 'none');
+        }
+    })
 
 ",
     View::POS_END,

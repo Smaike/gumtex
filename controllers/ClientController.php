@@ -123,13 +123,11 @@ class ClientController extends Controller
     {
         if(Yii::$app->request->isPost){
             $paid = new Paid();
-            $paid->sum = Yii::$app->request->post('sum');
             $paid->id_event = Yii::$app->request->post('id');
-            $paid->type = Yii::$app->request->post('type');
+            $paid->sum = $paid->event->howmanyCost()-$paid->event->howmanyPaid();
             $paid->date = date("Y-m-d H:i:s");
             $client = $paid->event->client;
             if(($client->balance > $paid->sum) && $paid->save()){
-                $client = $paid->event->client;
                 $client->balance -= $paid->sum;
                 $client->save();
                 return true;
