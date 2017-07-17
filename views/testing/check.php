@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\jui\DatePicker;
 use yii\helpers\Url;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Client */
@@ -42,10 +43,11 @@ use yii\helpers\Url;
                 <?= $form->field($model, 'hobby') ?>
                 <?= $form->field($model, 'email') ?>
                 <?= $form->field($model, 'mobile') ?>
+                <div class="sup" style="display:<?=($model->age>18)?'block':'none'?>">
                 <?= $form->field($model, 'fio_mother') ?>
                 <?= $form->field($model, 'fio_father') ?>
-                <?= $form->field($model, 'fio_sup') ?>
                 <?= $form->field($model, 'p_mobile') ?>
+                </div>
             
                 <div class="form-group">
                     <?= Html::submitButton('Начать тест', ['class' => 'btn btn-primary']) ?>
@@ -55,3 +57,33 @@ use yii\helpers\Url;
         </div><!-- testing-check -->
     </div>
 </div>
+<?php $this->registerJs("
+    $('#client-birthday').on('change', function(){
+        birthDate = $(this).val();
+        if(birthDate!='')
+            if(getAge(birthDate) < 18 ){
+            $('.sup').css('display', 'block');
+        }else{
+            $('.sup').css('display', 'none');
+        }
+    });
+
+    function getAge(dateString) {
+      var day = parseInt(dateString.substring(0,2));
+      var month = parseInt(dateString.substring(3,5));
+      var year = parseInt(dateString.substring(6,10));
+
+      var today = new Date();
+      var birthDate = new Date(year, month - 1, day); // 'month - 1' т.к. нумерация месяцев начинается с 0 
+      var age = today.getFullYear() - birthDate.getFullYear();
+      var m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) { 
+          age--;
+      }
+      return age;
+    }
+
+",
+    View::POS_END,
+     'my-options');
+?>
