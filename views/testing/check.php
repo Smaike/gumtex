@@ -17,8 +17,9 @@ use yii\helpers\Url;
         <h1>Проверьте Ваши данные</h1>
             <?php $form = ActiveForm::begin(); ?>
 
-                <?= $form->field($model, 'first_name') ?>
                 <?= $form->field($model, 'last_name') ?>
+                <?= $form->field($model, 'first_name') ?>
+                <?= $form->field($model, 'middle_name') ?>
                 <?= $form->field($model, 'birthday', ['template' => "{label}<br />{input}\n{hint}\n{error}"])->widget(DatePicker::className(),[
                 'dateFormat' => 'dd-MM-yyyy',
                 'clientOptions' => [
@@ -37,12 +38,13 @@ use yii\helpers\Url;
                             'placeholder' => '31-12-1999'
             ]]) ?>
                 
-                <?= $form->field($model, 'where_know') ?>
-                <?= $form->field($model, 'middle_name') ?>
+                <?= $form->field($model, 'grade') ?>
+                <?= $form->field($model, 'hobby') ?>
+                <?= $form->field($model, 'email') ?>
+                <?= $form->field($model, 'mobile') ?>
                 <?= $form->field($model, 'fio_mother') ?>
                 <?= $form->field($model, 'fio_father') ?>
                 <?= $form->field($model, 'fio_sup') ?>
-                <?= $form->field($model, 'mobile') ?>
                 <?= $form->field($model, 'p_mobile') ?>
             
                 <div class="form-group">

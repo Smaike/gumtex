@@ -89,9 +89,11 @@ class TestingController extends Controller
                         $cl->birthday,
                         $cl->age,
                         ($cl->gender == 'М')?'m':'f',
-                        '',
+                        $cl->email,
                         $cl->mobile,
-                        $eventsService->code
+                        $eventsService->code,
+                        $cl->grade,
+                        $cl->hobby,
                     );
                 }
                 $eventsService->status = 'processed';
