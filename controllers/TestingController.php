@@ -93,7 +93,7 @@ class TestingController extends Controller
                         $cl->mobile,
                         $eventsService->code,
                         $cl->grade,
-                        $cl->hobby,
+                        $cl->hobby
                     );
                 }
                 $eventsService->status = 'processed';
