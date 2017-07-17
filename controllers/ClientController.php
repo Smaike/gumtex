@@ -127,7 +127,7 @@ class ClientController extends Controller
             $paid->sum = $paid->event->howmanyCost()-$paid->event->howmanyPaid();
             $paid->date = date("Y-m-d H:i:s");
             $client = $paid->event->client;
-            if(($client->balance > $paid->sum) && $paid->save()){
+            if(($client->balance >= $paid->sum) && $paid->save()){
                 $client->balance -= $paid->sum;
                 $client->save();
                 return true;
