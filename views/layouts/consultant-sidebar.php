@@ -21,6 +21,9 @@ use yii\helpers\Url;
 					<a href="<?=Url::to(['/consultant/search'])?>">Поиск</a>
 				</div>
 				<div class="panel-body">
+					<?=date('Y-m-d')?>
+				</div>
+				<div class="panel-body">
 					Услуг оказано: <?=$stat['count']?>
 				</div>
 				<div class="panel-body">
