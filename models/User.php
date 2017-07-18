@@ -43,7 +43,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             [['type', 'is_active', 'is_notice'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
             [['first_name', 'last_name', 'middle_name', 'email', 'login', 'authkey', 'sessionkey'], 'string', 'max' => 60],
-            [['password'], 'string', 'max' => 20],
+            [['password', 'phone'], 'string', 'max' => 20],
             [['type'], 'exist', 'skipOnEmpty' => false, 'targetClass' => UserType::className(), 'targetAttribute' => ['type' => 'id']],
         ];
     }
@@ -67,6 +67,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'sessionkey' => 'Sessionkey',
             'created_at' => 'Дата создания',
             'updated_at' => 'Дата изменения',
+            'phone' => 'Телефон',
         ];
     }
 
