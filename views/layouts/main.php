@@ -24,9 +24,9 @@ if(!Yii::$app->user->isGuest){
             // ['label' => 'Генератор писем', 'url' => ['/emails/']],
             ['label' => 'Календарь услуг', 'url' => ['/calendar/index']],
             // ['label' => 'Бронирование', 'url' => ['/booking/list']],
+            ['label' => 'В работе', 'url' => ['/consultant/index']],
         ]);
     }
-    $items[] = ['label' => 'В работе', 'url' => ['/consultant/index']];
     $items[] = 
         '<li>'
         . Html::beginForm(['/site/logout'], 'post')

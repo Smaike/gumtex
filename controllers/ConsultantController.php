@@ -55,10 +55,22 @@ class ConsultantController extends Controller
             $eventsService->id_consultant = Yii::$app->user->id;
             $eventsService->save();
         }
-        return $this->redirect('index');
+        return $this->redirect(['view', 'id' => $id]);
     }
 
-    public function actionFinish($id)
+    public function actionTakeAll($id, $es)
+    {   
+        if($eventsServices = EventsService::find()->where(['id_event' => $id])->all()){
+            foreach ($eventsServices as $key => $eventsService) {
+                $eventsService->status = 'consultant_progress';
+                $eventsService->id_consultant = Yii::$app->user->id;
+                $eventsService->save();
+            }
+        }
+        return $this->redirect(['view', 'id' => $es]);
+    }
+
+    public function actionFinish($id, $es = null)
     {   
         if($eventsService = EventsService::findOne($id)){
             $eventsService->status = 'consultant_finish';

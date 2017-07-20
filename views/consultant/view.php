@@ -24,19 +24,21 @@ $this->title = "Код: ".$model->code;
             'client.last_name',
             'client.first_name',
             'client.middle_name',
-            'client.gender',
             'client.age',
-            'client.fio_sup',
-            'client.mobile',
-            'client.s_mobile',
-            'client.clientType.name',
-            'client.clientCategory.name',
-            'client.birthday',
-            'client.where_know:ntext',
-            'client.comment:ntext',
-            'client.fio_mother',
-            'client.fio_father',
-            'client.p_mobile',
+            // 'client.gender',
+            'client.grade',
+            'client.hobby',
+            // 'client.fio_sup',
+            // 'client.mobile',
+            // 'client.s_mobile',
+            // 'client.clientType.name',
+            // 'client.clientCategory.name',
+            // 'client.birthday',
+            // 'client.where_know:ntext',
+            // 'client.comment:ntext',
+            // 'client.fio_mother',
+            // 'client.fio_father',
+            // 'client.p_mobile',
         ],
     ]) ?>
     <h2>Информаци об услуге</h2>
@@ -55,18 +57,32 @@ $this->title = "Код: ".$model->code;
     <div class="row">
         <div class="col-sm-12">
             <?php if(in_array($model->status, ["consultant", "new", "processed"])){
+                echo Html::a("Консультировать Все", Url::to([
+                    'consultant/take-all', 
+                    'id' => $model->id_event,
+                    'es' => $model->id,
+                ]), [
+                    'class' => 'btn btn-primary', 
+                    'style' => 'margin:10px 0'
+                ]);
+            }?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <?php if(in_array($model->status, ["consultant", "new", "processed"])){
                 echo Html::a("Консультировать", Url::to([
                     'consultant/take', 
                     'id' => $model->id
                 ]), ['class' => 'btn btn-primary']);
             }elseif($model->status == 'consultant_progress'){
-                if(!empty($model->event->client->consultant) && $model->client->consultant->id == Yii::$app->user->id){
+                if(!empty($model->consultant) && $model->consultant->id == Yii::$app->user->id){
                     echo Html::a("Завершить", Url::to([
                         'consultant/finish', 
                         'id' => $model->id
                     ]), ['class' => 'btn btn-primary']);
                 }else{
-                    echo (!empty($model->event->client->consultant))?"Консультирует " . $model->client->consultant->fullName:null;
+                    echo (!empty($model->consultant))?"Консультирует " . $model->consultant->fullName:null;
                 }
             }else{
                 echo null;
@@ -76,9 +92,9 @@ $this->title = "Код: ".$model->code;
     <div class="row">
         <div class="col-sm-12">
             <?php if(!empty($model->url_report)){
-                echo Html::a("Отчет", $model->url_report, ['class' => 'btn btn-primary', 'target' => '_blank', 'style' => 'margin:10px 0']);
+                echo Html::a("Результат", $model->url_report, ['class' => 'btn btn-primary', 'target' => '_blank', 'style' => 'margin:10px 0']);
             }else{
-                echo Html::a("Отчет", '#', ['class' => 'btn btn-primary disabled', 'style' => 'margin:10px 0']);
+                echo Html::a("Результат", '#', ['class' => 'btn btn-primary disabled', 'style' => 'margin:10px 0']);
             }?>
         </div>
     </div>

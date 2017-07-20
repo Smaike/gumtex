@@ -38,20 +38,8 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'format' => 'raw',
                 'value' => function ($model, $key, $index, $column){
-                    if(in_array($model->status, ["consultant", "new", "processed"])){
-                        return Html::a("Консультировать", Url::to([
-                            'consultant/take', 
-                            'id' => $model->id
-                        ]), ['class' => 'btn btn-primary']);
-                    }elseif($model->status == 'consultant_progress'){
-                        if(!empty($model->consultant) && $model->consultant->id == Yii::$app->user->id){
-                            return Html::a("Завершить", Url::to([
-                                'consultant/finish', 
-                                'id' => $model->id
-                            ]), ['class' => 'btn btn-primary']);
-                        }else{
-                            return (!empty($model->consultant))?"Консультирует " . $model->consultant->fullName:null;
-                        }
+                    if(in_array($model->status, ["consultant", "new", "processed", "consultant_progress"])){
+                        return (!empty($model->consultant))?"Консультирует " . $model->consultant->fullName:null;
                     }else{
                         return (!empty($model->consultant))?"Консультировался у " . $model->consultant->fullName:null;
                     }
@@ -61,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
                 'value' => function ($model, $key, $index, $column){
                     if(!empty($model->url_report)){
-                        return Html::a("Отчет", $model->url_report, ['class' => 'btn btn-primary', 'target' => '_blank']);
+                        return Html::a("Результат", $model->url_report, ['class' => 'btn btn-primary', 'target' => '_blank']);
                     }
                 }
             ]
