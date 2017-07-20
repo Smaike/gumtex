@@ -1,10 +1,11 @@
 <?php
 
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\helpers\Url;
-use yii\widgets\DetailView;
-use yii\bootstrap\Modal;
 use yii\web\View;
+use yii\widgets\ActiveForm;
+use yii\widgets\DetailView;
 
 use app\models\Paid;
 use app\models\Receipt;
@@ -98,15 +99,24 @@ $this->title = "Код: ".$model->code;
             }?>
         </div>
     </div>
-    <div class="row">
-        <div class="col-sm-12">
-            Выпадающий список рекомендуемых тренингов (вставлю как они у меня будут)
+    <?php $form = ActiveForm::begin(); ?>
+        <div class="row">
+            <div class="col-sm-6">
+                <?=$form->field($model, 'tranings')->dropDownList($model->getTraningsList(),[
+                    'multiple'=>'multiple',             
+                ])->label("Тренинги"); ?>
+                <span class="help-block">Для выбора нескольких зажать Ctrl и выбрать нужные</span>
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12">
-            Выпадающий список рекомендуемых профессий (вставлю как они у меня будут)
+        <div class="row">
+            <div class="col-sm-12">
+                Выпадающий список рекомендуемых профессий (вставлю как они у меня будут)
+            </div>
         </div>
-    </div>
-    
+        <div class="row">
+            <div class="col-sm-6">
+                <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
+            </div>
+        </div>
+    <?php ActiveForm::end(); ?>
 </div>

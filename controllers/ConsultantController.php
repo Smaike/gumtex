@@ -99,7 +99,12 @@ class ConsultantController extends Controller
         if(!$form = ConsultantEventForm::findOne($id)){
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-
+        if(Yii::$app->request->isPost && $form->load(Yii::$app->request->post())){
+            $form->saveTranings();
+            $form->status = 'consultant_finish';
+            $form->save(false, ['status']);
+        }
+        $form->tranings = unserialize($form->tranings);
         return $this->render('view', [
             'model' => $form,
         ]);

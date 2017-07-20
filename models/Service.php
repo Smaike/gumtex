@@ -17,6 +17,7 @@ use Yii;
  */
 class Service extends \yii\db\ActiveRecord
 {
+    const TYPE_TRANING = 2;
     /**
      * @inheritdoc
      */
