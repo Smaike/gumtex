@@ -10,6 +10,7 @@ use yii\filters\AccessControl;
 
 use app\models\EventsService;
 use app\models\Client;
+use app\models\ConsultantPoint;
 use app\forms\ConsultantEventForm;
 
 /**
@@ -107,6 +108,15 @@ class ConsultantController extends Controller
         $form->tranings = unserialize($form->tranings);
         return $this->render('view', [
             'model' => $form,
+        ]);
+    }
+
+    public function actionPoints()
+    {   
+        $this->layout = '@app/views/layouts/consultant-sidebar.php';
+        $models = ConsultantPoint::find()->where(['id_consultant' => Yii::$app->user->id])->all();
+        return $this->render('points', [
+            'models' => $models,
         ]);
     }
 }

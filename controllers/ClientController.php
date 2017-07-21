@@ -4,14 +4,17 @@ namespace app\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
+use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 use app\models\Client;
+use app\models\ConsultantPoint;
+use app\models\EventsService;
 use app\models\Paid;
 use app\models\Receipt;
 use app\models\search\ClientSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 
 /**
  * ClientController implements the CRUD actions for Client model.
@@ -149,6 +152,45 @@ class ClientController extends Controller
                 $client->balance += $receipt->sum;
                 $client->save();
                 return true;
+            }
+        }
+        return 0;
+    }
+
+    public function actionTraningPoints()
+    {
+        if(Yii::$app->request->isPost){
+            $tranings = Yii::$app->db->createCommand("
+                SELECT events_services.id, events_services.id_consultant, events_services.tranings 
+                FROM events_services
+                LEFT JOIN events on events.id = events_services.id_event
+                WHERE 
+                    events.id_client = :id_client and
+                    events_services.tranings is not null
+            ")->bindValues([
+                ':id_client' => Yii::$app->request->post('id'),
+            ])->queryAll();
+            $consultants = [];
+            foreach ($tranings as $key => $traning) {
+                $tranings[$key]['tranings'] = unserialize($traning['tranings']);
+                if(!empty($intersect = array_intersect($tranings[$key]['tranings'], Yii::$app->request->post('tranings')))){
+                    foreach($intersect as $ins){
+                        $consultants[] = [$traning['id_consultant'] => [
+                            'es' => $traning['id'],
+                            'tr' => $ins,
+                        ]];
+                    }
+                }
+            }
+            foreach ($consultants as $rows) {
+                 foreach ($rows as $key => $row) {
+                    $cp = new ConsultantPoint();
+                    $cp->id_consultant = $key;
+                    $cp->id_es = $row['es'];
+                    $cp->id_service = $row['tr'];
+                    $cp->created_at = date('Y-m-d H:i:s');
+                    $cp->save();
+                }
             }
         }
         return 0;

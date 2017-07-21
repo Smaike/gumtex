@@ -8,6 +8,7 @@ use yii\web\View;
 
 use app\models\Paid;
 use app\models\Receipt;
+use app\models\Service;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Client */
@@ -116,6 +117,35 @@ $this->params['breadcrumbs'][] = $this->title;
             </table>
         </div>
     </div>
+    <div class="row">   
+        <div class="col-sm-6">
+            <h2>Тренинги</h2>
+            <?php Modal::begin([
+                'header' => '<h2>Укажите посещенные тренинги</h2>',
+                'toggleButton' => [
+                    'label' => 'Выбрать',
+                    'class' => "btn btn-success",
+                ],
+            ]);?>
+                <form id="form_receipt_<?=$model->id?>">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <?=Html::checkboxList('tranings', null, Service::getTraningsList(), ['separator' => '<br>'])?>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <?=Html::button('Готово!', [
+                            'class' => 'btn tranings',
+                            'data-id' => $model->id,
+                            'style' => 'margin-top:10px;'
+                        ])?>
+                    </div>
+                </div>
+                </form>
+            <?php Modal::end();?>
+        </div>
+    </div>
 
 </div>
 <?php $this->registerJs("
@@ -149,6 +179,23 @@ $this->params['breadcrumbs'][] = $this->title;
             success: function(response){
                 alert('Успешно');
                 location.reload();
+            }
+        });
+    });
+    $('.tranings').click(function(){
+        var tranings = [];
+        $('input[name=\"tranings[]\"]:checked').each(function(){
+            tranings.push($(this).val());
+        });
+        $.ajax({
+            url: '" . Url::to('client/traning-points', true) . "',
+            type: 'POST',   
+            data: {
+                'id':this.dataset.id,
+                'tranings': tranings,
+            }, 
+            success: function(response){
+                console.log(response);
             }
         });
     });

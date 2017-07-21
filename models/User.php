@@ -152,7 +152,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
     public function consultantStatistic()
     {
-        $statistic = ['count' => 0, 'sum' =>0];
+        $statistic = ['count' => 0, 'sum' =>0, 'points' => 0];
         if($this->isConsultant()){
             $statistic['count'] = Yii::$app->db->createCommand("
                 SELECT count(id) 
@@ -177,6 +177,14 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
                 ':id_user' => $this->id,
                 ':d_past' => date('Y-m-d'),
                 ':d_future' => (new \DateTime('tomorrow'))->format('Y-m-d'),
+            ])->queryScalar();
+
+            $statistic['points'] = Yii::$app->db->createCommand("
+                SELECT count(id) 
+                FROM consultant_points
+                WHERE id_consultant = :id_user
+            ")->bindValues([
+                ':id_user' => $this->id,
             ])->queryScalar();
         }
         return $statistic;

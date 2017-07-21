@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "services".
@@ -89,4 +90,13 @@ class Service extends \yii\db\ActiveRecord
     //     }
     //     return false;
     // }
+
+    public static function getTraningsList()
+    {
+        $tranings = Service::find()->where([
+            'type_id' => Service::TYPE_TRANING,
+            'status'  => 1,
+        ])->orderBy('name')->all();
+        return ArrayHelper::map($tranings, 'id', 'name');
+    }
 }

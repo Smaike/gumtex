@@ -29,6 +29,9 @@ use yii\helpers\Url;
 				<div class="panel-body">
 					На сумму: <?=$stat['sum']?>
 				</div>
+				<div class="panel-body">
+					Баллов: <a href="<?=Url::to(['/consultant/points'])?>" target="_blank"><?=$stat['points']?></a>
+				</div>
 				
 			</div>
 	</div>

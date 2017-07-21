@@ -9,6 +9,7 @@ use yii\widgets\DetailView;
 
 use app\models\Paid;
 use app\models\Receipt;
+use app\models\Service;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Client */
@@ -102,7 +103,7 @@ $this->title = "Код: ".$model->code;
     <?php $form = ActiveForm::begin(); ?>
         <div class="row">
             <div class="col-sm-6">
-                <?=$form->field($model, 'tranings')->dropDownList($model->getTraningsList(),[
+                <?=$form->field($model, 'tranings')->dropDownList(Service::getTraningsList(),[
                     'multiple'=>'multiple',             
                 ])->label("Тренинги"); ?>
                 <span class="help-block">Для выбора нескольких зажать Ctrl и выбрать нужные</span>

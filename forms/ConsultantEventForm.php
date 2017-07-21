@@ -44,15 +44,6 @@ class ConsultantEventForm extends EventsService
         return $this->hasOne(Client::className(), ['id' => 'id_client'])->viaTable('events', ['id' => 'id_event']);
     }
 
-    public function getTraningsList()
-    {
-        $tranings = Service::find()->where([
-            'type_id' => Service::TYPE_TRANING,
-            'status'  => 1,
-        ])->orderBy('name')->all();
-        return ArrayHelper::map($tranings, 'id', 'name');
-    }
-
     public function saveTranings()
     {
         if($this->validate('tranings')){
