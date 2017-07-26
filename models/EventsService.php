@@ -107,4 +107,15 @@ class EventsService extends \yii\db\ActiveRecord
         }
         return "-";
     }
+
+    public function getAllOtherEsNames()
+    {
+        $r = '';
+        foreach ($this->idEvent->eS as $service) {
+            if($service->id != $this->id){
+                $r .= $service->idService->name . '<br>';
+            }
+        }
+        return $r;
+    }
 }

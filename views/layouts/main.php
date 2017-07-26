@@ -13,20 +13,7 @@ AppAsset::register($this);
 
 $items = [];
 if(!Yii::$app->user->isGuest){
-    if(Yii::$app->user->identity->isConsultant()){
-        $items[] = ['label' => 'Консультант', 'url' => ['/consultant/search']];
-    }else{
-        $items = array_merge($items, [
-            ['label' => 'Начало', 'url' => ['/site/index']],
-            ['label' => 'Справочники', 'url' => ['/directory/default/index']],
-            // ['label' => 'Отчеты', 'url' => ['/report/index']],
-            ['label' => 'Список клиентов', 'url' => ['/client/index']],
-            // ['label' => 'Генератор писем', 'url' => ['/emails/']],
-            ['label' => 'Календарь услуг', 'url' => ['/calendar/index']],
-            // ['label' => 'Бронирование', 'url' => ['/booking/list']],
-            ['label' => 'В работе', 'url' => ['/consultant/index']],
-        ]);
-    }
+    $items = Yii::$app->user->identity->menu;
     $items[] = 
         '<li>'
         . Html::beginForm(['/site/logout'], 'post')

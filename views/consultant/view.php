@@ -53,8 +53,14 @@ $this->title = "Код: ".$model->code;
                 'attribute' => 'statusLabel',
             ],
             'code_generated',
+            [
+                'attribute' => 'allOtherEsNames',
+                'label' => 'Другие услуги',
+                'format' => 'raw',
+            ]
         ],
     ]) ?>
+
     <h2>Действия</h2>
     <div class="row">
         <div class="col-sm-12">

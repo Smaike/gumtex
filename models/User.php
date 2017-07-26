@@ -27,6 +27,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     protected $__salt = '7z0ZzugKmnQW';
 
     const TYPE_CONSULTANT = 3;
+    const TYPE_CONSULTANT_ADMIN = 8;
+
     /**
      * @inheritdoc
      */
@@ -151,7 +153,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
     public function isConsultant()
     {
-        return $this->type == self::TYPE_CONSULTANT;
+        return in_array($this->type, [self::TYPE_CONSULTANT, self::TYPE_CONSULTANT_ADMIN]);
     }
 
     public function consultantStatistic()
@@ -192,5 +194,28 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             ])->queryScalar();
         }
         return $statistic;
+    }
+
+    public function getMenu()
+    {
+        $items = [];
+        if($this->type == self::TYPE_CONSULTANT){
+            $items[] = ['label' => 'Консультант', 'url' => ['/consultant/search']];
+        }else{
+            if($this->type == self::TYPE_CONSULTANT_ADMIN){
+                $items[] = ['label' => 'Консультант', 'url' => ['/consultant/search']];
+            }
+            $items = array_merge($items, [
+                ['label' => 'Начало', 'url' => ['/site/index']],
+                ['label' => 'Справочники', 'url' => ['/directory/default/index']],
+                // ['label' => 'Отчеты', 'url' => ['/report/index']],
+                ['label' => 'Список клиентов', 'url' => ['/client/index']],
+                // ['label' => 'Генератор писем', 'url' => ['/emails/']],
+                ['label' => 'Календарь услуг', 'url' => ['/calendar/index']],
+                // ['label' => 'Бронирование', 'url' => ['/booking/list']],
+                ['label' => 'В работе', 'url' => ['/consultant/index']],
+            ]);
+        }
+        return $items;
     }
 }

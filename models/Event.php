@@ -94,4 +94,6 @@ class Event extends \yii\db\ActiveRecord implements ItemInterface
         }
         return ($consultant)?$consultant->fullName:"-";
     }
+
+    
 }
