@@ -39,7 +39,11 @@ class ConsultantController extends Controller
         ->where(
             ['not', ['code' => null]]
         )->andWhere([
-            'or', ['not', ['events_services.status' => 'consultant_finish']], ['>=', 'events.date', (new \DateTime('tomorrow'))->format('Y-m-d')]
+            'not', ['events_services.status' => 'consultant_finish']
+        ])->andWhere([
+            '>=', 'events.date', (new \DateTime())->format('Y-m-d')
+        ])->andWhere([
+            '<', 'events.date', (new \DateTime('tomorrow'))->format('Y-m-d')
         ]);
         $dp = new ActiveDataProvider([
             'query' => $eventsServices,

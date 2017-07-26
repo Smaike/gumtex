@@ -84,4 +84,14 @@ class Event extends \yii\db\ActiveRecord implements ItemInterface
     {
         return ($this->price - $this->discount);
     }
+
+    public function getConsultantName()
+    {
+        $consultant = null;
+        if($es = $this->getES()->one())
+        {
+            $consultant = $es->consultant;
+        }
+        return ($consultant)?$consultant->fullName:"-";
+    }
 }

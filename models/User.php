@@ -129,12 +129,16 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         if (parent::beforeSave($insert)) {
             if ($this->isNewRecord) {
-                $this->password = $this->hashPassword($this->password);
                 $this->authkey = \Yii::$app->security->generateRandomString();
                 $this->sessionkey = \Yii::$app->security->generateRandomString();
                 $this->created_at = date("Y-m-d H:i:s");
             }
             $this->updated_at = date("Y-m-d H:i:s");
+            if(!empty($this->password)){
+                $this->password = $this->hashPassword($this->password);
+            }else{
+                $this->password = $this->oldAttributes['password'];
+            }
             return true;
         }
         return false;

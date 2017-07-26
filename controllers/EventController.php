@@ -239,6 +239,19 @@ class EventController extends Controller
 
     /**
      *
+     * Распечатка кода. Говорят потом что-то там будет неебическое.
+     *
+     */
+    
+    public function actionPrintCode($code)
+    {
+        $pdf = Yii::$app->pdf;
+        $pdf->content = "<h1 style='text-align:center'>".$code."</h1>";
+        return $pdf->render();
+    }
+
+    /**
+     *
      * Поиск дублей на странице добавления события
      *
      */

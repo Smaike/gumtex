@@ -55,8 +55,7 @@ class ActiveRecordCalendar extends Component implements CalendarInterface
     public function findItems($startTime, $endTime)
     {
         $modelClass = $this->modelClass;
-        $query = $modelClass::find()->joinWith('services', true, 'INNER JOIN')
-        ->andWhere(['services.status' => 1]);
+        $query = $modelClass::find();
         $query
             ->andWhere([
                 'AND',
@@ -78,6 +77,7 @@ class ActiveRecordCalendar extends Component implements CalendarInterface
             ]);
         /** @var ItemInterface[] $models */
         $models = $query->all();
+        // var_dump($models);die;
         foreach ($models as $model) {
             $model->setCalendar($this);
         }

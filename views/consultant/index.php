@@ -11,6 +11,7 @@ use yii\grid\GridView;
 $this->title = 'В работе';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<meta http-equiv="refresh" content="30" />
 <div class="event-index">
 
     <h1><?= Html::encode($this->title) ?></h1>

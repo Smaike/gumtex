@@ -98,7 +98,7 @@ $linkProfile = Url::to();
                             <?php }?>
                         </table>
                     </td>
-                    <td style="width:15%"><?=$item->getES()->one()->consultantName?></td>
+                    <td style="width:15%"><?=$item->consultantName?></td>
                     <td style="width:19%"><?=$item->client->comment?></td>
                     <td style="width:10%">
                         Баланс: <?=$item->client->balance?><br>
@@ -206,7 +206,7 @@ $linkProfile = Url::to();
           type: 'POST',   
           data: {'event':div.data('id')}, 
           success: function(response){
-            $('.modal-body').html(\"<h3 style='text-align:center'>\"+response+\"</h3>\");
+            $('.modal-body').html(\"<h3 style='text-align:center'>\"+response+\"</h3>\" + \"<a href='/event/print-code?code=\"+response+\"' data-pjax = '0' target = '_blank' class='glyphicon glyphicon-print' style='font-size: 30px'></a>\");
             div.after('Код: '+response);
             div.remove();
           }

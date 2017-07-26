@@ -172,15 +172,15 @@ $types = ArrayHelper::map($models, 'id', 'name');
     });
     $('#eventcreateform-first_name').on('change', function(){
         var val = $(this).val();
-        $(this).val(ucfirst(val));
+        $(this).val(ucfirst(val.toLowerCase()));
     });
     $('#eventcreateform-last_name').on('change', function(){
         var val = $(this).val();
-        $(this).val(ucfirst(val));
+        $(this).val(ucfirst(val.toLowerCase()));
     });
     $('#eventcreateform-middle_name').on('change', function(){
         var val = $(this).val();
-        $(this).val(ucfirst(val));
+        $(this).val(ucfirst(val.toLowerCase()));
     });
 
     $('#eventcreateform-discount').on('keyup', function(){
