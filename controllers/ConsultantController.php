@@ -78,6 +78,7 @@ class ConsultantController extends Controller
     public function actionFinish($id, $es = null)
     {   
         if($eventsService = EventsService::findOne($id)){
+            
             $eventsService->status = 'consultant_finish';
             $eventsService->save();
         }
@@ -104,12 +105,11 @@ class ConsultantController extends Controller
         if(!$form = ConsultantEventForm::findOne($id)){
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-        if(Yii::$app->request->isPost && $form->load(Yii::$app->request->post())){
+        if(Yii::$app->request->isPost  && $form->load(Yii::$app->request->post())){
             $form->saveTranings();
-            $form->status = 'consultant_finish';
-            $form->save(false, ['status']);
+            EventsService::updateAll(['status' => 'consultant_finish'], ['id_event' => $form->id_event]);
+            return $this->redirect('search');
         }
-        $form->tranings = unserialize($form->tranings);
         return $this->render('view', [
             'model' => $form,
         ]);

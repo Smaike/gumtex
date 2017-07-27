@@ -99,4 +99,15 @@ class Service extends \yii\db\ActiveRecord
         ])->orderBy('name')->all();
         return ArrayHelper::map($tranings, 'id', 'name');
     }
+
+    public static function getServicesList()
+    {
+        $services = Service::find()
+            ->andWhere(['status' => 1])
+            ->all();
+        foreach ($services as $key => $service) {
+            $aServices[$service->serviceType->name][$service->id] = $service->name;
+        }
+        return $aServices;
+    } 
 }

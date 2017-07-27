@@ -100,19 +100,30 @@ $this->title = "Код: ".$model->code;
     <div class="row">
         <div class="col-sm-12">
             <?php if(!empty($model->url_report)){
-                echo Html::a("Результат", $model->url_report, ['class' => 'btn btn-primary', 'target' => '_blank', 'style' => 'margin:10px 0']);
+                echo Html::a("Результат теста", $model->url_report, ['class' => 'btn btn-primary', 'target' => '_blank', 'style' => 'margin:10px 0']);
             }else{
-                echo Html::a("Результат", '#', ['class' => 'btn btn-primary disabled', 'style' => 'margin:10px 0']);
+                echo Html::a("Результат теста", '#', ['class' => 'btn btn-primary disabled', 'style' => 'margin:10px 0']);
             }?>
         </div>
     </div>
     <?php $form = ActiveForm::begin(); ?>
         <div class="row">
             <div class="col-sm-6">
-                <?=$form->field($model, 'tranings')->dropDownList(Service::getTraningsList(),[
-                    'multiple'=>'multiple',             
-                ])->label("Тренинги"); ?>
-                <span class="help-block">Для выбора нескольких зажать Ctrl и выбрать нужные</span>
+                <div class="btn btn-success" style="margin:10px 0" onclick="$('#tranings').toggle()">Рекомендации</div>
+                <div id="tranings" style="display: none">
+                <?php foreach (Service::getServicesList() as $key => $services){
+                    Modal::begin([
+                        'header' => '<h2>Услуги</h2>',
+                        'toggleButton' => [
+                            'label' => $key,
+                            'class' => "btn btn-success start-serv",
+                            'style' => 'margin-top:25px'
+                        ],
+                    ]);?> 
+                    <?= Html::checkboxList('ConsultantEventForm[tranings]', $model->client->tranings, $services, ['separator' => "<br>"])?>
+                    <?php Modal::end();?>
+                <?php }?>
+                </div>
             </div>
         </div>
         <div class="row">

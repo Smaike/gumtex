@@ -133,4 +133,11 @@ class Client extends \yii\db\ActiveRecord
         return $data;
     }
 
+    public function getTranings()
+    {
+        return ClientRecomendation::find()->select('id_service')->where([
+            'id_client' => $this->id
+        ])->column();
+    }
+
 }

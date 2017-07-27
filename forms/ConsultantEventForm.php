@@ -9,12 +9,15 @@ use app\models\Event;
 use app\models\Client;
 use app\models\Service;
 use app\models\EventsService;
+use app\models\ClientRecomendation;
 
 /**
  * ContactForm is the model behind the contact form.
  */
 class ConsultantEventForm extends EventsService
 {
+    public $tranings;
+
     public function rules()
     {
         $rules = [
@@ -47,8 +50,19 @@ class ConsultantEventForm extends EventsService
     public function saveTranings()
     {
         if($this->validate('tranings')){
-            $this->tranings = serialize($this->tranings);
-            $this->save(false, ['tranings']);
+            foreach ($this->tranings as $recomendation_id) {
+                if(!($recomendation = ClientRecomendation::find()->where([
+                    'id_service' => $recomendation_id,
+                    'id_client' => $this->client->id
+                ])->one())){
+                    $recomendation = new ClientRecomendation();
+                    $recomendation->id_es = $this->id;
+                    $recomendation->id_service = $recomendation_id;
+                    $recomendation->id_client = $this->client->id;
+                    $recomendation->id_consultant = Yii::$app->user->identity->id;
+                    $recomendation->save();
+                }
+            }
         }
     }
 
