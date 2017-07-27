@@ -24,10 +24,10 @@ $services = ArrayHelper::map($models, 'id', 'name');
 
     <div class="row">
         <div class="col-sm-6">
-            <?= $form->field($model, 'first_name') ?>
+            <?= $form->field($model, 'last_name') ?>
         </div>
         <div class="col-sm-6">
-            <?= $form->field($model, 'last_name') ?>
+            <?= $form->field($model, 'first_name') ?>
         </div>
     </div>
     <div class="row">

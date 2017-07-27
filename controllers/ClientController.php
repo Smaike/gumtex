@@ -99,8 +99,17 @@ class ClientController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        if(!empty($model->birthday)){
+            $date = strtotime($model->birthday);
+            $model->birthday = date('d-m-Y', $date);
+        }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            if(!empty($model->birthday)){
+                $date = strtotime($model->birthday);
+                $model->birthday = date('Y-m-d', $date);
+            }
+            $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
             return $this->render('update', [
