@@ -26,7 +26,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     protected $__salt = '7z0ZzugKmnQW';
 
-    const TYPE_CONSULTANT = 3;
+    const TYPE_CONSULTANT = 5;
     const TYPE_CONSULTANT_ADMIN = 8;
 
     /**
@@ -163,7 +163,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             $statistic['count'] = Yii::$app->db->createCommand("
                 SELECT count(id) 
                 FROM events_services 
-                WHERE id_consultant = :id_consultant AND created_at > :d_past AND created_at < :d_future
+                WHERE id_consultant = :id_consultant AND consultant_end > :d_past AND consultant_end < :d_future
             ")->bindValues([
                 ':id_consultant' => $this->id,
                 ':d_past' => date('Y-m-d'),
@@ -173,12 +173,12 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             $statistic['sum'] = Yii::$app->db->createCommand("
                 SELECT sum(s1.value) 
                 FROM (
-                    SELECT es.id_service, cc.value, es.id_consultant, es.created_at
+                    SELECT es.id_service, cc.value, es.id_consultant, es.consultant_end
                     FROM events_services es
                     LEFT JOIN consultants_cost cc ON cc.id_service = es.id_service AND cc.id_consultant_type = (
                         SELECT id_type FROM consultants WHERE id_user = :id_user)  
                 ) s1
-                WHERE s1.id_consultant = :id_user AND s1.created_at > :d_past AND s1.created_at < :d_future
+                WHERE s1.id_consultant = :id_user AND s1.consultant_end > :d_past AND s1.consultant_end < :d_future
             ")->bindValues([
                 ':id_user' => $this->id,
                 ':d_past' => date('Y-m-d'),
@@ -187,8 +187,15 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
             $statistic['points'] = Yii::$app->db->createCommand("
                 SELECT count(id) 
-                FROM consultant_points
+                FROM client_recomendations
                 WHERE id_consultant = :id_user
+            ")->bindValues([
+                ':id_user' => $this->id,
+            ])->queryScalar() + Yii::$app->db->createCommand("
+                SELECT count(id) 
+                FROM client_recomendations
+                WHERE id_consultant = :id_user 
+                    AND is_visited = 1
             ")->bindValues([
                 ':id_user' => $this->id,
             ])->queryScalar();
@@ -199,6 +206,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function getMenu()
     {
         $items = [];
+        // var_dump($this->type);die;
         if($this->type == self::TYPE_CONSULTANT){
             $items[] = ['label' => 'Консультант', 'url' => ['/consultant/search']];
         }else{

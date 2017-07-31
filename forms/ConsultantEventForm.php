@@ -49,7 +49,7 @@ class ConsultantEventForm extends EventsService
 
     public function saveTranings()
     {
-        if($this->validate('tranings')){
+        if(!empty($this->tranings) && $this->validate('tranings')){
             foreach ($this->tranings as $recomendation_id) {
                 if(!($recomendation = ClientRecomendation::find()->where([
                     'id_service' => $recomendation_id,

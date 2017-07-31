@@ -49,4 +49,14 @@ class ClientRecomendation extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
         ];
     }
+
+    public function getService()
+    {
+        return $this->hasOne(Service::className(), ['id' => 'id_service']);
+    }
+
+    public function getClient()
+    {
+        return $this->hasOne(Client::className(), ['id' => 'id_client']);
+    }
 }

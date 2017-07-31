@@ -85,10 +85,7 @@ $this->title = "Код: ".$model->code;
                 ]), ['class' => 'btn btn-primary']);
             }elseif($model->status == 'consultant_progress'){
                 if(!empty($model->consultant) && $model->consultant->id == Yii::$app->user->id){
-                    echo Html::a("Завершить", Url::to([
-                        'consultant/finish', 
-                        'id' => $model->id
-                    ]), ['class' => 'btn btn-primary']);
+                    // уже ничего
                 }else{
                     echo (!empty($model->consultant))?"Консультирует " . $model->consultant->fullName:null;
                 }
@@ -133,7 +130,7 @@ $this->title = "Код: ".$model->code;
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
+                <?= Html::submitButton('Завершить все', ['class' => 'btn btn-primary']) ?>
             </div>
         </div>
     <?php ActiveForm::end(); ?>

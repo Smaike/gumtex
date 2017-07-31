@@ -10,7 +10,7 @@ use yii\filters\AccessControl;
 
 use app\models\EventsService;
 use app\models\Client;
-use app\models\ConsultantPoint;
+use app\models\ClientRecomendation;
 use app\forms\ConsultantEventForm;
 
 /**
@@ -68,21 +68,12 @@ class ConsultantController extends Controller
         if($eventsServices = EventsService::find()->where(['id_event' => $id])->all()){
             foreach ($eventsServices as $key => $eventsService) {
                 $eventsService->status = 'consultant_progress';
+                $eventsService->consultant_start = date('Y-m-d H:i:s');
                 $eventsService->id_consultant = Yii::$app->user->id;
                 $eventsService->save();
             }
         }
         return $this->redirect(['view', 'id' => $es]);
-    }
-
-    public function actionFinish($id, $es = null)
-    {   
-        if($eventsService = EventsService::findOne($id)){
-            
-            $eventsService->status = 'consultant_finish';
-            $eventsService->save();
-        }
-        return $this->redirect('index');
     }
 
     public function actionSearch()
@@ -105,9 +96,15 @@ class ConsultantController extends Controller
         if(!$form = ConsultantEventForm::findOne($id)){
             throw new NotFoundHttpException('The requested page does not exist.');
         }
-        if(Yii::$app->request->isPost  && $form->load(Yii::$app->request->post())){
+        if(Yii::$app->request->isPost){
+            $form->load(Yii::$app->request->post());
             $form->saveTranings();
-            EventsService::updateAll(['status' => 'consultant_finish'], ['id_event' => $form->id_event]);
+            EventsService::updateAll([
+                'status' => 'consultant_finish',
+                'consultant_end' => date('Y-m-d H:i:s')
+            ], [
+                'id_event' => $form->id_event
+            ]);
             return $this->redirect('search');
         }
         return $this->render('view', [
@@ -118,7 +115,7 @@ class ConsultantController extends Controller
     public function actionPoints()
     {   
         $this->layout = '@app/views/layouts/consultant-sidebar.php';
-        $models = ConsultantPoint::find()->where(['id_consultant' => Yii::$app->user->id])->all();
+        $models = ClientRecomendation::find()->where(['id_consultant' => Yii::$app->user->id])->all();
         return $this->render('points', [
             'models' => $models,
         ]);

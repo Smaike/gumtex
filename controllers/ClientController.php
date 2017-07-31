@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
 use app\models\Client;
+use app\models\ClientRecomendation;
 use app\models\ConsultantPoint;
 use app\models\EventsService;
 use app\models\Paid;
@@ -169,37 +170,19 @@ class ClientController extends Controller
     public function actionTraningPoints()
     {
         if(Yii::$app->request->isPost){
-            $tranings = Yii::$app->db->createCommand("
-                SELECT events_services.id, events_services.id_consultant, events_services.tranings 
-                FROM events_services
-                LEFT JOIN events on events.id = events_services.id_event
-                WHERE 
-                    events.id_client = :id_client and
-                    events_services.tranings is not null
-            ")->bindValues([
-                ':id_client' => Yii::$app->request->post('id'),
-            ])->queryAll();
-            $consultants = [];
-            foreach ($tranings as $key => $traning) {
-                $tranings[$key]['tranings'] = unserialize($traning['tranings']);
-                if(!empty($intersect = array_intersect($tranings[$key]['tranings'], Yii::$app->request->post('tranings')))){
-                    foreach($intersect as $ins){
-                        $consultants[] = [$traning['id_consultant'] => [
-                            'es' => $traning['id'],
-                            'tr' => $ins,
-                        ]];
-                    }
+            foreach(Yii::$app->request->post('tranings') as $traning_id){
+                if(!$recomendation = ClientRecomendation::find()->where([
+                    'id_service' => $traning_id,
+                    'id_client' => Yii::$app->request->post('id'),
+                ])->one()){
+                    $recomendation = new ClientRecomendation();
+                    $recomendation->id_service = $traning_id;
+                    $recomendation->id_client = Yii::$app->request->post('id');
+                    $recomendation->created_at = date('Y-m-d H:i:s');
                 }
-            }
-            foreach ($consultants as $rows) {
-                 foreach ($rows as $key => $row) {
-                    $cp = new ConsultantPoint();
-                    $cp->id_consultant = $key;
-                    $cp->id_es = $row['es'];
-                    $cp->id_service = $row['tr'];
-                    $cp->created_at = date('Y-m-d H:i:s');
-                    $cp->save();
-                }
+                $recomendation->is_visited = 1;
+                $recomendation->date_visited = date('Y-m-d H:i:s');
+                $recomendation->save();
             }
         }
         return 0;

@@ -195,7 +195,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'tranings': tranings,
             }, 
             success: function(response){
-                console.log(response);
+                location.reload();
             }
         });
     });

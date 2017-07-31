@@ -45,7 +45,8 @@ class PaymentController extends Controller
             (new yii\db\Query())
             ->select('id_consultant')
             ->from('events_services')
-            ->where("created_at > '" . date('Y-m-d') . "' and created_at < '" . (new \DateTime('tomorrow'))->format('Y-m-d') . "'")]);
+            ->where("created_at > '" . date('Y-m-d') . "' and created_at < '" . (new \DateTime('tomorrow'))->format('Y-m-d') . "'")])
+        ->orWhere(['id' => Yii::$app->user->id]);
         $dp = new ActiveDataProvider([
             'query' => $consultants,
         ]);

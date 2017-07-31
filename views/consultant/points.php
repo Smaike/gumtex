@@ -19,6 +19,6 @@ $this->title = "Баллы";
 <div class="consultant-points">
     <h2>Рекомендованные тренинги:</h2>
     <?php foreach($models as $model){?>
-        <h3><?=$model->service->name?> для <?=$model->es->idEvent->client->fullName?></h3>
+        "<?=$model->service->name?>" для <?=$model->client->fullName?>. Дата рекомендации: <?=$model->created_at?>
     <?php }?>
 </div>
