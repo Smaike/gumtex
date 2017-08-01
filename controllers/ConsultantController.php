@@ -38,11 +38,13 @@ class ConsultantController extends Controller
         $eventsServices = EventsService::find()->joinWith(['idEvent'])
         ->where(
             ['not', ['code' => null]]
-        )->andWhere([
+        )
+        ->andWhere([
             'not', ['events_services.status' => 'consultant_finish']
         ])->andWhere([
             '>=', 'events.date', (new \DateTime())->format('Y-m-d')
-        ])->andWhere([
+        ])
+        ->andWhere([
             '<', 'events.date', (new \DateTime('tomorrow'))->format('Y-m-d')
         ]);
         $dp = new ActiveDataProvider([
@@ -119,5 +121,28 @@ class ConsultantController extends Controller
         return $this->render('points', [
             'models' => $models,
         ]);
+    }
+
+    public function actionPdfReport($id)
+    {
+        $es = EventsService::findOne($id);
+        libxml_use_internal_errors(true);
+        $pdf = Yii::$app->pdf;
+        $d = new \DOMDocument('1.0', 'UTF-8');
+        $html = Yii::$app->soap->sc->getResultsReportHtml($es->session, 0, 1)['ReportContentHtml'];
+        $d->loadHTML($html);
+        $head="";
+        foreach ($d->getElementsByTagName('body') as $key => $value) {
+        //     if($key<9){
+                $head .= $value->nodeValue;
+        //     }
+        }
+        file_put_contents(Yii::getAlias("@runtime").'/test.html', base64_decode($head));
+        // $pdf->content = file_get_contents($es->url_report);
+        // $pdf->cssFile = Yii::getAlias("@runtime").'/test.css';
+        // return $pdf->render();
+        return base64_decode($head).'<script>window.print();</script>';
+        // var_dump($html);
+        return true;
     }
 }
