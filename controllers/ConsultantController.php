@@ -95,6 +95,7 @@ class ConsultantController extends Controller
     public function actionView($id)
     {   
         $this->layout = '@app/views/layouts/consultant-sidebar.php';
+        $csv = str_getcsv(file_get_contents(Yii::getAlias('@app').'/prof.csv'),';','"');
         if(!$form = ConsultantEventForm::findOne($id)){
             throw new NotFoundHttpException('The requested page does not exist.');
         }
@@ -111,6 +112,7 @@ class ConsultantController extends Controller
         }
         return $this->render('view', [
             'model' => $form,
+            'professions' => $csv,
         ]);
     }
 

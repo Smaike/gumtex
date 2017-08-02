@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -9,6 +9,7 @@ use yii\grid\GridView;
 
 $this->title = 'Клиенты';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="client-index">
 
