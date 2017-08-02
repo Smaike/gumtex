@@ -186,16 +186,18 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             ])->queryScalar();
 
             $statistic['points'] = Yii::$app->db->createCommand("
-                SELECT count(id) 
+                SELECT count(distinct id_client) 
                 FROM client_recomendations
                 WHERE id_consultant = :id_user
+                GROUP BY id_client
             ")->bindValues([
                 ':id_user' => $this->id,
             ])->queryScalar() + Yii::$app->db->createCommand("
-                SELECT count(id) 
+                SELECT count(distinct id_client) 
                 FROM client_recomendations
                 WHERE id_consultant = :id_user 
                     AND is_visited = 1
+                GROUP BY id_client
             ")->bindValues([
                 ':id_user' => $this->id,
             ])->queryScalar();
