@@ -10,18 +10,19 @@ use app\models\Client;
 use app\models\Service;
 use app\models\EventsService;
 use app\models\ClientRecomendation;
+use app\models\ClientProfession;
 
 /**
  * ContactForm is the model behind the contact form.
  */
 class ConsultantEventForm extends EventsService
 {
-    public $tranings;
+    public $professions;
 
     public function rules()
     {
         $rules = [
-            [['tranings'], 'each', 'rule' => ['integer']],
+            [['tranings', 'professions'], 'each', 'rule' => ['integer']],
         ];
         return array_merge(parent::rules(), $rules);
     }
@@ -66,9 +67,23 @@ class ConsultantEventForm extends EventsService
         }
     }
 
-    public function getTranings()
+    public function saveProfessions()
     {
-        return unserialize($this->tranings);
+        if(!empty($this->professions) && $this->validate('professions')){
+            foreach ($this->professions as $recomendation_id) {
+                if(!($recomendation = ClientProfession::find()->where([
+                    'id_profession' => $recomendation_id,
+                    'id_client' => $this->client->id
+                ])->one())){
+                    $recomendation = new ClientProfession();
+                    $recomendation->id_es = $this->id;
+                    $recomendation->id_profession = $recomendation_id;
+                    $recomendation->id_client = $this->client->id;
+                    $recomendation->id_consultant = Yii::$app->user->identity->id;
+                    $recomendation->save();
+                }
+            }
+        }
     }
 
 }

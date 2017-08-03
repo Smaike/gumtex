@@ -2,14 +2,14 @@
 
 use yii\db\Migration;
 
-class m170727_134929_create_recomendations extends Migration
+class m170803_203804_create_professions extends Migration
 {
     public function up()
     {
-        $this->createTable('client_recomendations', [
+        $this->createTable('client_professions', [
             'id'            => $this->primaryKey(),
             'id_es'         => $this->integer(11),
-            'id_service'    => $this->integer(11),
+            'id_profession'    => $this->integer(11),
             'id_client'    => $this->integer(11),
             'id_consultant' => $this->integer(12),
             'created_at'    => $this->datetime(),
@@ -18,7 +18,7 @@ class m170727_134929_create_recomendations extends Migration
 
     public function down()
     {
-        echo "m170727_134929_create_recomendations cannot be reverted.\n";
+        echo "m170803_203804_create_professions cannot be reverted.\n";
 
         return false;
     }

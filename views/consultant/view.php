@@ -125,7 +125,17 @@ $this->title = "Код: ".$model->code;
         </div>
         <div class="row">
             <div class="col-sm-12">
-                Выпадающий список рекомендуемых профессий (вставлю как они у меня будут)
+                <?php Modal::begin([
+                    'header' => '<h2>Профессии</h2>',
+                    'toggleButton' => [
+                        'label' => 'Выбрать профессии',
+                        'class' => "btn btn-success start-serv",
+                        'style' => 'margin-bottom:25px; margin-top:15px;'
+                    ],
+                ]);?> 
+                    <?= Html::checkboxList('ConsultantEventForm[professions]', $model->client->professions, $professions, ['separator' => "<br>"])?>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                <?php Modal::end();?>
             </div>
         </div>
         <div class="row">

@@ -102,6 +102,7 @@ class ConsultantController extends Controller
         if(Yii::$app->request->isPost){
             $form->load(Yii::$app->request->post());
             $form->saveTranings();
+            $form->saveProfessions();
             EventsService::updateAll([
                 'status' => 'consultant_finish',
                 'consultant_end' => date('Y-m-d H:i:s')

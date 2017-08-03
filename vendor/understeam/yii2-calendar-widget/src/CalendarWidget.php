@@ -204,10 +204,10 @@ class CalendarWidget extends Widget
         }
 
         if ($firstDay->format('Y') == $lastDay->format('Y')) {
-            $common[] = Yii::$app->formatter->asDate($firstDay, 'YYYY');
+            $common[] = Yii::$app->formatter->asDate($firstDay, 'Y');
         } else {
-            $left[] = Yii::$app->formatter->asDate($firstDay, 'YYYY');
-            $right[] = Yii::$app->formatter->asDate($lastDay, 'YYYY');
+            $left[] = Yii::$app->formatter->asDate($firstDay, 'Y');
+            $right[] = Yii::$app->formatter->asDate($lastDay, 'Y');
         }
 
         $string = implode(' ', $left) . ' — ' . implode(' ', $right);

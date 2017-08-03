@@ -140,4 +140,11 @@ class Client extends \yii\db\ActiveRecord
         ])->column();
     }
 
+    public function getProfessions()
+    {
+        return ClientProfession::find()->select('id_profession')->where([
+            'id_client' => $this->id
+        ])->column();
+    }
+
 }
