@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\EventSearch */
@@ -28,4 +29,23 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         'formatter' => ['class' => 'yii\i18n\Formatter','nullDisplay' => ''],
     ]); ?>
+    <?=Html::a('Сохранить', null, ['class' => 'btn btn-primary', 'id' => 'pay'])?>
 </div>
+<?php $this->registerJs("
+    $(document).on('click', '#pay', function(){
+        var keys = $('#w0').yiiGridView('getSelectedRows');
+        console.log(keys);
+        $.ajax({
+          url: '" . Url::to('payment/ajax-dinner', true) . "',
+          type: 'POST',   
+          data: {'keys':keys}, 
+          success: function(response){
+            alert('Успешно');
+          }
+        });
+    });
+
+",
+    View::POS_END,
+     'my-options');
+?>

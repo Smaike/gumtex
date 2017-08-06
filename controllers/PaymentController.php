@@ -12,6 +12,8 @@ use app\models\EventsService;
 use app\models\Client;
 use app\models\ConsultantPoint;
 use app\models\User;
+use app\models\PaymentDinner;
+use app\models\PaymentCrm;
 use app\forms\ConsultantEventForm;
 
 /**
@@ -55,4 +57,24 @@ class PaymentController extends Controller
             'dp' => $dp,
         ]);
     }
+
+    public function actionAjaxDinner()
+    {   
+        foreach (Yii::$app->request->post('keys') as $key) {
+            $payment = new PaymentDinner();
+            $payment->sum = PaymentDinner::DINNER_COST;
+            $payment->created_at = date('Y-m-d');
+            $payment->id_user = $key;
+            $payment->save();
+        }
+        return true;
+    }
+    public function actionExpenses()
+    {   
+        $payment = new PaymentCrm();
+        return $this->render('expenses', [
+            'model' => $payment,
+        ]);
+    }
+    
 }
