@@ -85,6 +85,11 @@ class EventsService extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'id_consultant']);
     }
 
+    public function getPrice()
+    {
+        return $this->hasOne(Price::className(), ['id_service' => 'id_service']);
+    }
+
     public function getComputer()
     {
         return $this->hasOne(Computer::className(), ['is_processed_by' => 'id']);

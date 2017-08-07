@@ -19,3 +19,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <a href="<?=Url::to(['/payment/incomes'])?>" class="btn btn-primary">Доходы</a>
     
 </div>
+<div class="event-index">
+
+    <h1>Отчеты</h1>
+    <a href="<?=Url::to(['/payment/daily-report'])?>" class="btn btn-success">Отчет за день</a>
+    
+</div>

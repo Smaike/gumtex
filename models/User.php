@@ -216,7 +216,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
                 $items[] = ['label' => 'Консультант', 'url' => ['/consultant/search']];
             }
             $items = array_merge($items, [
-                ['label' => 'Начало', 'url' => ['/site/index']],
+                // ['label' => 'Начало', 'url' => ['/site/index']],
                 ['label' => 'Справочники', 'url' => ['/directory/default/index']],
                 ['label' => 'Платежи', 'url' => ['/payment/index']],
                 ['label' => 'Список клиентов', 'url' => ['/client/index']],
