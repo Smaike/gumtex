@@ -69,10 +69,30 @@ class PaymentController extends Controller
         }
         return true;
     }
+
     public function actionExpenses()
     {   
         $payment = new PaymentCrm();
+        if(Yii::$app->request->isPost && $payment->load(Yii::$app->request->post())){
+            $payment->created_at = date('Y-m-d');
+            $payment->save();
+            return $this->redirect(['expenses']);
+        }
         return $this->render('expenses', [
+            'model' => $payment,
+        ]);
+    }
+
+    public function actionIncomes()
+    {   
+        $payment = new PaymentCrm();
+        if(Yii::$app->request->isPost && $payment->load(Yii::$app->request->post())){
+            $payment->type = 5;
+            $payment->created_at = date('Y-m-d');
+            $payment->save();
+            return $this->redirect(['incomes']);
+        }
+        return $this->render('incomes', [
             'model' => $payment,
         ]);
     }

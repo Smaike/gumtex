@@ -16,6 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <a href="<?=Url::to(['/payment/dinner'])?>" class="btn btn-primary">Обеды</a>
     <a href="<?=Url::to(['/payment/expenses'])?>" class="btn btn-primary">Расходы</a>
-    <a href="<?=Url::to(['/payment/dinner'])?>" class="btn btn-primary">Доходы</a>
+    <a href="<?=Url::to(['/payment/incomes'])?>" class="btn btn-primary">Доходы</a>
     
 </div>

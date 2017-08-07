@@ -23,7 +23,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $form->field($model, 'type')->dropDownList(PaymentCrm::getTypesList()) ?>
 
-    <?= $form->field($model, 'descriptions')->textarea() ?>
+    <?= $form->field($model, 'descriptions', [
+    	'inputOptions' => [
+        	'class' =>'form-control',
+        	'style' => 'display:none;',
+        	'placeholder' => 'Причина'
+        ]
+    ])->label(false)->textarea() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Добавить', ['class' => 'btn btn-success']) ?>
@@ -31,3 +37,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php ActiveForm::end(); ?>
 </div>
+<?php $this->registerJs("
+    $(document).on('change', '#paymentcrm-type', function(){
+        if($(this).val() == 4){
+        	$('#paymentcrm-descriptions').css({'display':'block'});
+        }else{
+        	$('#paymentcrm-descriptions').css({'display':'none'});
+        }
+    });
+
+",
+    View::POS_END,
+     'my-options');
+?>
