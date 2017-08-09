@@ -214,6 +214,10 @@ class EventController extends Controller
     
     public function actionPrint($date)
     {
+
+        Yii::$app->response->format = \yii\web\Response::FORMAT_RAW;
+        $headers = Yii::$app->response->headers;
+        $headers->add('Content-Type', 'application/pdf');
         $period[0] = date('Y-m-d', strtotime($date));
         $period[1] = date('Y-m-d H:i:s', strtotime($date)  + 60*60*24);
         $models = Event::find()->andWhere([
@@ -229,10 +233,12 @@ class EventController extends Controller
                 $period[1],
             ],
         ])->all();
+        $this->layout = null;
         $content = $this->renderPartial('_print', [
             'models' => $models
         ]);
         $pdf = Yii::$app->pdf;
+        $pdf->cssFile = Yii::getAlias('@app').'/web/css/pdf.css';
         $pdf->content = $content;
         return $pdf->render();
     }

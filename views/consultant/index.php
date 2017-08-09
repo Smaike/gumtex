@@ -11,7 +11,7 @@ use yii\grid\GridView;
 $this->title = 'В работе';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<meta http-equiv="refresh" content="30" />
+<meta http-equiv="refresh" content="15" />
 <div class="event-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
@@ -35,6 +35,22 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'code_generated',
                 'label' => 'Время создания кода',
+            ],
+            [
+                'attribute' => 'test_start',
+                'label' => 'Начало тестирования',
+            ],
+            [
+                'attribute' => 'test_end',
+                'label' => 'Окончание тестирования',
+            ],
+            [
+                'attribute' => 'consultant_start',
+                'label' => 'Начало консультирования',
+            ],
+            [
+                'attribute' => 'consultant_end',
+                'label' => 'Окончание консультирования',
             ],
             [
                 'format' => 'raw',

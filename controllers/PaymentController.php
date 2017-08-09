@@ -98,6 +98,19 @@ class PaymentController extends Controller
         ]);
     }
 
+    /**
+    
+        TODO:
+        - queryQ1 - Собираем все оказанные услуги за сегодня, цена берется из справочников.
+        - queryQ2 - Платежи, полученные за события, которые прошли сегодня. Сумма может отличаться от суммы с первого запроса.
+        - queryQ3 - Скидки, которые были выданы клиентам, записанным на сегодняшние события.
+        - queryQ4 - Деньги, перечисленные конторе за сегодняшний день.
+        - queryQ5 - Дополнительные доходы
+        - queryQ5 - Дополнительные расходы
+        - queryQ5 - Дополнительные техпомощь
+    
+     */
+    
     public function actionDailyReport()
     {
         $time = date('Y-m-d H:i:s');
@@ -121,21 +134,77 @@ class PaymentController extends Controller
             LEFT JOIN clients on clients.id = events.id_client
             WHERE events.date BETWEEN '".date('Y-m-d 00:00:00')."' AND '$time' 
             AND events.discount is not null
-
         ")->queryAll();
 
         $queryQ4 = Yii::$app->db->createCommand("
             SELECT sum(paids.sum) as sum
             FROM paids
             WHERE paids.date > '".date('Y-m-d 00:00:00')."' 
-
         ")->queryScalar();
+
+        $queryQ5 = Yii::$app->db->createCommand("
+            SELECT sum, descriptions
+            FROM payments_crm
+            WHERE created_at BETWEEN '".date('Y-m-d 00:00:00')."' AND '$time' AND type = 4
+        ")->queryAll();
+
+        $queryQ6 = Yii::$app->db->createCommand("
+            SELECT sum, descriptions
+            FROM payments_crm
+            WHERE created_at BETWEEN '".date('Y-m-d 00:00:00')."' AND '$time' AND type = 5
+        ")->queryAll();
+
+        $queryQ7 = Yii::$app->db->createCommand("
+            SELECT sum(sum)
+            FROM payments_crm
+            WHERE created_at BETWEEN '".date('Y-m-d 00:00:00')."' AND '$time' AND type = 1
+        ")->queryScalar();
+
+        $queryQ8_1 = Yii::$app->db->createCommand("
+            SELECT sum(sum)
+            FROM payments_dinner
+            WHERE created_at BETWEEN '".date('Y-m-d 00:00:00')."' AND '$time'
+        ")->queryScalar();
+
+        $queryQ8_2 = Yii::$app->db->createCommand("
+            SELECT sum(s1.value) 
+            FROM (
+                SELECT es.id_service, cc.value, es.id_consultant, es.consultant_end
+                FROM events_services es
+                LEFT JOIN consultants_cost cc ON cc.id_service = es.id_service AND cc.id_consultant_type = (
+                    SELECT id_type FROM consultants WHERE id_user = es.id_consultant)  
+            ) s1
+            WHERE s1.consultant_end > :d_past AND s1.consultant_end < :d_future
+        ")->bindValues([
+            ':d_past' => date('Y-m-d'),
+            ':d_future' => (new \DateTime('tomorrow'))->format('Y-m-d'),
+        ])->queryScalar();
+
+        // $queryQ9 = Yii::$app->db->createCommand("
+        //     SELECT type, sum(sum) as sum
+        //     FROM paids
+        //     WHERE date > '".date('Y-m-d 00:00:00')."' and type is not null
+        //     GROUP BY type
+        // ")->indexBy('type')->queryAll();
+
+        $queryQ9 = (new \yii\db\Query())
+            ->select(['type', 'sum(sum) as sum'])
+            ->from('paids')
+            ->where(["and", [">", "date", date('Y-m-d 00:00:00')], ["not", ["type" => null]]])
+            ->groupBy('type')
+            ->indexBy('type')
+            ->all();
         
         return $this->render('daily-report', [
             'queryQ1' => $queryQ1,
             'queryQ2' => $queryQ2,
             'queryQ3' => $queryQ3,
             'queryQ4' => $queryQ4,
+            'queryQ5' => $queryQ5,
+            'queryQ6' => $queryQ6,
+            'queryQ7' => $queryQ7,
+            'queryQ8' => $queryQ8_1 + $queryQ8_2,
+            'queryQ9' => $queryQ9,
         ]);
     }
     
