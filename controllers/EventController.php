@@ -252,7 +252,9 @@ class EventController extends Controller
     public function actionPrintCode($code)
     {
         $pdf = Yii::$app->pdf;
-        $pdf->content = "<h1 style='text-align:center;'>Ваш персональный код</h1><h1 style='text-align:center; font-size:80px;'>".$code."</h1>";
+        $pdf->content = $this->renderPartial('_print_code', [
+            'code' => $code,
+        ]);
         return $pdf->render();
     }
 
