@@ -194,6 +194,21 @@ class PaymentController extends Controller
             ->groupBy('type')
             ->indexBy('type')
             ->all();
+        if(Yii::$app->request->get('print')){
+            $pdf = Yii::$app->pdf;
+            $pdf->content = $this->renderPartial('daily-report', [
+                'queryQ1' => $queryQ1,
+                'queryQ2' => $queryQ2,
+                'queryQ3' => $queryQ3,
+                'queryQ4' => $queryQ4,
+                'queryQ5' => $queryQ5,
+                'queryQ6' => $queryQ6,
+                'queryQ7' => $queryQ7,
+                'queryQ8' => $queryQ8_1 + $queryQ8_2,
+                'queryQ9' => $queryQ9,
+            ]);
+            return $pdf->render();
+        }
         
         return $this->render('daily-report', [
             'queryQ1' => $queryQ1,

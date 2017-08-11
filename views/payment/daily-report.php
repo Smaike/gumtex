@@ -14,7 +14,21 @@ $discount = 0;
 $costs = 0;
 $costs += $queryQ7 + $queryQ8;
 ?>
-<div class="event-index">
+<style>
+    @media print {
+      .nav {
+        display: none;
+      }
+      .breadcrumb{
+        display: none;
+      }
+      #printPageButton {
+        display: none;
+      }
+    }
+</style>
+<div class="event-index" id="report">
+    <button id="printPageButton" onClick="window.print();">Печать</button>
 
     <h1><?= Html::encode($this->title) ?></h1>
     <table class="table">
