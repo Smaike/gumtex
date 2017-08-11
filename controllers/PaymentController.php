@@ -137,9 +137,9 @@ class PaymentController extends Controller
         ")->queryAll();
 
         $queryQ4 = Yii::$app->db->createCommand("
-            SELECT sum(paids.sum) as sum
-            FROM paids
-            WHERE paids.date > '".date('Y-m-d 00:00:00')."' 
+            SELECT sum(receipts.sum) as sum
+            FROM receipts
+            WHERE receipts.date > '".date('Y-m-d 00:00:00')."' 
         ")->queryScalar();
 
         $queryQ5 = Yii::$app->db->createCommand("
@@ -189,7 +189,7 @@ class PaymentController extends Controller
 
         $queryQ9 = (new \yii\db\Query())
             ->select(['type', 'sum(sum) as sum'])
-            ->from('paids')
+            ->from('receipts')
             ->where(["and", [">", "date", date('Y-m-d 00:00:00')], ["not", ["type" => null]]])
             ->groupBy('type')
             ->indexBy('type')
