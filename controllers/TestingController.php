@@ -95,6 +95,7 @@ class TestingController extends Controller
                         $cl->hobby,
                         $eventsService->code
                     );
+                    $eventsService->test_start = date('Y-m-d H:i:s');
                 }
                 $eventsService->status = 'processed';
                 $eventsService->save(false);
@@ -117,6 +118,7 @@ class TestingController extends Controller
         ])->one()){
             $eventsService->status = 'consultant';
             $eventsService->url_report = Yii::$app->soap->sc->getResultsReportUrl($eventsService->session)['ResultsReportUrl'];
+            $eventsService->test_end = date('Y-m-d H:i:s');
             $eventsService->save();
             return true;
         }else{
