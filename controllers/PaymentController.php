@@ -168,7 +168,7 @@ class PaymentController extends Controller
         ")->queryScalar();
 
         $queryQ8 = Yii::$app->db->createCommand("
-            SELECT sum(s1.value) as value, payments_dinner.sum, s1.name
+            SELECT sum(s1.value) as value, sum(payments_dinner.sum) as sum, s1.name
             FROM (
                 SELECT es.id_service, cc.value, es.id_consultant, es.consultant_end, CONCAT(users.last_name, ' ', users.first_name) as name
                 FROM events_services es
