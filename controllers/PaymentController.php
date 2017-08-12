@@ -139,7 +139,7 @@ class PaymentController extends Controller
             LEFT JOIN client_categories on clients.category = client_categories.id
             WHERE events_services.consultant_end BETWEEN '$time_start' AND '$time_end'
             AND ((clients.type is not null) OR (clients.category is not null))
-            GROUP BY events_services.id_service
+            GROUP BY clients.id
         ")->queryAll();
 
         $queryQ2 = Event::find()
