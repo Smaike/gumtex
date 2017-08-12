@@ -113,72 +113,78 @@ class PaymentController extends Controller
     
     public function actionDailyReport()
     {
+        if(!empty(Yii::$app->request->get('day'))){
+            $time_start = Yii::$app->request->get('day') . " 00:00:00";
+            $time_end = Yii::$app->request->get('day') . " 23:59:59";
+        }else{
+            $time_start = date('Y-m-d 00:00:00');
+            $time_end = date('Y-m-d 23:59:59');
+        }
         $time = date('Y-m-d H:i:s');
         $queryQ1 = Yii::$app->db->createCommand("
             SELECT services.name, sum(prices.price) as sum, count(events_services.id_service) as cnt
             FROM events_services
             LEFT JOIN prices on prices.id_service = events_services.id_service
             LEFT JOIN services on services.id = events_services.id_service
-            WHERE events_services.consultant_end BETWEEN '".date('Y-m-d 00:00:00')."' AND '$time'
+            WHERE events_services.consultant_end BETWEEN '$time_start' AND '$time_end'
             GROUP BY events_services.id_service
         ")->queryAll();
 
         $queryQ2 = Event::find()
         ->joinWith('paids')
-        ->where(['between', 'events.date', date('Y-m-d 00:00:00'), $time])
+        ->where(['between', 'events.date', $time_start, $time_end])
         ->sum('paids.sum');
 
         $queryQ3 = Yii::$app->db->createCommand("
             SELECT clients.last_name as lastname, events.discount as discount, events.why as why
             FROM events
             LEFT JOIN clients on clients.id = events.id_client
-            WHERE events.date BETWEEN '".date('Y-m-d 00:00:00')."' AND '$time' 
+            WHERE events.date BETWEEN '$time_start' AND '$time_end' 
             AND events.discount is not null
         ")->queryAll();
 
         $queryQ4 = Yii::$app->db->createCommand("
             SELECT sum(receipts.sum) as sum
             FROM receipts
-            WHERE receipts.date > '".date('Y-m-d 00:00:00')."' 
+            WHERE receipts.date between '$time_start' and '$time_end'
         ")->queryScalar();
 
         $queryQ5 = Yii::$app->db->createCommand("
             SELECT sum, descriptions
             FROM payments_crm
-            WHERE created_at BETWEEN '".date('Y-m-d 00:00:00')."' AND '$time' AND type = 4
+            WHERE created_at BETWEEN '$time_start' AND '$time_end' AND type = 4
         ")->queryAll();
 
         $queryQ6 = Yii::$app->db->createCommand("
             SELECT sum, descriptions
             FROM payments_crm
-            WHERE created_at BETWEEN '".date('Y-m-d 00:00:00')."' AND '$time' AND type = 5
+            WHERE created_at BETWEEN '$time_start' AND '$time_end' AND type = 5
         ")->queryAll();
 
         $queryQ7 = Yii::$app->db->createCommand("
             SELECT sum(sum)
             FROM payments_crm
-            WHERE created_at BETWEEN '".date('Y-m-d 00:00:00')."' AND '$time' AND type = 1
+            WHERE created_at BETWEEN '$time_start' AND '$time_end' AND type = 1
         ")->queryScalar();
 
-        $queryQ8_1 = Yii::$app->db->createCommand("
-            SELECT sum(sum)
-            FROM payments_dinner
-            WHERE created_at BETWEEN '".date('Y-m-d 00:00:00')."' AND '$time'
-        ")->queryScalar();
-
-        $queryQ8_2 = Yii::$app->db->createCommand("
-            SELECT sum(s1.value) 
+        $queryQ8 = Yii::$app->db->createCommand("
+            SELECT sum(s1.value) as value, payments_dinner.sum, s1.name
             FROM (
-                SELECT es.id_service, cc.value, es.id_consultant, es.consultant_end
+                SELECT es.id_service, cc.value, es.id_consultant, es.consultant_end, CONCAT(users.last_name, ' ', users.first_name) as name
                 FROM events_services es
                 LEFT JOIN consultants_cost cc ON cc.id_service = es.id_service AND cc.id_consultant_type = (
-                    SELECT id_type FROM consultants WHERE id_user = es.id_consultant)  
+                    SELECT id_type FROM consultants WHERE id_user = es.id_consultant) 
+                LEFT JOIN users on es.id_consultant = users.id 
             ) s1
+            LEFT JOIN payments_dinner on payments_dinner.id_user = s1.id_consultant and payments_dinner.created_at >= :d_past AND payments_dinner.created_at < :d_future
             WHERE s1.consultant_end > :d_past AND s1.consultant_end < :d_future
+            GROUP BY s1.id_consultant
         ")->bindValues([
-            ':d_past' => date('Y-m-d'),
-            ':d_future' => (new \DateTime('tomorrow'))->format('Y-m-d'),
-        ])->queryScalar();
+            ':d_past' => $time_start,
+            ':d_future' => $time_end,
+        ])->queryAll();
+
+        // var_dump($queryQ8);die;
 
         // $queryQ9 = Yii::$app->db->createCommand("
         //     SELECT type, sum(sum) as sum
@@ -190,26 +196,11 @@ class PaymentController extends Controller
         $queryQ9 = (new \yii\db\Query())
             ->select(['type', 'sum(sum) as sum'])
             ->from('receipts')
-            ->where(["and", [">", "date", date('Y-m-d 00:00:00')], ["not", ["type" => null]]])
+            ->where(["and", [">", "date", $time_start], ["not", ["type" => null]]])
             ->groupBy('type')
             ->indexBy('type')
             ->all();
-        if(Yii::$app->request->get('print')){
-            $pdf = Yii::$app->pdf;
-            $pdf->content = $this->renderPartial('daily-report', [
-                'queryQ1' => $queryQ1,
-                'queryQ2' => $queryQ2,
-                'queryQ3' => $queryQ3,
-                'queryQ4' => $queryQ4,
-                'queryQ5' => $queryQ5,
-                'queryQ6' => $queryQ6,
-                'queryQ7' => $queryQ7,
-                'queryQ8' => $queryQ8_1 + $queryQ8_2,
-                'queryQ9' => $queryQ9,
-            ]);
-            return $pdf->render();
-        }
-        
+
         return $this->render('daily-report', [
             'queryQ1' => $queryQ1,
             'queryQ2' => $queryQ2,
@@ -218,7 +209,7 @@ class PaymentController extends Controller
             'queryQ5' => $queryQ5,
             'queryQ6' => $queryQ6,
             'queryQ7' => $queryQ7,
-            'queryQ8' => $queryQ8_1 + $queryQ8_2,
+            'queryQ8' => $queryQ8,
             'queryQ9' => $queryQ9,
         ]);
     }

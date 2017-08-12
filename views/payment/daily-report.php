@@ -8,11 +8,14 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\search\EventSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Отчет на '.date('Y-m-d');
+$day = (Yii::$app->request->get('day'))? Yii::$app->request->get('day') : date("Y-m-d");
+$this->title = 'Отчет на '. $day;
 $this->params['breadcrumbs'][] = $this->title;
 $discount = 0;
 $costs = 0;
-$costs += $queryQ7 + $queryQ8;
+$costs += $queryQ7;
+$in_cass = (array_key_exists(1, $queryQ9))? $queryQ9[1]['sum']:0;
+$consultants = 0;
 ?>
 <style>
     @media print {
@@ -33,7 +36,7 @@ $costs += $queryQ7 + $queryQ8;
     <h1><?= Html::encode($this->title) ?></h1>
     <table class="table">
     <tr>
-    	<th colspan='3' align='right'><h2>Услуги:</h2></th>
+    	<th colspan='3' align='right'><h4>Услуги:</h4></th>
     </tr>
     <tr>
     	<th>Услуга</th>
@@ -54,7 +57,7 @@ $costs += $queryQ7 + $queryQ8;
     	</tr>
     <?php }?>
     <tr>
-    	<th colspan='3' align='right'><h2>Скидки:</h2></th>
+    	<th colspan='3' align='right'><h4>Скидки:</h4></th>
     </tr>
     <tr>
     	<th>Кому</th>
@@ -75,9 +78,32 @@ $costs += $queryQ7 + $queryQ8;
     		</td>
     	</tr>
     <?php }?>
+    <tr>
+        <th colspan='3' align='right'><h4>Консультанты:</h4></th>
+    </tr>
+    <tr>
+        <th>Кто</th>
+        <th>За услуги</th>
+        <th>За обеды</th>
+    </tr>
+    <?php foreach($queryQ8 as $row){
+        $consultants += $row['sum'] + $row['value'];
+        $costs+= $row['sum'] + $row['value'];?>
+        <tr>
+            <td>
+                <?=$row['name']?>
+            </td>
+            <td>
+                <?=$row['value']?>
+            </td>
+            <td>
+                <?=$row['sum']?>
+            </td>
+        </tr>
+    <?php }?>
 
     <tr>
-    	<th colspan='3' align='right'><h2>Дополнительные расходы:</h2></th>
+    	<th colspan='3' align='right'><h4>Дополнительные расходы:</h4></th>
     </tr>
     <tr>
     	<th colspan="2">Причина</th>
@@ -96,13 +122,14 @@ $costs += $queryQ7 + $queryQ8;
     <?php }?>
 
     <tr>
-    	<th colspan='3' align='right'><h2>Дополнительные доходы:</h2></th>
+    	<th colspan='3' align='right'><h4>Дополнительные доходы:</h4></th>
     </tr>
     <tr>
     	<th colspan="2">Причина</th>
     	<th>Сумма</th>
     </tr>
-    <?php foreach($queryQ6 as $row){?>
+    <?php foreach($queryQ6 as $row){
+        $in_cass += $row['sum'];?>
     	<tr>
     		<td colspan="2">
     			<?=$row['descriptions']?>
@@ -113,7 +140,7 @@ $costs += $queryQ7 + $queryQ8;
     	</tr>
     <?php }?>
 	<tr>
-    	<th colspan='3' align='right'><h2>Итог:</h2></th>
+    	<th colspan='3' align='right'><h4>Итог:</h4></th>
     </tr>
     <tr>
     	<td colspan='3' align='right'>Итог (по оказанным услугам): <?=$queryQ2?></td>
@@ -135,13 +162,13 @@ $costs += $queryQ7 + $queryQ8;
     	<td colspan='3' align='right'>Тех-помощь: <?=$queryQ7?></td>
     </tr>
     <tr>
-    	<td colspan='3' align='right'>Выплачено консультантам (Обеды + оказанные услуги): <?=$queryQ8?></td>
+    	<td colspan='3' align='right'>Выплачено консультантам (Обеды + оказанные услуги): <?=$consultants?></td>
     </tr>
     <tr>
     	<td colspan='3' align='right'>Расходы сегодня: <?=$costs?></td>
     </tr>
     <tr>
-    	<td colspan='3' align='right'>В кассе: <?=((array_key_exists(1, $queryQ9))? $queryQ9[1]['sum']:0) - $costs?></td>
+    	<td colspan='3' align='right'>В кассе: <?=$in_cass - $costs?></td>
     </tr>
 
 
