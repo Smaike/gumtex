@@ -79,6 +79,27 @@ $consultants = 0;
     	</tr>
     <?php }?>
     <tr>
+        <th colspan='3' align='right'><h4>Скидки по типам пользователей:</h4></th>
+    </tr>
+    <tr>
+        <th>Кто</th>
+        <th>Категория</th>
+        <th>Тип</th>
+    </tr>
+    <?php foreach($queryQ1_1 as $row){?>
+        <tr>
+            <td>
+                <?=$row['cl_name']?>
+            </td>
+            <td>
+                <?=$row['cc_name']?>
+            </td>
+            <td>
+                <?=$row['ct_name']?>
+            </td>
+        </tr>
+    <?php }?>
+    <tr>
         <th colspan='3' align='right'><h4>Консультанты:</h4></th>
     </tr>
     <tr>

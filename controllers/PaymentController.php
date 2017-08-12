@@ -130,6 +130,18 @@ class PaymentController extends Controller
             GROUP BY events_services.id_service
         ")->queryAll();
 
+        $queryQ1_1 = Yii::$app->db->createCommand("
+            SELECT concat(clients.last_name, ' ', clients.first_name) as cl_name, client_types.name as ct_name, client_categories.name as cc_name
+            FROM events_services
+            LEFT JOIN events on events_services.id_event = events.id
+            LEFT JOIN clients on clients.id = events.id_client
+            LEFT JOIN client_types on clients.type = client_types.id
+            LEFT JOIN client_categories on clients.category = client_categories.id
+            WHERE events_services.consultant_end BETWEEN '$time_start' AND '$time_end'
+            AND ((clients.type is not null) OR (clients.category is not null))
+            GROUP BY events_services.id_service
+        ")->queryAll();
+
         $queryQ2 = Event::find()
         ->joinWith('paids')
         ->where(['between', 'events.date', $time_start, $time_end])
@@ -203,6 +215,7 @@ class PaymentController extends Controller
 
         return $this->render('daily-report', [
             'queryQ1' => $queryQ1,
+            'queryQ1_1' => $queryQ1_1,
             'queryQ2' => $queryQ2,
             'queryQ3' => $queryQ3,
             'queryQ4' => $queryQ4,
